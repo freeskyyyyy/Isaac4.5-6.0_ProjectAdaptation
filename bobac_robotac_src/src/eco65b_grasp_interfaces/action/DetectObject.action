@@ -1,0 +1,22 @@
+# DetectObject.action
+# 物体检测 Action
+
+# Goal
+string[] target_classes      # 要检测的类别列表，例如 ['pencil', 'pen']
+                             # 如果为空，则检测所有类别
+float32 confidence_threshold # 置信度阈值 (0.0-1.0)，默认0.01
+float32 timeout              # 检测超时时间（秒），默认30.0
+                             # 超时后如果没有检测到物体则返回失败
+---
+# Result
+bool success
+string message
+string detected_class        # 检测到的物体类别
+geometry_msgs/PointStamped object_position    # 物体位置（base_frame）
+geometry_msgs/Vector3Stamped normal           # 表面法向量（base_frame）
+geometry_msgs/Vector3Stamped long_axis        # 物体长轴方向（base_frame）
+float32 confidence           # 检测置信度
+---
+# Feedback
+string state                 # "WAITING_IMAGE", "DETECTING", "FOUND"
+int32 detection_attempts     # 已尝试检测次数

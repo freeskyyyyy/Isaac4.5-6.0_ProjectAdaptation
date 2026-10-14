@@ -1,0 +1,46 @@
+# 针对平放在桌面上的笔的抓取参数配置
+# 使用方法：ros2 run yoloe_grasp yoloe_grasp_node --ros-args --params-file pen_grasp_params.yaml
+
+yoloe_grasp_node:
+  ros__parameters:
+    use_sim_time: true
+    # 相机话题
+    rgb_topic: '/arm_camera/rgb'
+    depth_topic: '/arm_camera/depth'
+    camera_info_topic: '/arm_camera/camera_info'
+
+    # 坐标系
+    base_frame: 'base_link_arm'
+    camera_frame: 'arm_Camera'  # 注意：C 是大写
+    disable_optical_compensation: true  # arm_Camera 已经是 optical frame 形式，不需要手动旋转
+
+    # YOLOE 模型配置
+    model_path: 'yoloe-26l-seg.pt'
+    classes: ['pencil', 'pen']
+    conf: 0.01
+    device: 'cuda:0'
+
+    # 调试选项
+    save_debug_images: true
+    debug_image_dir: '/workspace/course/.runtime/vision/debug'
+
+    # Action 配置
+    action_name: '/grasp_to_point'
+    ee_link: 'link_6'
+    finger_link: 'gripper_l_link_finger'
+    plan_only: false
+
+    # ===== 关键参数：法向量模式 =====
+    # 对于平放在桌面上的笔，从上往下抓取，使用固定法向量
+    normal_mode: 'fixed_base'  # 选项: 'fixed_base', 'local_plane', 'camera_side', 'fixed', 'pca'
+    fixed_normal: [0.0, 0.0, -1.0]  # 向下的法向量（Z轴向下）
+
+    # ===== 关键参数：长轴检测模式 =====
+    # 使用 mask 的长轴来确定笔的方向
+    axis_mode: 'mask_long'  # 'mask_long' 检测笔的长轴方向
+    axis_step_px: 10  # 用于采样长轴方向的像素步长
+
+    # local_plane 模式参数（如果使用 local_plane 模式）
+    local_plane_radius_px: 15
+    local_plane_depth_tol: 0.015  # 15mm 深度容差
+    local_plane_min_points: 80

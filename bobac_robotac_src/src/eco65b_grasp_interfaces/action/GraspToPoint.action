@@ -1,0 +1,20 @@
+# GraspToPoint.action
+
+# Goal
+geometry_msgs/PointStamped target
+geometry_msgs/Vector3Stamped normal
+geometry_msgs/Vector3Stamped short_axis
+string ee_link
+string finger_link
+bool plan_only
+string label
+float32 confidence
+---
+# Result
+bool success
+int32 error_code
+string message
+geometry_msgs/PoseStamped commanded_pose
+---
+# Feedback
+string state

@@ -1,0 +1,84 @@
+192.168.1.95
+/isaac-sim/robotac-sim-assets/isaacsimassets-dev/assets/full_worlds/Collected_bobac_race_scene/
+sudo docker start isaac-sim-test
+sudo docker exec -it isaac-sim-test bash
+sudo docker start ros2-test
+sudo docker exec -it ros2-test bash
+阶段 0：准备工作
+# 每个终端都执行（解决 DDS 冲突）
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+阶段 1：导航到桌边
+# 终端 1：启动 IsaacSim（确保发布 /odom, /laser_scan_fuse, /clock）
+# 在 IsaacSim GUI 中加载 Bobac3 机器人和场景
+
+# 终端 2：启动导航系统
+cd ~/bobac_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch bobac3_navigation bobac3_navigation.launch.py
+在 RViz2 中：
+1. 设置初始位姿：点击 "2D Pose Estimate"，在地图上标定机器人位置
+2. 发送导航目标：点击 "Nav2 Goal"，发送到桌边位置
+3. 等待机器人到达：观察机器人移动到目标点
+阶段 2：执行抓取
+机器人到达桌边后，在新终端中依次启动：
+# 终端 3：启动 MoveIt2
+cd /workspace/bobac_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch eco65b_moveit_config move_group.launch.py
+
+# 终端 4：启动运动规划
+ros2 run eco65b_moveit_grasp grasp_moveit_node
+
+# 终端 5：启动视觉检测
+ros2 run yoloe_grasp yoloe_grasp_node --ros-args --params-file src/yoloe_grasp/config/pen_grasp_params.yaml
+
+# 终端 6：启动夹爪控制
+ros2 run grasp_control gripper_control_node
+
+# 终端 7：启动状态机（开始抓取）
+ros2 run grasp_control grasp_state_machine
+
+完整重启步骤：
+第 1 步：停止所有正在运行的终端（Ctrl+C）
+第 2 步：重新启动 IsaacSim
+export ROS_DOMAIN_ID=44
+# 启动 IsaacSim，等待 ROS2 Bridge 显示 Connected
+第 3 步：确认话题发布正常
+export ROS_DOMAIN_ID=44
+ros2 topic hz /odom
+ros2 topic hz /laser_scan_fuse
+ros2 topic hz /clock
+三个都有数据后，继续下一步。
+第 4 步：确认 TF 正常
+export ROS_DOMAIN_ID=44
+ros2 run tf2_ros tf2_echo odom base_link
+有输出后继续。
+第 5 步：启动 QoS 中继
+export ROS_DOMAIN_ID=44
+cd /workspace/bobac_ws
+python3 src/bobac3_navigation/scripts/laser_qos_relay.py
+第 6 步：启动导航
+export ROS_DOMAIN_ID=44
+cd /workspace/bobac_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 launch bobac3_navigation bobac3_navigation.launch.py
+等 15 秒。
+第 7 步：发送导航目标
+export ROS_DOMAIN_ID=44
+cd /workspace/bobac_ws
+source /opt/ros/humble/setup.bash
+source install/setup.bash
+ros2 action send_goal /navigate_to_pose nav2_msgs/action/NavigateToPose '{
+  pose: {
+    header: {frame_id: "map"},
+    pose: {
+      position: {x: -1.616, y: 2.902, z: 0.0},
+      orientation: {x: 0.0, y: 0.0, z: -0.7071, w: 0.7071}
+    }
+  }
+}'
+
+地图对齐

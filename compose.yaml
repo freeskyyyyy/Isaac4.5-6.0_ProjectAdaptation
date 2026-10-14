@@ -1,0 +1,45 @@
+services:
+  course:
+    image: bobac-course:isaac6.0-jazzy-spark
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bobac-isaac6-course
+    gpus: all
+    network_mode: host
+    shm_size: 8gb
+    user: "1234:1234"
+    group_add:
+      - "${COURSE_HOST_GID:-1000}"
+    environment:
+      ACCEPT_EULA: "Y"
+      NVIDIA_DRIVER_CAPABILITIES: all
+      ROS_DISTRO: jazzy
+      ROS_DOMAIN_ID: "${ROS_DOMAIN_ID:-44}"
+      RMW_IMPLEMENTATION: rmw_cyclonedds_cpp
+      DISPLAY: "${DISPLAY:-}"
+      XAUTHORITY: /tmp/course.Xauthority
+      COURSE_ROOT: /workspace/course
+      COURSE_WS: /workspace/bobac_ws
+      YOLO_CONFIG_DIR: /workspace/course/.runtime/${COURSE_ARCH:-arm64}/vision/config
+    volumes:
+      - ${ISAAC_SIM_HOST_DIR:-../IsaacSim-6.0.0}:/isaac-sim:rw
+      - ${COURSE_DESKTOP_DIR:-..}:/workspace/Desktop:ro
+      - .:/workspace/course:rw
+      - ./bobac_robotac_src/src:/workspace/bobac_ws/src:ro
+      - ./.runtime/${COURSE_ARCH:-arm64}/build:/workspace/bobac_ws/build:rw
+      - ./.runtime/${COURSE_ARCH:-arm64}/install:/workspace/bobac_ws/install:rw
+      - ./.runtime/${COURSE_ARCH:-arm64}/log:/workspace/bobac_ws/log:rw
+      - ./.runtime/${COURSE_ARCH:-arm64}/isaac-cache:/isaac-sim/.cache:rw
+      - ./.runtime/${COURSE_ARCH:-arm64}/compute-cache:/isaac-sim/.nv/ComputeCache:rw
+      - ./.runtime/${COURSE_ARCH:-arm64}/isaac-config:/isaac-sim/.nvidia-omniverse/config:rw
+      - ./.runtime/${COURSE_ARCH:-arm64}/isaac-logs:/isaac-sim/.nvidia-omniverse/logs:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix:ro
+      - ./.runtime/${COURSE_ARCH:-arm64}/Xauthority:/tmp/course.Xauthority:ro
+    stdin_open: true
+    tty: true
+    init: true
+    command: ["sleep", "infinity"]
+    # The official image's AppReady health check does not apply to this shell container.
+    healthcheck:
+      disable: true

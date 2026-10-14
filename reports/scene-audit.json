@@ -1,0 +1,757 @@
+{
+  "source": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+  "source_sha256": "bd602d9456dd34e0905d0e7f54cc204cf64fc9f07e84c12c406f6121d0631ddc",
+  "audit_usd_version": [
+    0,
+    25,
+    11
+  ],
+  "audit_sdk_version": "6.0.0-rc.59+release.41464.5f2772bc.gl",
+  "target_isaac_sim": "6.0.0",
+  "layers": [
+    "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+    "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+  ],
+  "assets": [
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "authored": "../isaacsimassets-dev/assets/robot/bobac.usd",
+      "resolved": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "status": "present"
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "authored": "OmniPBR.mdl",
+      "status": "resolver_required",
+      "resolved": "OmniPBR.mdl"
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "authored": "../kaya/kaya.usd",
+      "status": "inactive_not_required",
+      "resolved": "../kaya/kaya.usd"
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "authored": "../mobot.usd",
+      "status": "inactive_not_required",
+      "resolved": "../mobot.usd"
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "authored": "OmniPBR.mdl",
+      "status": "resolver_required",
+      "resolved": "OmniPBR.mdl"
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "authored": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/Environments/Grid/default_environment.usd",
+      "status": "remote_unverified",
+      "resolved": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/Environments/Grid/default_environment.usd"
+    }
+  ],
+  "nodes": [
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/on_playback_tick",
+      "type": "omni.graph.action.OnPlaybackTick",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/make_3_vector",
+      "type": "omni.graph.nodes.MakeVector3",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/usd_setup_holonomic_robot",
+      "type": "isaacsim.robot.wheeled_robots.HolonomicRobotUsdSetup",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/articulation_controller",
+      "type": "isaacsim.core.nodes.IsaacArticulationController",
+      "inputs": {
+        "inputs:robotPath": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link"
+      }
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/holonomic_controller",
+      "type": "isaacsim.robot.wheeled_robots.HolonomicController",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/W",
+      "type": "omni.graph.nodes.ReadKeyboardState",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/A",
+      "type": "omni.graph.nodes.ReadKeyboardState",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/S",
+      "type": "omni.graph.nodes.ReadKeyboardState",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/D",
+      "type": "omni.graph.nodes.ReadKeyboardState",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/ToDoubleW",
+      "type": "omni.graph.nodes.ToDouble",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/ToDoubleA",
+      "type": "omni.graph.nodes.ToDouble",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/ToDoubleS",
+      "type": "omni.graph.nodes.ToDouble",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/ToDoubleD",
+      "type": "omni.graph.nodes.ToDouble",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/NegateLinear",
+      "type": "omni.graph.nodes.Multiply",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/NegateAngular",
+      "type": "omni.graph.nodes.Multiply",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/AddLinear",
+      "type": "omni.graph.nodes.Add",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/AddAngular",
+      "type": "omni.graph.nodes.Add",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/SpeedLinear",
+      "type": "omni.graph.nodes.Multiply",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/ScaleLinear",
+      "type": "omni.graph.nodes.ConstantDouble",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/SpeedAngular",
+      "type": "omni.graph.nodes.Multiply",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/ScaleAngular",
+      "type": "omni.graph.nodes.ConstantDouble",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/NegOne",
+      "type": "omni.graph.nodes.ConstantInt",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/Q",
+      "type": "omni.graph.nodes.ReadKeyboardState",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/E",
+      "type": "omni.graph.nodes.ReadKeyboardState",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/ToDoubleQ",
+      "type": "omni.graph.nodes.ToDouble",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/ToDoubleE",
+      "type": "omni.graph.nodes.ToDouble",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/NegateStrafe",
+      "type": "omni.graph.nodes.Multiply",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/AddStrafe",
+      "type": "omni.graph.nodes.Add",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/SpeedStrafe",
+      "type": "omni.graph.nodes.Multiply",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+      "path": "/Graphs/kaya_holonomic_controller/ScaleStrafe",
+      "type": "omni.graph.nodes.ConstantDouble",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/Hand_Controller/ArticulationController",
+      "type": "isaacsim.core.nodes.IsaacArticulationController",
+      "inputs": {
+        "inputs:robotPath": "None"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/Hand_Controller/Context",
+      "type": "isaacsim.ros2.bridge.ROS2Context",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/Hand_Controller/OnPlaybackTick",
+      "type": "omni.graph.action.OnPlaybackTick",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/Hand_Controller/SubscriberJointState",
+      "type": "isaacsim.ros2.bridge.ROS2SubscribeJointState",
+      "inputs": {
+        "inputs:topicName": "/hand_command"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_Camera/OnPlaybackTick",
+      "type": "omni.graph.action.OnPlaybackTick",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_Camera/CameraInfoPublish",
+      "type": "isaacsim.ros2.bridge.ROS2CameraInfoHelper",
+      "inputs": {
+        "inputs:frameId": "arm_camera",
+        "inputs:frameSkipCount": "None",
+        "inputs:topicName": "camera_info"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_Camera/RenderProduct",
+      "type": "isaacsim.core.nodes.IsaacCreateRenderProduct",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_Camera/RunOnce",
+      "type": "isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_Camera/Context",
+      "type": "isaacsim.ros2.bridge.ROS2Context",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_Camera/RGBPublish",
+      "type": "isaacsim.ros2.bridge.ROS2CameraHelper",
+      "inputs": {
+        "inputs:frameId": "arm_camera",
+        "inputs:frameSkipCount": "None",
+        "inputs:topicName": "/rgb"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_Camera/DepthPublish",
+      "type": "isaacsim.ros2.bridge.ROS2CameraHelper",
+      "inputs": {
+        "inputs:frameId": "arm_camera",
+        "inputs:frameSkipCount": "None",
+        "inputs:topicName": "/depth"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_Clock/ros2_context",
+      "type": "isaacsim.ros2.bridge.ROS2Context",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_Clock/isaac_read_simulation_time",
+      "type": "isaacsim.core.nodes.IsaacReadSimulationTime",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_Clock/ros2_publish_clock",
+      "type": "isaacsim.ros2.bridge.ROS2PublishClock",
+      "inputs": {
+        "inputs:topicName": "/clock"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_Clock/on_playback_tick",
+      "type": "omni.graph.action.OnPlaybackTick",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_JointStates/OnPlaybackTick",
+      "type": "omni.graph.action.OnPlaybackTick",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_JointStates/Context",
+      "type": "isaacsim.ros2.bridge.ROS2Context",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_JointStates/ReadSimTime",
+      "type": "isaacsim.core.nodes.IsaacReadSimulationTime",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_JointStates/PublisherJointState",
+      "type": "isaacsim.ros2.bridge.ROS2PublishJointState",
+      "inputs": {
+        "inputs:topicName": "/joint_states"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROS_JointStates/PublisherJointState_01",
+      "type": "isaacsim.ros2.bridge.ROS2PublishJointState",
+      "inputs": {
+        "inputs:topicName": "/joint_states"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/HolonomicController/usd_setup_holonomic_robot",
+      "type": "isaacsim.robot.wheeled_robots.HolonomicRobotUsdSetup",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/HolonomicController/holonomic_controller",
+      "type": "isaacsim.robot.wheeled_robots.HolonomicController",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/HolonomicController/articulation_controller",
+      "type": "isaacsim.core.nodes.IsaacArticulationController",
+      "inputs": {
+        "inputs:robotPath": "None"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/HolonomicController/ros2_subscribe_twist",
+      "type": "isaacsim.ros2.bridge.ROS2SubscribeTwist",
+      "inputs": {
+        "inputs:topicName": "None"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/HolonomicController/break_3_vector",
+      "type": "omni.graph.nodes.BreakVector3",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/HolonomicController/break_3_vector_01",
+      "type": "omni.graph.nodes.BreakVector3",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/HolonomicController/make_3_vector",
+      "type": "omni.graph.nodes.MakeVector3",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/HolonomicController/on_playback_tick",
+      "type": "omni.graph.action.OnPlaybackTick",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/HolonomicController/ros2_context",
+      "type": "isaacsim.ros2.bridge.ROS2Context",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/transform_tree_robot/ros2_context",
+      "type": "isaacsim.ros2.bridge.ROS2Context",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/transform_tree_robot/ros2_qos_profile",
+      "type": "isaacsim.ros2.bridge.ROS2QoSProfile",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/transform_tree_robot/isaac_read_simulation_time",
+      "type": "isaacsim.core.nodes.IsaacReadSimulationTime",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/transform_tree_robot/ros2_publish_transform_tree_to_camera",
+      "type": "isaacsim.ros2.bridge.ROS2PublishTransformTree",
+      "inputs": {
+        "inputs:topicName": "tf_static"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/transform_tree_robot/ros2_publish_transform_tree_to_robot_01",
+      "type": "isaacsim.ros2.bridge.ROS2PublishTransformTree",
+      "inputs": {
+        "inputs:topicName": "tf_static"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/transform_tree_robot/ros2_publish_transform_tree_to_robot_02",
+      "type": "isaacsim.ros2.bridge.ROS2PublishTransformTree",
+      "inputs": {
+        "inputs:topicName": "tf"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/transform_tree_robot/ros2_qos_profile_01",
+      "type": "isaacsim.ros2.bridge.ROS2QoSProfile",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/transform_tree_robot/on_playback_tick",
+      "type": "omni.graph.action.OnPlaybackTick",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/transform_tree_robot/isaac_simulation_gate",
+      "type": "isaacsim.core.nodes.IsaacSimulationGate",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/Context",
+      "type": "isaacsim.ros2.bridge.ROS2Context",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/ReadSimTime",
+      "type": "isaacsim.core.nodes.IsaacReadSimulationTime",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/TFOdom2Robot",
+      "type": "isaacsim.ros2.bridge.ROS2PublishRawTransformTree",
+      "inputs": {
+        "inputs:topicName": "tf"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/ComputeOdometry",
+      "type": "isaacsim.core.nodes.IsaacComputeOdometry",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/PublisherOdometry",
+      "type": "isaacsim.ros2.bridge.ROS2PublishOdometry",
+      "inputs": {
+        "inputs:topicName": "odom"
+      }
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/on_playback_tick",
+      "type": "omni.graph.action.OnPlaybackTick",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/isaac_simulation_gate",
+      "type": "isaacsim.core.nodes.IsaacSimulationGate",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/Ros_Lidar/on_playback_tick",
+      "type": "omni.graph.action.OnPlaybackTick",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/Ros_Lidar/ros2_context",
+      "type": "isaacsim.ros2.bridge.ROS2Context",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/Ros_Lidar/isaac_read_lidar_beams_node",
+      "type": "isaacsim.sensors.physx.IsaacReadLidarBeams",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/Ros_Lidar/isaac_read_simulation_time",
+      "type": "isaacsim.core.nodes.IsaacReadSimulationTime",
+      "inputs": {}
+    },
+    {
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd",
+      "path": "/Root/bobac3_serverbot/Graph/Ros_Lidar/ros2_publish_laser_scan",
+      "type": "isaacsim.ros2.bridge.ROS2PublishLaserScan",
+      "inputs": {
+        "inputs:frameId": "fuse_lidar_link",
+        "inputs:topicName": "laser_scan_fuse"
+      }
+    }
+  ],
+  "sensor_candidates": [
+    {
+      "path": "/World/bobac/bobac3_serverbot/Graph/Ros_Lidar/ros2_publish_laser_scan",
+      "type": "",
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda"
+    },
+    {
+      "path": "/World/bobac/bobac3_serverbot/Graph/Ros_Lidar/isaac_read_simulation_time",
+      "type": "",
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda"
+    },
+    {
+      "path": "/World/bobac/bobac3_serverbot/Graph/Ros_Lidar",
+      "type": "",
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda"
+    },
+    {
+      "path": "/World/bobac/bobac3_serverbot/Graph/ROS_JointStates/PublisherJointState_01",
+      "type": "",
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda"
+    },
+    {
+      "path": "/World/bobac/bobac3_serverbot/Graph/ROS_JointStates/PublisherJointState",
+      "type": "",
+      "layer": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/front_lidar_link/visual/front_lidar_link_cspc",
+      "type": "Xform",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/front_lidar_link/visual",
+      "type": "Scope",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/front_lidar_link",
+      "type": "Xform",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/rear_lidar_link/visual/rear_lidar_link_cspc",
+      "type": "Xform",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/rear_lidar_link/visual",
+      "type": "Scope",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/rear_lidar_link",
+      "type": "Xform",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/fuse_lidar_link/Lidar",
+      "type": "Lidar",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/fuse_lidar_link",
+      "type": "Xform",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/Camera",
+      "type": "Camera",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_6/arm_camera/arm_Camera",
+      "type": "Camera",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/Graph/Ros_Lidar/on_playback_tick",
+      "type": "OmniGraphNode",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/Graph/Ros_Lidar/ros2_context",
+      "type": "OmniGraphNode",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/Graph/Ros_Lidar/isaac_read_lidar_beams_node",
+      "type": "OmniGraphNode",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/Graph/Ros_Lidar/isaac_read_simulation_time",
+      "type": "OmniGraphNode",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/Graph/Ros_Lidar/ros2_publish_laser_scan",
+      "type": "OmniGraphNode",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    },
+    {
+      "path": "/Root/bobac3_serverbot/Graph/Ros_Lidar",
+      "type": "OmniGraph",
+      "layer": "/workspace/course/isaacsimassets-dev/assets/robot/bobac.usd"
+    }
+  ],
+  "inherited_graph_overrides": [
+    "/World/bobac/bobac3_serverbot/Graph/Ros_Lidar/ros2_publish_laser_scan",
+    "/World/bobac/bobac3_serverbot/Graph/Ros_Lidar/isaac_read_simulation_time",
+    "/World/bobac/bobac3_serverbot/Graph/transform_tree_robot/isaac_read_simulation_time",
+    "/World/bobac/bobac3_serverbot/Graph/transform_tree_robot/ros2_publish_transform_tree_to_robot_01",
+    "/World/bobac/bobac3_serverbot/Graph/transform_tree_robot/ros2_publish_transform_tree_to_camera",
+    "/World/bobac/bobac3_serverbot/Graph/transform_tree_robot/ros2_publish_transform_tree_to_robot_02",
+    "/World/bobac/bobac3_serverbot/Graph/ROS_Clock/isaac_read_simulation_time",
+    "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/ReadSimTime",
+    "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/ComputeOdometry",
+    "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/PublisherOdometry",
+    "/World/bobac/bobac3_serverbot/Graph/ROS_JointStates/ReadSimTime",
+    "/World/bobac/bobac3_serverbot/Graph/ROS_JointStates/PublisherJointState_01",
+    "/World/bobac/bobac3_serverbot/Graph/ROS_JointStates/PublisherJointState",
+    "/World/bobac/bobac3_serverbot/Graph/ROS_Camera/RGBPublish",
+    "/World/bobac/bobac3_serverbot/Graph/ROS_Camera/DepthPublish",
+    "/World/bobac/bobac3_serverbot/Graph/ROS_Camera/RenderProduct"
+  ],
+  "errors": [],
+  "missing_assets": [],
+  "node_type_counts": {
+    "omni.graph.action.OnPlaybackTick": 9,
+    "omni.graph.nodes.MakeVector3": 2,
+    "isaacsim.robot.wheeled_robots.HolonomicRobotUsdSetup": 2,
+    "isaacsim.core.nodes.IsaacArticulationController": 3,
+    "isaacsim.robot.wheeled_robots.HolonomicController": 2,
+    "omni.graph.nodes.ReadKeyboardState": 6,
+    "omni.graph.nodes.ToDouble": 6,
+    "omni.graph.nodes.Multiply": 6,
+    "omni.graph.nodes.Add": 3,
+    "omni.graph.nodes.ConstantDouble": 3,
+    "omni.graph.nodes.ConstantInt": 1,
+    "isaacsim.ros2.bridge.ROS2Context": 8,
+    "isaacsim.ros2.bridge.ROS2SubscribeJointState": 1,
+    "isaacsim.ros2.bridge.ROS2CameraInfoHelper": 1,
+    "isaacsim.core.nodes.IsaacCreateRenderProduct": 1,
+    "isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame": 1,
+    "isaacsim.ros2.bridge.ROS2CameraHelper": 2,
+    "isaacsim.core.nodes.IsaacReadSimulationTime": 5,
+    "isaacsim.ros2.bridge.ROS2PublishClock": 1,
+    "isaacsim.ros2.bridge.ROS2PublishJointState": 2,
+    "isaacsim.ros2.bridge.ROS2SubscribeTwist": 1,
+    "omni.graph.nodes.BreakVector3": 2,
+    "isaacsim.ros2.bridge.ROS2QoSProfile": 2,
+    "isaacsim.ros2.bridge.ROS2PublishTransformTree": 3,
+    "isaacsim.core.nodes.IsaacSimulationGate": 2,
+    "isaacsim.ros2.bridge.ROS2PublishRawTransformTree": 1,
+    "isaacsim.core.nodes.IsaacComputeOdometry": 1,
+    "isaacsim.ros2.bridge.ROS2PublishOdometry": 1,
+    "isaacsim.sensors.physx.IsaacReadLidarBeams": 1,
+    "isaacsim.ros2.bridge.ROS2PublishLaserScan": 1
+  },
+  "status": "static_audit_passed_runtime_pending",
+  "original_source": {
+    "source": "/workspace/course/test_scene_bobac.usd",
+    "source_sha256": "113f0f04cda057921285eb6cc27944f5e2c75e20d2772921e0854dec300fe19a",
+    "missing_assets_before_relink": [
+      {
+        "layer": "/workspace/course/test_scene_bobac.usd",
+        "authored": "../../14f88a82bf85b3c28717ab94d63e0d61.jpeg",
+        "resolved": "/14f88a82bf85b3c28717ab94d63e0d61.jpeg",
+        "status": "missing"
+      },
+      {
+        "layer": "/workspace/course/test_scene_bobac.usd",
+        "authored": "/home/nvidia/桌面/isaacsimassets-dev/assets/robot/bobac.usd",
+        "resolved": "/home/nvidia/桌面/isaacsimassets-dev/assets/robot/bobac.usd",
+        "status": "missing"
+      }
+    ]
+  },
+  "draft": "/workspace/course/scenes/test_scene_bobac_6.0.draft.usda",
+  "draft_is_validated_scene": false,
+  "cosmetic_fallback": "Missing dashed-line JPEG replaced by a light solid material; geometry preserved"
+}

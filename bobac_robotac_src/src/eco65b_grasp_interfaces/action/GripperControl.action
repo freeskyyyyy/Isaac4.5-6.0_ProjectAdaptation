@@ -1,0 +1,18 @@
+# GripperControl.action
+# 夹爪控制 Action
+
+# Goal
+string command          # "open", "close", "position"
+float32 position        # 0-100 的百分比位置 (0=完全打开, 100=完全关闭)
+                        # 当 command="position" 时使用此字段
+float32 speed           # 可选：夹爪移动速度 (0-100)，默认50
+bool wait_for_completion  # 是否等待夹爪到达目标位置，默认true
+---
+# Result
+bool success
+string message
+float32 final_position  # 最终位置 (0-100)
+---
+# Feedback
+string state            # "MOVING", "REACHED"
+float32 current_position  # 当前位置 (0-100)

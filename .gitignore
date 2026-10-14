@@ -1,0 +1,38 @@
+.runtime/
+__pycache__/
+*.pyc
+build/
+install/
+log/
+.venv/
+
+# Local simulator assets and model weights are restored separately (docs/LOCAL_ASSETS.md).
+/isaacsimassets-dev/
+*.zip
+*.tar
+*.tar.gz
+*.pt
+*.pth
+*.onnx
+*.engine
+/bobac_robotac_src/src/yoloe_grasp/weights/*.ts
+
+# Machine-local credentials and configuration.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+.idea/
+.vscode/
+
+# Keep selected audit summaries; raw runtime output stays on this machine.
+/reports/*
+!/reports/README.md
+!/reports/compatibility-check.json
+!/reports/host-jazzy-build.json
+!/reports/assets-source.json
+!/reports/scene-audit.json
+!/reports/readiness-negative.json
+!/reports/archive/

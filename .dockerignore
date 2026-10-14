@@ -1,0 +1,11 @@
+.runtime
+reports
+**/__pycache__
+**/*.pyc
+**/build
+**/install
+**/log
+.git
+isaacsimassets-dev
+scenes
+test_scene_bobac.usd

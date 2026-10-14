@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>course_bringup</name>
+  <version>0.1.0</version>
+  <description>Isaac Sim 6.0 course readiness checks and coordinated ROS startup.</description>
+  <maintainer email="course@example.invalid">Course Maintainer</maintainer>
+  <license>Apache-2.0</license>
+  <buildtool_depend>ament_python</buildtool_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>rosgraph_msgs</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>bobac3_navigation</exec_depend>
+  <exec_depend>eco65b_moveit_config</exec_depend>
+  <exec_depend>eco65b_moveit_grasp</exec_depend>
+  <exec_depend>grasp_control</exec_depend>
+  <exec_depend>yoloe_grasp</exec_depend>
+  <export><build_type>ament_python</build_type></export>
+</package>

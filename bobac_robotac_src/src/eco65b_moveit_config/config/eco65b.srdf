@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot name="ECO65-B">
+  <group name="eco65_arm">
+    <chain base_link="base_link_arm" tip_link="link_6" />
+  </group>
+
+  <group_state name="home" group="eco65_arm">
+    <joint name="joint_1" value="0" />
+    <joint name="joint_2" value="0" />
+    <joint name="joint_3" value="0" />
+    <joint name="joint_4" value="0" />
+    <joint name="joint_5" value="0" />
+    <joint name="joint_6" value="0" />
+  </group_state>
+
+  <disable_collisions link1="base_link_arm" link2="link_1" reason="Adjacent"/>
+  <disable_collisions link1="link_5" link2="link_6" reason="Adjacent"/>
+
+  <!-- Minimal disabled collisions can be added later if needed -->
+</robot>

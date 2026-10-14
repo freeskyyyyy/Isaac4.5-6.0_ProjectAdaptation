@@ -1,0 +1,7 @@
+{
+  "status": "passed",
+  "environment": "official Isaac Sim 6.0.0 ARM64 container on DGX Spark",
+  "driver": "580.82.09",
+  "evidence": "reports/compatibility-check.log",
+  "desktop_gui": "not yet validated"
+}

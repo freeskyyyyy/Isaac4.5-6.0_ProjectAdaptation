@@ -1,0 +1,8 @@
+# CUDA packages come exclusively from the official cu130 wheel index.
+torch==2.9.0
+torchvision==0.24.0
+ultralytics==8.4.26
+numpy==1.26.4
+opencv-python==4.11.0.86
+open_clip_torch==2.32.0
+PyYAML==6.0.2

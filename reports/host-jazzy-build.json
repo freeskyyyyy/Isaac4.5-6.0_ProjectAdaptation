@@ -1,0 +1,7 @@
+{
+  "platform": "DGX Spark ARM64",
+  "scope": "host preflight only; container execution pending",
+  "course_packages": 9,
+  "status": "passed",
+  "build_log": "reports/host-jazzy-build.log"
+}

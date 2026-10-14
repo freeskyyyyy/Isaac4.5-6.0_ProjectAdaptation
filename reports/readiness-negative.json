@@ -1,0 +1,28 @@
+{
+  "status": "failed",
+  "errors": [
+    "No data: /clock; check Play, graph, ROS_DOMAIN_ID and QoS",
+    "No data: /odom; check Play, graph, ROS_DOMAIN_ID and QoS",
+    "No data: /laser_scan_fuse; check Play, graph, ROS_DOMAIN_ID and QoS",
+    "No data: /joint_states; check Play, graph, ROS_DOMAIN_ID and QoS",
+    "No data: /arm/joint_states; check Play, graph, ROS_DOMAIN_ID and QoS",
+    "No data: /arm_camera/rgb; check Play, graph, ROS_DOMAIN_ID and QoS",
+    "No data: /arm_camera/depth; check Play, graph, ROS_DOMAIN_ID and QoS",
+    "No data: /arm_camera/camera_info; check Play, graph, ROS_DOMAIN_ID and QoS",
+    "/clock is not advancing; press Play",
+    "Missing TF: odom <- base_link",
+    "Missing TF: base_link_arm <- arm_Camera",
+    "Missing TF: base_link <- fuse_lidar_link"
+  ],
+  "messages_received": {
+    "/clock": 0,
+    "/odom": 0,
+    "/laser_scan_fuse": 0,
+    "/joint_states": 0,
+    "/arm/joint_states": 0,
+    "/arm_camera/rgb": 0,
+    "/arm_camera/depth": 0,
+    "/arm_camera/camera_info": 0
+  },
+  "topics": {}
+}

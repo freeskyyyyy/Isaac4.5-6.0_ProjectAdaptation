@@ -1,0 +1,8 @@
+/local_costmap/local_costmap:
+  ros__parameters:
+    qos_overrides:
+      /laser_scan_fuse:
+        subscription:
+          reliability: reliable
+          history: keep_last
+          depth: 10

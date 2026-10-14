@@ -1,0 +1,7 @@
+planner_configs:
+  RRTConnectkConfigDefault:
+    type: geometric::RRTConnect
+    range: 0.0
+eco65_arm:
+  planner_configs:
+  - RRTConnectkConfigDefault
