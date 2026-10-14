@@ -1,6 +1,6 @@
 # DGX Spark 课程迁移待办清单
 
-更新时间：2026-10-14 16:28（Asia/Shanghai）
+更新时间：2026-10-14 16:30（Asia/Shanghai）
 
 目标：只在 DGX Spark 的新课程容器内运行 Isaac Sim 6.0、ROS 2 Jazzy、Nav2、MoveIt2 和 YOLOE，跑通导航、视觉定位、抓取、提升的完整课程。
 
@@ -49,7 +49,7 @@
 - [x] 初始化本地 Git 仓库与 `main` 分支，整理源码、容器配置、迁移草稿和精选审计记录；原始首个提交为 `3d6c313`。
 - [x] 添加根目录 README、本地资产恢复说明和 578 个本地文件的 SHA-256 清单；校验全部通过。排除 SDK、资产、模型、缓存、凭据和原始运行日志，保留在本机。
 - [x] 暂存文件检查通过：初始 115 个文件约 3.28 MiB，Python AST、JSON、Shell 语法及 Compose 解析通过，未发现匹配的凭据模式。
-- [ ] 在 `freeskyyyyy` 下新建公开仓库 `Isaac4.5-6.0_ProjectAdaptation`，推送并核对远端提交。用户已明确选择公开；GitHub CLI 设备登录成功，账号已核对为 `freeskyyyyy`，正在创建和上传。
+- [x] 在 `freeskyyyyy` 下新建 [公开仓库 Isaac4.5-6.0_ProjectAdaptation](https://github.com/freeskyyyyy/Isaac4.5-6.0_ProjectAdaptation)，完成 `main` 分支上传并确认 GitHub 返回 `visibility=PUBLIC`、`isPrivate=false`。本地 `origin` 已关联远端，`main` 已跟踪 `origin/main`。源码、配置、文档、小型场景和精选审计记录已上传；大型资产、模型、SDK、缓存和凭据留在本机。
 
 ## 更新记录
 
@@ -57,3 +57,4 @@
 - 2026-10-14 16:10：按用户提出的文档重合问题，将独有验证范围和待解决问题并入本文件，旧进度报告归档；今后只维护本文件中的进度。镜像仍在 ROS 等依赖下载阶段，完成项未新增。
 - 2026-10-14 16:18：完成 GitHub 上传的本地整理、首个提交和资源清单校验；远端创建与推送等待设备登录。课程镜像依赖下载继续进行。
 - 2026-10-14 16:28：GitHub CLI 登录成功，用户要求将新仓库设为公开，开始创建与推送。
+- 2026-10-14 16:30：公开 GitHub 仓库创建成功，`main` 首次推送成功，可见性核对为 `PUBLIC`；更新本清单记录上传完成。课程容器构建仍在依赖下载阶段。
