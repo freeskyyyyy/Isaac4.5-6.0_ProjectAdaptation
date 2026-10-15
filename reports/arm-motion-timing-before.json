@@ -1,0 +1,64 @@
+{
+  "status": "failed",
+  "scope": "real MoveIt small arm Action trajectory and measured FK; not grasp acceptance",
+  "checks": [
+    {
+      "plan_only": true,
+      "status": 4,
+      "success": true,
+      "message": "Planned (plan_only)",
+      "command_messages": 0,
+      "wall_seconds": 0.36982155599980615
+    },
+    {
+      "plan_only": false,
+      "status": 4,
+      "success": true,
+      "message": "Succeeded",
+      "command_messages": 3,
+      "wall_seconds": 0.33335653000176535,
+      "command_stamp_span_sim_seconds": 0.0,
+      "position_error_m": 0.0,
+      "orientation_error_rad": 0.0,
+      "actual_joints": {
+        "joint_1": 0.05,
+        "joint_2": 0.0,
+        "joint_3": 0.0,
+        "joint_4": 0.0,
+        "joint_5": 0.0,
+        "joint_6": 0.0
+      }
+    },
+    {
+      "plan_only": false,
+      "status": 4,
+      "success": true,
+      "message": "Succeeded",
+      "command_messages": 3,
+      "wall_seconds": 0.36532563700166065,
+      "command_stamp_span_sim_seconds": 0.0,
+      "position_error_m": 0.0,
+      "orientation_error_rad": 0.0,
+      "actual_joints": {
+        "joint_1": 0.0,
+        "joint_2": 0.0,
+        "joint_3": 0.0,
+        "joint_4": 0.0,
+        "joint_5": 0.0,
+        "joint_6": 0.0
+      }
+    }
+  ],
+  "errors": [
+    "Nonzero arm trajectory published with zero/near-zero simulation duration",
+    "Nonzero arm trajectory published with zero/near-zero simulation duration"
+  ],
+  "baseline_joints": {
+    "joint_1": 0.0,
+    "joint_2": 0.0,
+    "joint_3": 0.0,
+    "joint_4": 0.0,
+    "joint_5": 0.0,
+    "joint_6": 0.0
+  }
+}

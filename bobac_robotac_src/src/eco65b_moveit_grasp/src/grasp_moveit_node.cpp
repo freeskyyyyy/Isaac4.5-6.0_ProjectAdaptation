@@ -640,7 +640,44 @@ private:
     moveit::planning_interface::MoveGroupInterface::Plan plan;
     plan.trajectory = trajectory;
 
-    // Always publish the planned joint trajectory to IsaacSim via /hand_command.
+    // CartesianPath may return a full fraction even when time parameterization
+    // fails. Never execute a nonzero path whose timestamps have not advanced.
+    const auto &timed = plan.trajectory.joint_trajectory;
+    if (timed.joint_names.empty() || timed.points.empty()) {
+      message_out = "Empty planned joint trajectory";
+      error_code_out = -6;
+      return false;
+    }
+    for (size_t i = 0; i < timed.points.size(); ++i) {
+      const auto &point = timed.points[i];
+      const auto stamp = rclcpp::Duration(point.time_from_start).nanoseconds();
+      if (point.positions.size() != timed.joint_names.size() || stamp < 0) {
+        message_out = "Invalid trajectory timing or joint dimensions";
+        error_code_out = -6;
+        return false;
+      }
+      if (i > 0) {
+        const auto &previous = timed.points[i - 1];
+        const auto previous_stamp = rclcpp::Duration(previous.time_from_start).nanoseconds();
+        bool changed = false;
+        for (size_t j = 0; j < point.positions.size(); ++j) {
+          changed = changed || std::abs(point.positions[j] - previous.positions[j]) > 1e-9;
+        }
+        if (stamp < previous_stamp || (changed && stamp == previous_stamp)) {
+          message_out = "Invalid trajectory timing; check MoveIt joint acceleration limits";
+          error_code_out = -6;
+          return false;
+        }
+      }
+    }
+
+    if (plan_only) {
+      message_out = "Planned (plan_only)";
+      error_code_out = 0;
+      return true;
+    }
+
+    // Publish execution requests to IsaacSim via /hand_command.
     // IsaacSim subscriber expects JointState positions.
     if (!plan.trajectory.joint_trajectory.joint_names.empty() && !plan.trajectory.joint_trajectory.points.empty()) {
       const auto &jt = plan.trajectory.joint_trajectory;
@@ -709,12 +746,6 @@ private:
           (*goal_handle_opt)->publish_feedback(fb);
         }
       }
-    }
-
-    if (plan_only) {
-      message_out = "Planned (plan_only)";
-      error_code_out = 0;
-      return true;
     }
 
     message_out = "Succeeded";

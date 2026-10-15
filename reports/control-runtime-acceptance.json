@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "scope": "TODO12: real target-container communication and bounded base/arm/gripper controls; not full course",
+  "scene": "scenes/test_scene_bobac_6.0.usda",
+  "scene_sha256": "a859a876e4c1829ffe12b0258771ef2f6f0a095cf3a3a03ec37ec30d25b47686",
+  "loaded_scene_identical_bytes": "scenes/test_scene_bobac_6.0.drive-migrated.usda",
+  "original_preserved": true,
+  "runtime": "Isaac Sim 6.0.0-rc.59+release.41464.5f2772bc.gl / DGX Spark GB10 / ROS Jazzy / Cyclone DDS / domain44",
+  "evidence": [
+    "live-sensors-drive-migrated.json",
+    "readiness-controls-final.json",
+    "navigation-readiness-common-stack.json",
+    "base-control-saved-scene.json",
+    "joint-control-common-stack.json",
+    "arm-model-live.json",
+    "arm-motion-timing-before.json",
+    "arm-invalid-timing-before.json",
+    "arm-invalid-timing-after.json",
+    "arm-motion-timing-after.json",
+    "control-runtime-parameters.json",
+    "vision-action-common-stack.json",
+    "drive-control-diagnosis.json"
+  ],
+  "corrections": [
+    "Drive linear/yaw gains matched to physical rolling Jacobian",
+    "plan_only returns before publishing joint commands",
+    "Missing acceleration limits loaded as conservative software caps; invalid timing rejected before execution"
+  ],
+  "not_accepted": [
+    "Navigation goal/map-to-world alignment",
+    "Positive visual localization; occasional capture-time TF future extrapolation still needs bounded waiting",
+    "Physical grasp/lift or three repetitions",
+    "Container restart reproducibility",
+    "Graceful MoveIt shutdown: one prior SIGINT shutdown hung then exited -11 after launch escalation; functional restart passed"
+  ]
+}

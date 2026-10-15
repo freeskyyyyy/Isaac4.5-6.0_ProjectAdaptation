@@ -1,0 +1,97 @@
+{
+  "status": "passed",
+  "scope": "course drive sign/scale correction; not navigation or grasp acceptance",
+  "original_usd_sha256": "113f0f04cda057921285eb6cc27944f5e2c75e20d2772921e0854dec300fe19a",
+  "old_scene_sha256": "7057074044277cfa9f4d8d18725b8dd87282c618cea0afbb11ce3a7bc5556738",
+  "candidate_scene": "scenes/test_scene_bobac_6.0.drive-migrated.usda",
+  "candidate_sha256": "a859a876e4c1829ffe12b0258771ef2f6f0a095cf3a3a03ec37ec30d25b47686",
+  "root_cause": "Legacy gains map positive ROS body velocity to negative physical motion in the installed 6.0 controller. Its constraints sum wheel rolling velocities and yaw moments; the actual rolling Jacobian gives linearGain≈1.5 and angularGain≈-0.07412258. Default speed-limit numerical error was evaluated and did not explain the reversed response.",
+  "configuration": {
+    "previous": {
+      "linearGain": -1.25,
+      "angularGain": 1.0
+    },
+    "configured": {
+      "linearGain": 1.4999999999804507,
+      "angularGain": -0.07412258135655687
+    },
+    "constraint_product": [
+      [
+        1.500683876332223,
+        -1.3721199821037584e-07,
+        1.0943872245852234e-06
+      ],
+      [
+        -1.3721199821934793e-07,
+        1.4993161236286783,
+        -0.000167357370712134
+      ],
+      [
+        -1.094387224546677e-06,
+        0.00016735737071214667,
+        -0.07412258135655687
+      ]
+    ],
+    "rolling_jacobian": [
+      [
+        24.749735423496787,
+        14.275052717753818,
+        -4.493635295130664
+      ],
+      [
+        -24.74871022360665,
+        14.27682978766305,
+        -4.49367208585727
+      ],
+      [
+        -0.0010231688585398452,
+        -28.57142857142857,
+        -4.485797888666524
+      ]
+    ],
+    "wheel_names": [
+      "left_wheel_joint",
+      "right_wheel_joint",
+      "front_wheel_joint"
+    ]
+  },
+  "evidence": {
+    "before_full_chain": "reports/base-control-live.json",
+    "before_low_pulses": [
+      "reports/base-pulse-0005.json",
+      "reports/base-pulse-x-before.json"
+    ],
+    "installed_solver": "reports/drive-solver-body-model.json",
+    "candidate_pulses": [
+      "reports/base-pulse-yaw-candidate.json",
+      "reports/base-pulse-x-candidate.json"
+    ],
+    "candidate_full_chain": "reports/base-control-drive-candidate.json",
+    "fresh_migration_reopen": "reports/scene-migration-drive.json",
+    "fresh_sensor_streams": "reports/live-sensors-drive-migrated.json"
+  },
+  "candidate_full_chain": {
+    "status": "passed",
+    "scope": "small physical base rotation and velocity chain; no navigation goal",
+    "errors": [],
+    "initial_yaw": 0.0,
+    "initial_xy": [
+      -1.430511474609375e-05,
+      -2.181529998779297e-05
+    ],
+    "positive_yaw_delta": 0.04351545013098418,
+    "final_yaw_error": 0.0,
+    "odom_messages": 130,
+    "cmd_vel_messages": 59,
+    "positive_output": true,
+    "negative_output": true,
+    "final_command_z": 0.0
+  },
+  "limits": [
+    "Yaw tiny pulse signal close to solver/pose quantization; accepted directional control uses the larger bounded 0.04rad return test.",
+    "No navigation path goal, positive vision localization, grasp, three runs or container restart validated."
+  ],
+  "canonical_scene": "scenes/test_scene_bobac_6.0.usda",
+  "saved_scene_control": "reports/base-control-saved-scene.json",
+  "previous_scene_backup": "reports/scene-before-drive-accepted.usda"
+}

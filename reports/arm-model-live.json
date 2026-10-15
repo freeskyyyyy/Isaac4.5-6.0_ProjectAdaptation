@@ -1,0 +1,48 @@
+{
+  "scope": "real current joint FK versus Isaac capture-time TF; no motion",
+  "status": "passed",
+  "position_error_m": 9.412915991102902e-05,
+  "orientation_error_rad": 0.00016706957592472596,
+  "moveit_position": [
+    -0.0859995201966464,
+    0.020622240653887,
+    0.7725002162734593
+  ],
+  "isaac_position": [
+    -0.08608841816511678,
+    0.020651187007984392,
+    0.7724892819910474
+  ],
+  "moveit_quaternion_xyzw": [
+    -0.7071080798547036,
+    2.5973530076686933e-06,
+    3.7012782801047934e-17,
+    0.7071054825112364
+  ],
+  "isaac_quaternion_xyzw": [
+    -0.7071201844554814,
+    -4.219660523283286e-05,
+    -6.839885542392743e-05,
+    0.70709337309629
+  ],
+  "joint_names": [
+    "joint_1",
+    "joint_2",
+    "joint_3",
+    "joint_4",
+    "joint_5",
+    "joint_6"
+  ],
+  "joint_positions": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "stamp": {
+    "sec": 119,
+    "nanosec": 616668701
+  }
+}

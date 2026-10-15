@@ -12,10 +12,10 @@
 
 - 源代码位于 `bobac_robotac_src/src`，原始入口 `test_scene_bobac.usd` 保留；6.0 副本为 `scenes/test_scene_bobac_6.0.usda`。
 - 官方 ARM64 基础摘要固定为 `sha256:68735a60b6c15c85e0dd0098570c6d2cc79e928f2d068ce2790aa43284ac165d`；镜像内 SDK 实际版本为 `6.0.0-rc.59+release.41464.5f2772bc.gl`。
-- 步骤 09–11 已在目标容器取得证据：镜像及 9 个 ROS 包编译、桌面 SDK 挂载、GPU/视觉依赖、GUI、真实场景与传感器、采样 TF 以及暂停/停止重播通过。精选验收摘要为 `reports/scene-runtime-acceptance.json`。
+- 步骤 09–12 已在目标容器取得证据：镜像及 9 个 ROS 包编译、桌面 SDK 挂载、GPU/视觉依赖、GUI、真实场景与传感器、采样 TF 以及暂停/停止重播通过。精选验收摘要为 `reports/scene-runtime-acceptance.json`。
 - 活跃资产已补齐；停用 mobot/Kaya 不计为活跃依赖。虚线 JPEG 在副本采用浅色替代；原始 USD 哈希不变。
 - 当前驱动 `580.82.09` 已通过实际兼容性和运行检查，无证据要求更换驱动。
-- 图像跨进程传输使用与真实发布端一致的 RELIABLE 订阅；BEST_EFFORT 在小接收缓冲下严重丢包。视觉模块配置尚待 B 交接；导航目标、机械臂/夹爪控制、完整抓取及三次/重启复现尚未验收。
+- 图像跨进程传输使用 RELIABLE；B 的三路QoS更新已安装并真实验证。底盘、机械臂/夹爪有界控制及有时序 MoveIt Action 通过；正向视觉定位、导航目标、完整抓取及三次/重启复现尚未验收。
 
 ## 实施阶段
 
@@ -73,8 +73,8 @@
 
 ## 后续处理顺序
 
-1. 接收 B 的视觉订阅可靠性配置，重编译并验收真实相机/TF/Action。
-2. 完成机械臂仅规划无命令输出的回归和修复，再验证机械臂与夹爪实际反馈。
+1. 继续协调 B 的采样TF有限等待，验收正向定位；三路可靠性与Action调度诊断已通过。
+2. 有界机械臂/夹爪及有效时序已通过，继续验证抓取所需姿态、偏移与真实物体接触。
 3. 核验 Nav2 地图与仿真初始姿态，先通过 C 的 navigation_readiness，再执行真实目标。
 4. 完成完整抓取提升后，才开始三次连续与容器重启复现的计数。详细状态与证据见 TODO。
 
@@ -85,3 +85,5 @@
 - [ROS 2 OmniGraph migration](https://docs.isaacsim.omniverse.nvidia.com/latest/migration_guides/isaac_sim_6_0/ros2_omnigraph_migration.html)
 - [ROS 2 sensor graph migration](https://docs.isaacsim.omniverse.nvidia.com/latest/migration_guides/isaac_sim_6_0/ros2_sensor_graph_migration.html)
 - [Isaac Sim 6.0 system requirements](https://docs.isaacsim.omniverse.nvidia.com/6.0.0/installation/requirements.html)
+
+- [MoveIt 官方关节限制配置](https://moveit.picknik.ai/main/doc/how_to_guides/moveit_configuration/moveit_configuration_tutorial.html)：本课程通过 robot_description_planning 加载六轴软件规划约束，实际配置以目标 Jazzy 加载器和运行参数查询为准。

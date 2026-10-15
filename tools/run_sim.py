@@ -63,6 +63,10 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--scene', type=Path, required=True)
     parser.add_argument('--headless', action='store_true')
+    parser.add_argument('--drive-audit', type=Path,
+                        help='Evaluate installed drive solver on actual USD geometry without motion')
+    parser.add_argument('--configure-drive-copy', type=Path,
+                        help='Configure chassis gains and export a separate candidate scene before playing')
     parser.add_argument('--diagnostics', type=Path,
                         help='Write periodic camera/render graph diagnostics while playing')
     args = parser.parse_args()
@@ -94,6 +98,18 @@ def main():
             raise RuntimeError('Cannot open migrated scene')
         for _ in range(10):
             app.update()
+        if args.drive_audit:
+            from drive_audit import audit_drive
+            audit_drive(args.drive_audit)
+        if args.configure_drive_copy:
+            if args.configure_drive_copy.resolve() == args.scene.resolve():
+                raise RuntimeError('Drive diagnostic must preserve its input scene')
+            from drive_audit import configure_drive
+            configuration = configure_drive(omni.usd.get_context().get_stage())
+            args.configure_drive_copy.parent.mkdir(parents=True, exist_ok=True)
+            omni.usd.get_context().get_stage().GetRootLayer().Export(str(args.configure_drive_copy))
+            args.configure_drive_copy.with_suffix('.drive.json').write_text(json.dumps(configuration, indent=2)+'\n')
+            print('Drive candidate written: '+str(args.configure_drive_copy), flush=True)
         # Match the working NVIDIA periodic-camera reference initialization.
         # PhysX/Lidar use CPU; RTX rendering and YOLOE still use the GPU.
         from isaacsim.core.simulation_manager import SimulationManager
@@ -115,8 +131,17 @@ def main():
                     capture_diagnostics(args.diagnostics)
                 except Exception as exc:
                     print(f'Camera diagnostic snapshot failed: {exc}', flush=True)
+    except Exception:
+        # Fast Kit shutdown can terminate Python before its normal uncaught
+        # exception handler runs. Flush the real failure before closing Kit.
+        import traceback
+        traceback.print_exc()
+        sys.stderr.flush()
+        raise
     finally:
-        app.close()
+        # This SDK's fast shutdown exits immediately; preserve failure status.
+        error_type = sys.exc_info()[0]
+        app.close(exit_code=1 if error_type not in (None, KeyboardInterrupt) else 0)
 
 
 if __name__ == '__main__':

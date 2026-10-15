@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "errors": [],
+  "messages_received": {
+    "/clock": 301,
+    "/odom": 302,
+    "/laser_scan_fuse": 100
+  },
+  "lifecycle": {
+    "map_server": "active",
+    "amcl": "active",
+    "controller_server": "active",
+    "smoother_server": "active",
+    "planner_server": "active",
+    "behavior_server": "active",
+    "bt_navigator": "active",
+    "waypoint_follower": "active",
+    "velocity_smoother": "active"
+  },
+  "use_sim_time": {
+    "map_server": true,
+    "amcl": true,
+    "controller_server": true,
+    "smoother_server": true,
+    "planner_server": true,
+    "behavior_server": true,
+    "bt_navigator": true,
+    "waypoint_follower": true,
+    "velocity_smoother": true
+  },
+  "domain": "44",
+  "rmw": "rmw_cyclonedds_cpp",
+  "scan_topic": "/laser_scan_fuse"
+}

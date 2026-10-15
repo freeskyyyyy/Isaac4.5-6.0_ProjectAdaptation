@@ -22,6 +22,8 @@ from eco65b_grasp_interfaces.action import GraspToPoint
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--report', type=Path, required=True)
+    parser.add_argument('--target-z-offset', type=float, default=0.0,
+                        help='Metres relative to current FK; zero tests a known reachable pose')
     opts = parser.parse_args()
     rclpy.init()
     node = rclpy.create_node('arm_plan_only_observer',
@@ -68,7 +70,11 @@ def main():
         goal.target.header = pose.header
         goal.target.point.x = pose.pose.position.x
         goal.target.point.y = pose.pose.position.y
-        goal.target.point.z = pose.pose.position.z + 0.005
+        goal.target.point.z = pose.pose.position.z + opts.target_z_offset
+        report.update(target_z_offset=opts.target_z_offset,
+                      target_position=[goal.target.point.x, goal.target.point.y, goal.target.point.z],
+                      source_joint_names=list(joints[-1].name),
+                      source_joint_positions=list(joints[-1].position))
         goal.ee_link = 'link_6'
         goal.finger_link = 'link_6'
         goal.plan_only = True

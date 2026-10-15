@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "scope": "real plan-only Action with command output remapped; no arm motion",
+  "errors": [],
+  "command_messages": 0,
+  "target_z_offset": 0.0,
+  "target_position": [
+    -0.0859995201966464,
+    0.020622240653887,
+    0.7725002162734593
+  ],
+  "source_joint_names": [
+    "joint_1",
+    "joint_2",
+    "joint_3",
+    "joint_4",
+    "joint_5",
+    "joint_6"
+  ],
+  "source_joint_positions": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "action_status": 4,
+  "action_success": true,
+  "action_message": "Planned (plan_only)"
+}

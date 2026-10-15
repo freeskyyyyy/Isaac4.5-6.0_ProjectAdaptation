@@ -1,0 +1,262 @@
+{
+  "status": "graph_migrated_runtime_acceptance_pending",
+  "changes": [
+    {
+      "physics_scene_kept": "/World/PhysicsScene",
+      "duplicate_physics_scenes_disabled": [
+        "/PhysicsScene"
+      ],
+      "reason": "Consolidate known identical scene pair; verify Fabric time and camera streams"
+    },
+    {
+      "path": "/Graphs/kaya_holonomic_controller",
+      "reason": "Disable competing keyboard wheel controller"
+    },
+    {
+      "graph_rebuilt": "/CourseGraphs/g00_Hand_Controller",
+      "source": "/World/bobac/bobac3_serverbot/Graph/Hand_Controller",
+      "node_count": 4
+    },
+    {
+      "graph_rebuilt": "/CourseGraphs/g01_ROS_Camera",
+      "source": "/World/bobac/bobac3_serverbot/Graph/ROS_Camera",
+      "node_count": 7
+    },
+    {
+      "graph_rebuilt": "/CourseGraphs/g02_ROS_Clock",
+      "source": "/World/bobac/bobac3_serverbot/Graph/ROS_Clock",
+      "node_count": 4
+    },
+    {
+      "graph_rebuilt": "/CourseGraphs/g03_ROS_JointStates",
+      "source": "/World/bobac/bobac3_serverbot/Graph/ROS_JointStates",
+      "node_count": 5
+    },
+    {
+      "graph_rebuilt": "/CourseGraphs/g04_HolonomicController",
+      "source": "/World/bobac/bobac3_serverbot/Graph/HolonomicController",
+      "node_count": 9
+    },
+    {
+      "graph_rebuilt": "/CourseGraphs/g05_transform_tree_robot",
+      "source": "/World/bobac/bobac3_serverbot/Graph/transform_tree_robot",
+      "node_count": 9
+    },
+    {
+      "graph_rebuilt": "/CourseGraphs/g06_ROSPublisher_odom2Base_link",
+      "source": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link",
+      "node_count": 7
+    },
+    {
+      "graph_rebuilt": "/CourseGraphs/g07_Ros_Lidar",
+      "source": "/World/bobac/bobac3_serverbot/Graph/Ros_Lidar",
+      "node_count": 5
+    },
+    {
+      "old_articulation_target": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/base_link_arm",
+      "new_articulation_target": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link"
+    },
+    {
+      "render_product": "/CourseGraphs/g01_ROS_Camera/RenderProduct",
+      "execution": "every playback tick (6.0 reference graph)"
+    },
+    {
+      "publisher": "/CourseGraphs/g03_ROS_JointStates/PublisherJointState",
+      "source": "/CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState"
+    },
+    {
+      "old_articulation_target": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/base_link_arm",
+      "new_articulation_target": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link"
+    },
+    {
+      "publisher": "/CourseGraphs/g03_ROS_JointStates/PublisherJointState_01",
+      "source": "/CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState_01"
+    },
+    {
+      "publisher": "/CourseGraphs/g05_transform_tree_robot/ros2_publish_transform_tree_to_camera",
+      "source": "/CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_camera"
+    },
+    {
+      "publisher": "/CourseGraphs/g05_transform_tree_robot/ros2_publish_transform_tree_to_robot_01",
+      "source": "/CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_robot_01"
+    },
+    {
+      "explicit_robot_tf_bodies": [
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/front_wheel_link",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/left_wheel_link",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/right_wheel_link",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_0",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_1",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_2",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_3",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_4",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_5",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_6",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_7",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_8",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_9",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_0",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_1",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_2",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_3",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_4",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_5",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_6",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_7",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_8",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_9",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_0",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_1",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_2",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_3",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_4",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_5",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_6",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_7",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_8",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_9",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_1",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_2",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_3",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_4",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_5",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_6",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/base_link_arm",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_base_link",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_l_link1",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_l_link2",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_l_link_finger",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_r_link1",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_r_link2",
+        "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_r_link_finger"
+      ],
+      "reason": "Runtime root target emitted only a self transform"
+    },
+    {
+      "publisher": "/CourseGraphs/g05_transform_tree_robot/ros2_publish_transform_tree_to_robot_02",
+      "source": "/CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_robot_02"
+    },
+    {
+      "camera": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_6/arm_camera/arm_Camera",
+      "tickRate": 30.0,
+      "schema": "OmniSensorAPI"
+    },
+    {
+      "path": "/CourseGraphs/g04_HolonomicController/holonomic_controller",
+      "reason": "Match SDK summed wheel/moment constraints to the actual rigid-body rolling Jacobian",
+      "gains": {
+        "linearGain": 1.4999999999804507,
+        "angularGain": -0.07412258135655687
+      }
+    }
+  ],
+  "errors": [],
+  "inactive_connections_removed": [
+    {
+      "source": "/World/bobac/bobac3_serverbot/Graph/ROS_Clock/on_tick.outputs:tick",
+      "target": "/World/bobac/bobac3_serverbot/Graph/ROS_Clock/ros2_publish_clock.inputs:execIn"
+    },
+    {
+      "source": "/World/bobac/bobac3_serverbot/Graph/transform_tree_robot/on_physics_step.outputs:step",
+      "target": "/World/bobac/bobac3_serverbot/Graph/transform_tree_robot/ros2_publish_transform_tree_to_camera.inputs:execIn"
+    },
+    {
+      "source": "/World/bobac/bobac3_serverbot/Graph/transform_tree_robot/on_physics_step.outputs:step",
+      "target": "/World/bobac/bobac3_serverbot/Graph/transform_tree_robot/ros2_publish_transform_tree_to_robot_01.inputs:execIn"
+    },
+    {
+      "source": "/World/bobac/bobac3_serverbot/Graph/transform_tree_robot/on_physics_step.outputs:step",
+      "target": "/World/bobac/bobac3_serverbot/Graph/transform_tree_robot/ros2_publish_transform_tree_to_robot_02.inputs:execIn"
+    },
+    {
+      "source": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/OnPlaybackTick.outputs:tick",
+      "target": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/TFOdom2Robot.inputs:execIn"
+    },
+    {
+      "source": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/on_physics_step.outputs:step",
+      "target": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/TFOdom2Robot.inputs:execIn"
+    },
+    {
+      "source": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/OnPlaybackTick.outputs:tick",
+      "target": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/ComputeOdometry.inputs:execIn"
+    },
+    {
+      "source": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/on_physics_step.outputs:step",
+      "target": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/ComputeOdometry.inputs:execIn"
+    },
+    {
+      "source": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/select_if_01.outputs:result",
+      "target": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/PublisherOdometry.inputs:orientation"
+    },
+    {
+      "source": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/select_if.outputs:result",
+      "target": "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link/PublisherOdometry.inputs:position"
+    }
+  ],
+  "original_graphs_disabled": [
+    "/World/bobac/bobac3_serverbot/Graph/Hand_Controller",
+    "/World/bobac/bobac3_serverbot/Graph/ROS_Camera",
+    "/World/bobac/bobac3_serverbot/Graph/ROS_Clock",
+    "/World/bobac/bobac3_serverbot/Graph/ROS_JointStates",
+    "/World/bobac/bobac3_serverbot/Graph/HolonomicController",
+    "/World/bobac/bobac3_serverbot/Graph/transform_tree_robot",
+    "/World/bobac/bobac3_serverbot/Graph/ROSPublisher_odom2Base_link",
+    "/World/bobac/bobac3_serverbot/Graph/Ros_Lidar"
+  ],
+  "inactive_composition_warnings": [
+    "Could not open asset @/workspace/course/mobot.usd@ for payload introduced by @/workspace/course/scenes/.course-load-prepared.usda@</World/mobot>."
+  ],
+  "drive_configuration": {
+    "previous": {
+      "linearGain": -1.25,
+      "angularGain": 1.0
+    },
+    "configured": {
+      "linearGain": 1.4999999999804507,
+      "angularGain": -0.07412258135655687
+    },
+    "constraint_product": [
+      [
+        1.500683876332223,
+        -1.3721199821037584e-07,
+        1.0943872245852234e-06
+      ],
+      [
+        -1.3721199821934793e-07,
+        1.4993161236286783,
+        -0.000167357370712134
+      ],
+      [
+        -1.094387224546677e-06,
+        0.00016735737071214667,
+        -0.07412258135655687
+      ]
+    ],
+    "rolling_jacobian": [
+      [
+        24.749735423496787,
+        14.275052717753818,
+        -4.493635295130664
+      ],
+      [
+        -24.74871022360665,
+        14.27682978766305,
+        -4.49367208585727
+      ],
+      [
+        -0.0010231688585398452,
+        -28.57142857142857,
+        -4.485797888666524
+      ]
+    ],
+    "wheel_names": [
+      "left_wheel_joint",
+      "right_wheel_joint",
+      "front_wheel_joint"
+    ]
+  },
+  "output": "/workspace/course/scenes/test_scene_bobac_6.0.drive-migrated.usda"
+}

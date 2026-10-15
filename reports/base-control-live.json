@@ -1,0 +1,19 @@
+{
+  "status": "failed",
+  "scope": "small physical base rotation and velocity chain; no navigation goal",
+  "errors": [
+    "Base has not stopped/restored within tolerance"
+  ],
+  "initial_yaw": 0.0,
+  "initial_xy": [
+    4.0531158447265625e-05,
+    -1.7762184143066406e-05
+  ],
+  "positive_yaw_delta": 3.121425861423242,
+  "final_yaw_error": -3.0423104956781857,
+  "odom_messages": 215,
+  "cmd_vel_messages": 105,
+  "positive_output": true,
+  "negative_output": true,
+  "final_command_z": 0.0
+}

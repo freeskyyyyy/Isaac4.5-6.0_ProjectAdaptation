@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "scope": "real MoveIt small arm Action trajectory and measured FK; not grasp acceptance",
+  "checks": [
+    {
+      "plan_only": true,
+      "status": 6,
+      "success": false,
+      "message": "Invalid trajectory timing; check MoveIt joint acceleration limits",
+      "command_messages": 0,
+      "wall_seconds": 0.3649857550008164
+    }
+  ],
+  "errors": [],
+  "baseline_joints": {
+    "joint_1": 0.0,
+    "joint_2": 0.0,
+    "joint_3": 0.0,
+    "joint_4": 0.0,
+    "joint_5": 0.0,
+    "joint_6": 0.0
+  }
+}

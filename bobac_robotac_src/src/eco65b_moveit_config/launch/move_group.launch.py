@@ -34,7 +34,8 @@ def generate_launch_description():
         {'use_sim_time': use_sim_time,
          'robot_description': robot_description,
          'robot_description_semantic': robot_description_semantic,
-         'robot_description_kinematics': config('kinematics.yaml')},
+         'robot_description_kinematics': config('kinematics.yaml'),
+         'robot_description_planning': config('joint_limits.yaml')},
         pipeline,
     ]
 

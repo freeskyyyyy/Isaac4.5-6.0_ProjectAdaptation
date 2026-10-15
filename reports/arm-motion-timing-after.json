@@ -1,0 +1,61 @@
+{
+  "status": "passed",
+  "scope": "real MoveIt small arm Action trajectory and measured FK; not grasp acceptance",
+  "checks": [
+    {
+      "plan_only": true,
+      "status": 4,
+      "success": true,
+      "message": "Planned (plan_only)",
+      "command_messages": 0,
+      "wall_seconds": 0.37151103699943633
+    },
+    {
+      "plan_only": false,
+      "status": 4,
+      "success": true,
+      "message": "Succeeded",
+      "command_messages": 11,
+      "wall_seconds": 1.8246266670030309,
+      "command_stamp_span_sim_seconds": 1.0,
+      "position_error_m": 0.0,
+      "orientation_error_rad": 0.0,
+      "actual_joints": {
+        "joint_1": 0.05,
+        "joint_2": 0.0,
+        "joint_3": 0.0,
+        "joint_4": 0.0,
+        "joint_5": 0.0,
+        "joint_6": 0.0
+      }
+    },
+    {
+      "plan_only": false,
+      "status": 4,
+      "success": true,
+      "message": "Succeeded",
+      "command_messages": 12,
+      "wall_seconds": 1.7697577960025228,
+      "command_stamp_span_sim_seconds": 1.0166666670000382,
+      "position_error_m": 0.0,
+      "orientation_error_rad": 0.0,
+      "actual_joints": {
+        "joint_1": 0.0,
+        "joint_2": 0.0,
+        "joint_3": 0.0,
+        "joint_4": 0.0,
+        "joint_5": 0.0,
+        "joint_6": 0.0
+      }
+    }
+  ],
+  "errors": [],
+  "baseline_joints": {
+    "joint_1": 0.0,
+    "joint_2": 0.0,
+    "joint_3": 0.0,
+    "joint_4": 0.0,
+    "joint_5": 0.0,
+    "joint_6": 0.0
+  }
+}

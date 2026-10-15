@@ -245,6 +245,12 @@ def main():
             if skip and (skip.Get() or 0) != 0:
                 raise RuntimeError(f'Set a sensor tickRate before removing frameSkipCount: {prim.GetPath()}')
 
+        from drive_audit import configure_drive
+        report['drive_configuration'] = configure_drive(stage)
+        report['changes'].append({'path': '/CourseGraphs/g04_HolonomicController/holonomic_controller',
+            'reason': 'Match SDK summed wheel/moment constraints to the actual rigid-body rolling Jacobian',
+            'gains': report['drive_configuration']['configured']})
+
         args.output.parent.mkdir(parents=True, exist_ok=True)
         print('COURSE_MIGRATION: settling rebuilt graphs', flush=True)
         for _ in range(10):

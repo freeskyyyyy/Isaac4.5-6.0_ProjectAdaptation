@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "scope": "small physical base rotation and velocity chain; no navigation goal",
+  "errors": [],
+  "initial_yaw": 0.0,
+  "initial_xy": [
+    4.1484832763671875e-05,
+    -1.7881393432617188e-05
+  ],
+  "positive_yaw_delta": 0.0439027612707836,
+  "final_yaw_error": 0.0,
+  "odom_messages": 131,
+  "cmd_vel_messages": 61,
+  "positive_output": true,
+  "negative_output": true,
+  "final_command_z": 0.0
+}

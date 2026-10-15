@@ -127,3 +127,40 @@ ROS_DOMAIN_ID=44 RMW_IMPLEMENTATION=rmw_cyclonedds_cpp \
 ## 可直接转发给 A 的交接说明
 
 会话 B 已完成视觉局部修复，改动仅在 yoloe_grasp、tools/vision_check.py 和 reports/parallel-vision.md。保持 /arm_camera/rgb、/arm_camera/depth、/arm_camera/camera_info、/detect_object 及 Action 定义；视觉默认 use_sim_time=true，入口要求 Cyclone DDS、ROS_DOMAIN_ID=44。修复了模型/缓存解析、RGB-D-CameraInfo 配对、深度单位/有效性、采样 stamp TF、位置与方向坐标一致性、Action 墙钟超时/取消/互斥/置信度，以及分阶段 GPU 检查诊断。私有目录 /tmp/bobac-parallel-vision.8EuKOl 的宿主 Jazzy 两包构建成功，36 项 CPU 回归通过；宿主 cv_bridge 往返通过；缺失 torch/torchvision/ultralytics 的检查负向诊断符合预期。未运行目标容器、GPU、真实相机或课程控制栈，不能据此勾选运行 TODO。请 A 在镜像构建中确认并锁定 ultralytics/CLIP tokenizer（clip 模块）；确认 arm_Camera TF 的 optical/USD 轴并显式设置 camera_frame_convention；配置持久文本权重缓存；重编译后安排 GPU/真实 RGB-D/TF/Action 取消与重置验收。CUDA 计算不可安全抢占，超时/取消后残余 worker 未结束时会拒绝新目标。完整命令、结果、局限和运行待验项见专属报告；该报告被现有 .gitignore 忽略，若归档请 A 单独 force-add。
+
+## 2026-10-16：按实际发布端配置三路订阅可靠性
+
+本轮仅处理用户指定的订阅 QoS 调整；公共门禁和集成复验由 A 负责。开始时 `git status --short` 为空。
+
+证据核对：`reports/image-transport-qos.log` 的图像发布端是 RELIABLE、KEEP_LAST(10)、VOLATILE；`reports/live-sensors-reliable.json` 记录 image_reliability=reliable、status=passed、三路相机消息到达，深度和 CameraInfo 相对 RGB 在 50ms 内配对比例均为1.0。该报告的 scope 只涉及真实传感器流，不是视觉定位或任务成功。本轮没有重新采样，也未启动共享栈。仅凭 RELIABLE 发布端不能推断旧 BEST_EFFORT 订阅必定不兼容；本轮按实际已采样策略和用户要求显式配置。
+
+修改文件：
+
+- `yoloe_grasp/yoloe_grasp_node.py`：新增 `rgb_qos_reliability`、`depth_qos_reliability`、`camera_info_qos_reliability` 三个独立启动参数，支持 `reliable`/`best_effort`；不合法值明确报错。各路复制原 sensor_data QoS，只覆盖 reliability，保留 KEEP_LAST、depth=5、VOLATILE 及其余策略；不修改全局 qos_profile_sensor_data。启动日志输出三路选值。未传参数时维持旧 best_effort 行为。
+- `config/pen_grasp_params.yaml`：三项均设为 `reliable`，课程加载该参数文件后使用 RELIABLE。
+- `test/test_vision_logic.py`：新增4项局部检查，验证可靠性选择、队列策略保持、全局及各路配置互不污染、无效配置拒绝。
+- 本报告。以上前三项相对路径均位于 `bobac_robotac_src/src/yoloe_grasp/`。
+
+保留项：CameraFrames 消息队列和配对实现、三路 topic、/detect_object 及其 Action 定义、use_sim_time=true、Cyclone DDS、ROS_DOMAIN_ID=44。未修改 tools/vision_check.py、公共启动或门禁、Dockerfile、场景、导航、MIGRATION_TODO.md；未切换分支、暂存或提交。
+
+验证目录：`/tmp/bobac-vision-qos.qNrMYm`，不写共享 .runtime。
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export PYTHONDONTWRITEBYTECODE=1 ROS_DOMAIN_ID=44 RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+colcon --log-base /tmp/bobac-vision-qos.qNrMYm/log-final build \
+  --base-paths bobac_robotac_src/src/eco65b_grasp_interfaces bobac_robotac_src/src/yoloe_grasp \
+  --build-base /tmp/bobac-vision-qos.qNrMYm/build \
+  --install-base /tmp/bobac-vision-qos.qNrMYm/install \
+  --symlink-install --executor sequential
+source /tmp/bobac-vision-qos.qNrMYm/install/setup.bash
+/usr/bin/python3 -m pytest -q -p no:cacheprovider \
+  bobac_robotac_src/src/yoloe_grasp/test \
+  --basetemp /tmp/bobac-vision-qos.qNrMYm/pytest
+```
+
+结果：最终构建 exit0，`2 packages finished [1.65s]`（首次私有环境构建10.3s）；视觉包全套局部检查 exit0，`40 passed in 1.13s`。日志：`build-final.log`、`pytest.log`，均在上述私有目录。AST、课程 YAML 实际解析检查通过：三路生成 RELIABLE、depth=5，原全局 sensor_data profile 仍为 BEST_EFFORT。`git diff --check`通过；对 camera_data.py 和 Action 源定义的 `git diff --exit-code` 返回0。
+
+测试过程：实现前新增4项检查均因 `camera_subscription_qos` 尚未存在而失败（`pytest-red.log`）；首次实现后 `test_camera_qos_selection_preserves_queue_and_other_subscribers` 的 reliable/best_effort 两个用例因 QoS 内部 Duration 的 C 句柄不支持 deepcopy 失败。读取本地 Jazzy QoS/Duration 源码确认原因后改为浅复制策略对象（只覆盖 reliability，不修改只读时长），最终40项全部通过。未运行 torch、GPU、ROS节点、真实相机订阅或 DDS 端点测试，局部检查不能代替集成验收。
+
+可直接转发给 A：B 已为 RGB、深度、CameraInfo 增加独立的 rgb_qos_reliability、depth_qos_reliability、camera_info_qos_reliability 启动参数，支持 reliable/best_effort；本课程 pen_grasp_params.yaml 三项均为 reliable，订阅深度保持5。相机队列、配对、话题和 Action 定义未改。最终私有两包构建通过，视觉局部检查40项通过；没有启动共享栈。请 A 重编译/重启视觉节点时加载更新后的课程参数文件，核对启动日志三项均为 reliable，并负责公共门禁及真实 DDS/图像配对/Action 集成复验。先前图像流证据已读取，但不能认定此版节点已完成运行验收。

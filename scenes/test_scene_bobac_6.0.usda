@@ -3181,7 +3181,7 @@ def "CourseGraphs"
 
         def OmniGraphNode "holonomic_controller"
         {
-            custom double inputs:angularGain = 1
+            custom double inputs:angularGain = -0.07412258135655687
             custom uint inputs:execIn (
                 customData = {
                     bool isExecution = 1
@@ -3190,7 +3190,7 @@ def "CourseGraphs"
             uint inputs:execIn.connect = </CourseGraphs/g04_HolonomicController/on_playback_tick.outputs:tick>
             custom double3 inputs:inputVelocity
             double3 inputs:inputVelocity.connect = </CourseGraphs/g04_HolonomicController/make_3_vector.outputs:tuple>
-            custom double inputs:linearGain = -1.25
+            custom double inputs:linearGain = 1.4999999999804507
             custom double inputs:maxAngularSpeed
             custom double inputs:maxLinearSpeed
             custom double inputs:maxWheelSpeed

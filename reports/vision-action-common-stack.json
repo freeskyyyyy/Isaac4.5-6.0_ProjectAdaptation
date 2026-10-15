@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "scope": "real vision Action diagnostics only; not positive localization",
+  "checks": {
+    "no_target_timeout": {
+      "wall_seconds": 3.0086307630008378,
+      "status": 6,
+      "success": false,
+      "message": "Detection timed out after 3.00s wall time; attempts=26; last diagnostic: YOLOE inference in progress",
+      "feedback_states": [
+        "DETECTING",
+        "WAITING_IMAGE"
+      ],
+      "max_attempts": 26
+    },
+    "concurrent_goal": {
+      "accepted": false
+    },
+    "cancel": {
+      "wall_seconds": 0.04935654700238956,
+      "status": 5,
+      "goals_canceling": 1,
+      "success": false,
+      "message": "Detection canceled; last diagnostic: YOLOE inference in progress"
+    }
+  },
+  "errors": [],
+  "camera_subscriptions": {
+    "/arm_camera/rgb": {
+      "reliability": "RELIABLE",
+      "depth": 5
+    },
+    "/arm_camera/depth": {
+      "reliability": "RELIABLE",
+      "depth": 5
+    },
+    "/arm_camera/camera_info": {
+      "reliability": "RELIABLE",
+      "depth": 5
+    }
+  }
+}

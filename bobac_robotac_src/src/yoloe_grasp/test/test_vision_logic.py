@@ -393,3 +393,24 @@ def test_timeout_preserves_detection_failure(monkeypatch):
         assert 'no valid metric depth' in result.message
     finally:
         node._worker.shutdown()
+
+
+@pytest.mark.parametrize('reliability,expected', [('reliable', 'RELIABLE'), ('best_effort', 'BEST_EFFORT')])
+def test_camera_qos_selection_preserves_queue_and_other_subscribers(reliability, expected):
+    from rclpy.qos import qos_profile_sensor_data
+    original = copy.copy(qos_profile_sensor_data)
+    profile = node_module.camera_subscription_qos(reliability)
+    assert profile.reliability.name == expected
+    assert profile.depth == original.depth
+    assert profile.history == original.history
+    assert profile.durability == original.durability
+    assert qos_profile_sensor_data == original
+    # Per-stream profiles must not share mutable QoS state.
+    profile.depth += 1
+    assert node_module.camera_subscription_qos(reliability).depth == original.depth
+
+
+@pytest.mark.parametrize('reliability', ['reliabel', 'system_default'])
+def test_camera_qos_rejects_unsupported_reliability(reliability):
+    with pytest.raises(ValueError, match='reliable.*best_effort'):
+        node_module.camera_subscription_qos(reliability)

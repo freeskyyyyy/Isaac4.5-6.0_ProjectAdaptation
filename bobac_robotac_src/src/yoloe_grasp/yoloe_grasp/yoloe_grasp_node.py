@@ -15,7 +15,7 @@ from rclpy.action import ActionServer, CancelResponse, GoalResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.node import Node
-from rclpy.qos import qos_profile_sensor_data
+from rclpy.qos import ReliabilityPolicy, qos_profile_sensor_data
 from rclpy.time import Time
 from ament_index_python.packages import get_package_share_directory
 from cv_bridge import CvBridge
@@ -35,6 +35,18 @@ from .model_runtime import (
 )
 
 
+def camera_subscription_qos(reliability):
+    """Select reliability without changing the sensor queue or global QoS profile."""
+    policies = {'reliable': ReliabilityPolicy.RELIABLE,
+                'best_effort': ReliabilityPolicy.BEST_EFFORT}
+    if reliability not in policies:
+        raise ValueError(f'Invalid camera QoS reliability {reliability!r}; '
+                         'expected reliable or best_effort')
+    profile = copy.copy(qos_profile_sensor_data)
+    profile.reliability = policies[reliability]
+    return profile
+
+
 class YoloEGraspNode(Node):
     def __init__(self):
         super().__init__('yoloe_grasp_node')
@@ -49,6 +61,8 @@ class YoloEGraspNode(Node):
             'text_model_cache_dir': str(default_cache_dir()),
             'rgb_topic': '/arm_camera/rgb', 'depth_topic': '/arm_camera/depth',
             'camera_info_topic': '/arm_camera/camera_info', 'base_frame': 'base_link_arm',
+            'rgb_qos_reliability': 'best_effort', 'depth_qos_reliability': 'best_effort',
+            'camera_info_qos_reliability': 'best_effort',
             'camera_frame': '', 'camera_frame_convention': 'optical',
             # Kept for old parameter files; explicit convention replaces guessing.
             'disable_optical_compensation': True,
@@ -81,14 +95,17 @@ class YoloEGraspNode(Node):
             len(self.fixed_normal) != 3 or self._normalize(np.asarray(self.fixed_normal)) is None
         ):
             raise ValueError('fixed_normal must contain three finite, nonzero components')
+        rgb_qos = camera_subscription_qos(self.rgb_qos_reliability)
+        depth_qos = camera_subscription_qos(self.depth_qos_reliability)
+        info_qos = camera_subscription_qos(self.camera_info_qos_reliability)
         self.debug_image_dir = str(Path(self.debug_image_dir).expanduser().resolve())
         self._frames = CameraFrames()
         self.bridge = CvBridge()
         self.tf_buffer = Buffer(node=self)
         self.tf_listener = TransformListener(self.tf_buffer, self)
-        self.create_subscription(Image, self.rgb_topic, lambda m: self._frames.add('rgb', m), qos_profile_sensor_data)
-        self.create_subscription(Image, self.depth_topic, lambda m: self._frames.add('depth', m), qos_profile_sensor_data)
-        self.create_subscription(CameraInfo, self.camera_info_topic, lambda m: self._frames.add('info', m), qos_profile_sensor_data)
+        self.create_subscription(Image, self.rgb_topic, lambda m: self._frames.add('rgb', m), rgb_qos)
+        self.create_subscription(Image, self.depth_topic, lambda m: self._frames.add('depth', m), depth_qos)
+        self.create_subscription(CameraInfo, self.camera_info_topic, lambda m: self._frames.add('info', m), info_qos)
         self._goal_lock = Lock()
         self._goal_reserved = False
         self._inference_future = None
@@ -110,7 +127,9 @@ class YoloEGraspNode(Node):
         self.get_logger().info(
             f'/detect_object ready; model={self.model_path}, device={self.device}, '
             f'python={sys.executable}, camera axes={self.camera_frame_convention}, '
-            f'cache={self.text_model_cache_dir}, use_sim_time=true'
+            f'cache={self.text_model_cache_dir}, use_sim_time=true, '
+            f'camera QoS rgb={self.rgb_qos_reliability}, depth={self.depth_qos_reliability}, '
+            f'camera_info={self.camera_info_qos_reliability}'
         )
 
     def _load_model(self):

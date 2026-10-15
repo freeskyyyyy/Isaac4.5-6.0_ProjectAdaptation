@@ -8,6 +8,10 @@ yoloe_grasp_node:
     rgb_topic: '/arm_camera/rgb'
     depth_topic: '/arm_camera/depth'
     camera_info_topic: '/arm_camera/camera_info'
+    # Isaac 发布端为 RELIABLE；可选 reliable / best_effort，仅覆盖可靠性
+    rgb_qos_reliability: 'reliable'
+    depth_qos_reliability: 'reliable'
+    camera_info_qos_reliability: 'reliable'
 
     # 坐标系
     base_frame: 'base_link_arm'

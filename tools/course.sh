@@ -11,6 +11,7 @@ container=bobac-isaac6-course
 prepare() {
     [[ $(uname -m) == aarch64 ]] || { echo 'This deployment targets DGX Spark ARM64.' >&2; exit 1; }
     mkdir -p "$runtime"/{build,install,log,isaac-cache,compute-cache,isaac-config,isaac-logs,vision}
+    mkdir -p "$runtime"/vision/{weights,config/Ultralytics}
     [[ -f "${ISAAC_SIM_HOST_DIR:-$course_root/../IsaacSim-6.0.0}/VERSION" ]] || {
         echo 'Desktop Isaac Sim installation is missing; run bash tools/setup_desktop_sdk.sh first.' >&2
         exit 1

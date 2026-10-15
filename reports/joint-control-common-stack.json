@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "scope": "real simulated joint feedback; no grasp/lift acceptance",
+  "checks": [
+    {
+      "joint": "joint_1",
+      "target": 0.05,
+      "actual": 0.05,
+      "absolute_error": 0.0,
+      "fresh_samples_min": 5
+    },
+    {
+      "joint": "joint_1",
+      "target": 0.0,
+      "actual": 0.0,
+      "absolute_error": 0.0,
+      "fresh_samples_min": 5
+    },
+    {
+      "joint": "gripper_l_joint1",
+      "target": 0.78,
+      "actual": 0.7683,
+      "absolute_error": 0.011700000000000044,
+      "fresh_samples_min": 5,
+      "action": "open",
+      "action_status": 4
+    },
+    {
+      "joint": "gripper_l_joint1",
+      "target": 0.0,
+      "actual": 0.0121,
+      "absolute_error": 0.0121,
+      "fresh_samples_min": 5,
+      "action": "close",
+      "action_status": 4
+    }
+  ],
+  "errors": [],
+  "command_publishers": [
+    "gripper_control_node",
+    "eco65b_grasp_moveit_node",
+    "joint_control_observer"
+  ],
+  "initial_joint_1": 0.0
+}
