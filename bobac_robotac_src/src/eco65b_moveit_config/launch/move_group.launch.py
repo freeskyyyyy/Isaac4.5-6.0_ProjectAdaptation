@@ -1,5 +1,6 @@
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.conditions import IfCondition
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
@@ -53,6 +54,7 @@ def generate_launch_description():
     rsp = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
+        condition=IfCondition(LaunchConfiguration('publish_robot_tf')),
         output='screen',
         parameters=[{'robot_description': robot_description, 'use_sim_time': use_sim_time}],
     )
@@ -67,6 +69,8 @@ def generate_launch_description():
 
     return LaunchDescription([
         DeclareLaunchArgument('use_sim_time', default_value='true'),
+        DeclareLaunchArgument('publish_robot_tf', default_value='true',
+                              description='Disable when Isaac publishes the complete arm link TF'),
         joint_filter,
         rsp,
         move_group,

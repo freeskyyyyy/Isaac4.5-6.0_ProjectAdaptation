@@ -1,0 +1,31 @@
+{
+  "scope": "real course sensor transport diagnosis, not navigation or grasp acceptance",
+  "same_isaac_process": true,
+  "publisher_reliability": "RELIABLE",
+  "middleware": "rmw_cyclonedds_cpp",
+  "socket_receive_limit_bytes": 212992,
+  "host_parameters_changed": false,
+  "reliable_result": "passed",
+  "best_effort_result": "failed",
+  "best_effort_udp_delta": {
+    "InDatagrams": 73345,
+    "NoPorts": 0,
+    "InErrors": 19336,
+    "OutDatagrams": 87114,
+    "RcvbufErrors": 19336,
+    "SndbufErrors": 0,
+    "InCsumErrors": 0,
+    "IgnoredMulti": 0,
+    "MemErrors": 0
+  },
+  "conclusion": "BEST_EFFORT image delivery failed with receive-buffer drops; matching RELIABLE subscriptions recovered sustained real RGB/depth and capture-time TF",
+  "evidence": [
+    "image-transport-qos.log",
+    "live-sensors-reliable.json",
+    "live-sensors-best-effort-ab.json",
+    "image-best-effort-udp-before.log",
+    "image-best-effort-udp-after.log"
+  ],
+  "reference": "https://cyclonedds.io/docs/cyclonedds/latest/config/config_file_reference.html",
+  "remaining": "vision module subscription configuration and pause/stop/replay validation"
+}

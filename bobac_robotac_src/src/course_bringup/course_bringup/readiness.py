@@ -6,6 +6,7 @@ import time
 
 import rclpy
 from rclpy.node import Node
+from rclpy.parameter import Parameter
 from rclpy.qos import qos_profile_sensor_data, QoSProfile, ReliabilityPolicy
 from rosgraph_msgs.msg import Clock
 from nav_msgs.msg import Odometry
@@ -21,8 +22,9 @@ TOPICS = {
 
 
 class Readiness(Node):
-    def __init__(self):
-        super().__init__('course_readiness')
+    def __init__(self, image_reliability='reliable'):
+        super().__init__('course_readiness', parameter_overrides=[Parameter('use_sim_time', value=True)])
+        self.image_reliability = image_reliability
         self.messages = {}
         self.received = {}
         self.counts = dict.fromkeys(TOPICS, 0)
@@ -30,9 +32,11 @@ class Readiness(Node):
         self.last_clock = None
         self.tf = Buffer()
         self.listener = TransformListener(self.tf, self)
+        image_qos = QoSProfile(depth=5, reliability=(ReliabilityPolicy.RELIABLE
+            if image_reliability == 'reliable' else ReliabilityPolicy.BEST_EFFORT))
         self.subscriptions_list = [
             self.create_subscription(kind, topic, lambda msg, key=topic: self.receive(key, msg),
-                                     qos_profile_sensor_data)
+                                     image_qos if kind is Image else qos_profile_sensor_data)
             for topic, kind in TOPICS.items()
         ]
 
@@ -52,8 +56,10 @@ class Readiness(Node):
         for topic in TOPICS:
             if topic not in self.messages:
                 errors.append(f'No data: {topic}; check Play, graph, ROS_DOMAIN_ID and QoS')
-            elif now - self.received[topic] > 5:
-                errors.append(f'Stale data (>5s): {topic}')
+            elif now - self.received[topic] > 1:
+                errors.append(f'Stale data (>1s): {topic}')
+            elif self.counts[topic] < 3:
+                errors.append(f'Waiting for at least 3 messages: {topic}')
         if not self.clock_advanced:
             errors.append('/clock is not advancing; press Play')
         joints = self.messages.get('/arm/joint_states')
@@ -86,6 +92,7 @@ class Readiness(Node):
 
     def report(self, errors):
         return {'status': 'passed' if not errors else 'failed', 'errors': errors,
+                'image_reliability': self.image_reliability,
                 'messages_received': self.counts,
                 'topics': {topic: {
                     'message_type': TOPICS[topic].__name__,
@@ -97,18 +104,29 @@ class Readiness(Node):
 def main(args=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('--timeout', type=float, default=60)
+    parser.add_argument('--stable-for', type=float, default=2,
+                        help='Require continuously healthy streams for this many wall seconds')
     parser.add_argument('--report', type=Path)
+    parser.add_argument('--image-reliability', choices=('best_effort', 'reliable'), default='reliable',
+                        help='Course image publishers are RELIABLE; enable retransmission across processes')
     opts, ros_args = parser.parse_known_args(args)
     rclpy.init(args=ros_args)
-    node = Readiness()
+    node = Readiness(image_reliability=opts.image_reliability)
     deadline = time.monotonic() + opts.timeout
     errors = node.problems()
+    stable_since = None
     try:
         while rclpy.ok() and time.monotonic() < deadline:
             rclpy.spin_once(node, timeout_sec=0.1)
             errors = node.problems()
-            if not errors:
+            if errors:
+                stable_since = None
+            elif stable_since is None:
+                stable_since = time.monotonic()
+            elif time.monotonic() - stable_since >= opts.stable_for:
                 break
+        if not errors and (stable_since is None or time.monotonic() - stable_since < opts.stable_for):
+            errors.append('Streams did not remain healthy for the required observation interval')
         report = node.report(errors)
         if opts.report:
             opts.report.parent.mkdir(parents=True, exist_ok=True)

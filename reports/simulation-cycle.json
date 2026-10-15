@@ -1,0 +1,123 @@
+{
+  "status": "passed",
+  "scope": "simulation lifecycle and sensor streams; no robot task acceptance",
+  "phases": {
+    "paused": {
+      "clock": {
+        "messages": 0,
+        "unique_stamps": 0,
+        "sim_span": 0,
+        "wall_span": 0,
+        "max_wall_gap": null,
+        "first_stamp": null,
+        "last_stamp": null
+      },
+      "rgb": {
+        "messages": 0,
+        "unique_stamps": 0,
+        "sim_span": 0,
+        "wall_span": 0,
+        "max_wall_gap": null,
+        "first_stamp": null,
+        "last_stamp": null
+      },
+      "depth": {
+        "messages": 0,
+        "unique_stamps": 0,
+        "sim_span": 0,
+        "wall_span": 0,
+        "max_wall_gap": null,
+        "first_stamp": null,
+        "last_stamp": null
+      }
+    },
+    "resumed": {
+      "clock": {
+        "messages": 889,
+        "unique_stamps": 889,
+        "sim_span": 14.800000000000068,
+        "wall_span": 19.98530856599973,
+        "max_wall_gap": 0.027983928001049208,
+        "first_stamp": 621.933333333,
+        "last_stamp": 636.733333333
+      },
+      "rgb": {
+        "messages": 438,
+        "unique_stamps": 438,
+        "sim_span": 14.766666667000095,
+        "wall_span": 19.89626925599805,
+        "max_wall_gap": 0.4898543819981569,
+        "first_stamp": 621.933333333,
+        "last_stamp": 636.7
+      },
+      "depth": {
+        "messages": 436,
+        "unique_stamps": 436,
+        "sim_span": 14.766666665999992,
+        "wall_span": 19.90018057600173,
+        "max_wall_gap": 0.48669508100283565,
+        "first_stamp": 621.9,
+        "last_stamp": 636.666666666
+      }
+    },
+    "stopped": {
+      "clock": {
+        "messages": 0,
+        "unique_stamps": 0,
+        "sim_span": 0,
+        "wall_span": 0,
+        "max_wall_gap": null,
+        "first_stamp": null,
+        "last_stamp": null
+      },
+      "rgb": {
+        "messages": 0,
+        "unique_stamps": 0,
+        "sim_span": 0,
+        "wall_span": 0,
+        "max_wall_gap": null,
+        "first_stamp": null,
+        "last_stamp": null
+      },
+      "depth": {
+        "messages": 0,
+        "unique_stamps": 0,
+        "sim_span": 0,
+        "wall_span": 0,
+        "max_wall_gap": null,
+        "first_stamp": null,
+        "last_stamp": null
+      }
+    },
+    "replayed": {
+      "clock": {
+        "messages": 879,
+        "unique_stamps": 879,
+        "sim_span": 14.633333333000001,
+        "wall_span": 19.986352145999263,
+        "max_wall_gap": 0.09163213899955736,
+        "first_stamp": 0.35000000000000003,
+        "last_stamp": 14.983333333000001
+      },
+      "rgb": {
+        "messages": 428,
+        "unique_stamps": 428,
+        "sim_span": 14.533333333,
+        "wall_span": 19.84958191699843,
+        "max_wall_gap": 0.49239269600002444,
+        "first_stamp": 0.333333333,
+        "last_stamp": 14.866666666
+      },
+      "depth": {
+        "messages": 439,
+        "unique_stamps": 439,
+        "sim_span": 14.633333333,
+        "wall_span": 19.983909872000368,
+        "max_wall_gap": 0.3235450710017176,
+        "first_stamp": 0.30000000000000004,
+        "last_stamp": 14.933333333
+      }
+    }
+  },
+  "errors": []
+}

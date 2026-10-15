@@ -34,7 +34,8 @@ def generate_launch_description():
     stack = [
         include('bobac3_navigation', 'bobac3_navigation.launch.py',
                 {'use_sim_time': 'true', 'rviz': LaunchConfiguration('rviz')}),
-        include('eco65b_moveit_config', 'move_group.launch.py', {'use_sim_time': 'true'}),
+        include('eco65b_moveit_config', 'move_group.launch.py',
+                {'use_sim_time': 'true', 'publish_robot_tf': 'false'}),
         motion, vision,
         Node(package='grasp_control', executable='gripper_control_node', output='screen',
              parameters=[{'use_sim_time': True}]),

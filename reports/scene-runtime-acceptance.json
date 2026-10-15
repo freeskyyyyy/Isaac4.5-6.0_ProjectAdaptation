@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "scope": "TODO 11: actual Isaac 6.0 course stage/graphs and sensors; navigation and physical grasp not accepted",
+  "candidate": "scenes/test_scene_bobac_6.0.usda",
+  "candidate_sha256": "7057074044277cfa9f4d8d18725b8dd87282c618cea0afbb11ce3a7bc5556738",
+  "original_sha256": "113f0f04cda057921285eb6cc27944f5e2c75e20d2772921e0854dec300fe19a",
+  "original_preserved": true,
+  "evidence": [
+    "readiness-reliable-live.json",
+    "live-sensors-reliable.json",
+    "simulation-cycle.json",
+    "live-sensors-after-replay.json",
+    "scene-migration.json",
+    "course-image-transport.log",
+    "sensor-transport-diagnosis.json"
+  ],
+  "image_subscription_reliability": "RELIABLE",
+  "image_streams": "rgb8 and 32FC1 meters, 30Hz simulation time",
+  "lifecycle": "pause, resume, stop/reset and replay passed; full sensor and capture-time TF check passed after replay",
+  "not_accepted": [
+    "vision Action integration (awaiting B QoS configuration)",
+    "navigation goal",
+    "arm/gripper commands",
+    "grasp and lift",
+    "three repetitions/container restart"
+  ]
+}

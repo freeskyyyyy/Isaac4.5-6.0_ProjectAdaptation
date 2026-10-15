@@ -1,0 +1,11 @@
+{
+  "status": "failed",
+  "scope": "real plan-only Action with command output remapped; no arm motion",
+  "errors": [
+    "Planning did not succeed: NO_IK"
+  ],
+  "command_messages": 0,
+  "action_status": 6,
+  "action_success": false,
+  "action_message": "NO_IK"
+}

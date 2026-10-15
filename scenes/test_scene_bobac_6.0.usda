@@ -1,0 +1,3976 @@
+#usda 1.0
+(
+    customLayerData = {
+        dictionary cameraSettings = {
+            dictionary Front = {
+                double3 position = (5, 0.4319361336734314, 1.807489291899795)
+                double radius = 6.490690612792969
+            }
+            dictionary Perspective = {
+                double3 position = (6.001517357055154, 0.06680204455293795, 1.2872319153972844)
+                double3 target = (11.018511620089722, -6.693199795626899, 2.554598997710937)
+            }
+            dictionary Right = {
+                double3 position = (0, -5, 0)
+                double radius = 5
+            }
+            dictionary Top = {
+                double3 position = (3.8345558096509444, -1.8934114088705898, 5)
+                double radius = 22.64453582763672
+            }
+            string boundCamera = "/OmniverseKit_Top"
+        }
+        dictionary courseMigration = {
+            string status = "graph_migrated_runtime_acceptance_pending"
+            string targetIsaacSim = "6.0.0"
+        }
+        dictionary omni_layer = {
+            string authoring_layer = "./test_scence_bobac.usd"
+            dictionary locked = {
+            }
+            dictionary muteness = {
+            }
+        }
+        int refinementOverrideImplVersion = 0
+        dictionary renderSettings = {
+        }
+    }
+    defaultPrim = "World"
+    endTimeCode = 1000000
+    metersPerUnit = 1
+    startTimeCode = 0
+    timeCodesPerSecond = 60
+    upAxis = "Z"
+)
+
+def Xform "World"
+{
+    def Xform "table1" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsMeshCollisionAPI", "PhysxMeshMergeCollisionAPI"]
+    )
+    {
+        vector3f physics:angularVelocity = (-0.000029761079, -0.0000097261545, -0.00000986321)
+        bool physics:kinematicEnabled = 0
+        bool physics:rigidBodyEnabled = 1
+        vector3f physics:velocity = (3.9443883e-8, -0.0000010203988, -8.3807157e-7)
+        float3 xformOp:rotateXYZ = (0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (4.8, -6.5, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+        def Cube "Cube_02" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            rel material:binding = </World/Looks/WhiteTable_Mat>
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(1, 1, 1)] (
+                interpolation = "constant"
+            )
+            double size = 1
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (0.10000000149011612, 1, 0.4000000059604645)
+            double3 xformOp:translate = (-1, 0, 0.2)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "Cube_01" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxConvexHullCollisionAPI", "PhysicsMeshCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/WhiteTable_Mat>
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token physics:approximation = "convexHull"
+            bool physics:collisionEnabled = 1
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            color3f[] primvars:displayColor = [(1, 1, 1)] (
+                interpolation = "constant"
+            )
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (2.5, 1, 0.20000000298023224)
+            double3 xformOp:translate = (0, 0, 0.5)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "Cube_0" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxConvexHullCollisionAPI", "PhysicsMeshCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/WhiteTable_Mat>
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token physics:approximation = "convexHull"
+            bool physics:collisionEnabled = 1
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            color3f[] primvars:displayColor = [(1, 1, 1)] (
+                interpolation = "constant"
+            )
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (0.10000000149011612, 1, 0.4000000059604645)
+            double3 xformOp:translate = (1, 0, 0.2)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+    }
+
+    def Xform "table2" (
+        prepend apiSchemas = ["PhysicsRigidBodyAPI", "PhysxRigidBodyAPI", "PhysicsCollisionAPI", "PhysicsMeshCollisionAPI", "PhysxMeshMergeCollisionAPI"]
+    )
+    {
+        vector3f physics:angularVelocity = (0.00009126712, 0.000015666232, -0.00000761445)
+        bool physics:kinematicEnabled = 0
+        bool physics:rigidBodyEnabled = 1
+        vector3f physics:velocity = (2.0570403e-7, -5.445345e-7, -0.000001678491)
+        float3 xformOp:rotateXYZ = (0, 0, -90)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (1.2, 0.6, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+
+        def Cube "Cube_02" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            rel material:binding = </World/Looks/WhiteTable_Mat>
+            bool physics:collisionEnabled = 1
+            color3f[] primvars:displayColor = [(1, 1, 1)] (
+                interpolation = "constant"
+            )
+            double size = 1
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (0.10000000149011612, 1, 0.4000000059604645)
+            double3 xformOp:translate = (-1, 0, 0.2)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "Cube_01" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxConvexHullCollisionAPI", "PhysicsMeshCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/WhiteTable_Mat>
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token physics:approximation = "convexHull"
+            bool physics:collisionEnabled = 1
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            color3f[] primvars:displayColor = [(1, 1, 1)] (
+                interpolation = "constant"
+            )
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (2.5, 1, 0.20000000298023224)
+            double3 xformOp:translate = (0, 0, 0.5)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "Cube_0" (
+            prepend apiSchemas = ["PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxConvexHullCollisionAPI", "PhysicsMeshCollisionAPI", "MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/WhiteTable_Mat>
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token physics:approximation = "convexHull"
+            bool physics:collisionEnabled = 1
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            color3f[] primvars:displayColor = [(1, 1, 1)] (
+                interpolation = "constant"
+            )
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (0.10000000149011612, 1, 0.4000000059604645)
+            double3 xformOp:translate = (1, 0, 0.2)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+    }
+
+    def Scope "Looks"
+    {
+        def Material "xuxian"
+        {
+            token outputs:mdl:displacement.connect = </World/Looks/xuxian/Shader.outputs:out>
+            token outputs:mdl:surface.connect = </World/Looks/xuxian/Shader.outputs:out>
+            token outputs:mdl:volume.connect = </World/Looks/xuxian/Shader.outputs:out>
+
+            def Shader "Shader"
+            {
+                uniform token info:implementationSource = "sourceAsset"
+                uniform asset info:mdl:sourceAsset = @OmniPBR.mdl@
+                uniform token info:mdl:sourceAsset:subIdentifier = "OmniPBR"
+                color3f inputs:diffuse_color_constant = (0.9, 0.9, 0.9)
+                asset inputs:diffuse_texture = @@ (
+                    colorSpace = "auto"
+                )
+                token outputs:out (
+                    renderType = "material"
+                )
+            }
+        }
+
+        def Material "BlueWall_Mat"
+        {
+            token outputs:surface.connect = </World/Looks/BlueWall_Mat/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.03, 0.22, 0.85)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.45
+                token outputs:surface
+            }
+        }
+
+        def Material "WhiteTable_Mat"
+        {
+            token outputs:surface.connect = </World/Looks/WhiteTable_Mat/PreviewSurface.outputs:surface>
+
+            def Shader "PreviewSurface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (1, 1, 1)
+                float inputs:metallic = 0
+                float inputs:roughness = 0.45
+                token outputs:surface
+            }
+        }
+    }
+
+    def "FlatGrid" (
+        prepend references = @https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/Environments/Grid/default_environment.usd@
+    )
+    {
+        double3 xformOp:translate = (0, 0, 0)
+    }
+
+    def "mobot" (
+        active = false
+        prepend payload = @../mobot.usd@
+    )
+    {
+        quatf xformOp:orient = (0.70710677, 0, 0, -0.70710677)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (7.999999985694266, 1.0820577121083024, 0.25)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        over "carter" (
+            active = false
+        )
+        {
+            over "chassis_link"
+            {
+                vector3f physics:angularVelocity = (0, 0, 0)
+                vector3f physics:velocity = (0, 0, 0)
+                quatf xformOp:orient = (0.9999977, -3.4088225e-7, 0.0021561903, -4.1856725e-7)
+                double3 xformOp:translate = (0.0005930039349824057, 2.5665390923634845e-8, -0.010126322507858276)
+
+                over "camera_mount"
+                {
+                    over "carter_camera_first_person" (
+                        prepend apiSchemas = ["OmniRtxCameraAutoExposureAPI_1", "OmniRtxCameraExposureAPI_1"]
+                    )
+                    {
+                        float exposure:fStop = 5
+                        float exposure:responsivity = 1.1026709
+                        float exposure:time = 0.02
+                        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -7.337603479636574)
+                        float3 xformOp:rotateZYX = (8.280715, -59.3849, -80.376945)
+                        float3 xformOp:scale = (1, 1, 1)
+                        float3 xformOp:translate = (-4.117101, -0.6988052, 3.5031865)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
+                    }
+
+                    over "carter_camera_stereo_left" (
+                        prepend apiSchemas = ["OmniRtxCameraAutoExposureAPI_1", "OmniRtxCameraExposureAPI_1"]
+                    )
+                    {
+                        float exposure:fStop = 5
+                        float exposure:responsivity = 1.1026709
+                        float exposure:time = 0.02
+                        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -10.283570007658502)
+                        float3 xformOp:rotateZYX = (-3.9995334, -40.21752, -96.21171)
+                        float3 xformOp:scale = (1, 1, 1)
+                        float3 xformOp:translate = (-1.5417705, -2.5522954, 8.115508)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
+                    }
+
+                    over "carter_camera_third_person" (
+                        prepend apiSchemas = ["OmniRtxCameraAutoExposureAPI_1", "OmniRtxCameraExposureAPI_1"]
+                    )
+                    {
+                        float exposure:fStop = 5
+                        float exposure:responsivity = 1.1026709
+                        float exposure:time = 0.02
+                        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -5.1509018630299535)
+                        float3 xformOp:rotateZYX = (-9.917265, -16.49125, -122.00722)
+                        float3 xformOp:scale = (1.0000027, 1, 1.0000008)
+                        float3 xformOp:translate = (-0.37981758, 0.34869018, 2.8367653)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
+                    }
+
+                    over "carter_camera_stereo_right" (
+                        prepend apiSchemas = ["OmniRtxCameraAutoExposureAPI_1", "OmniRtxCameraExposureAPI_1"]
+                    )
+                    {
+                        float exposure:fStop = 5
+                        float exposure:responsivity = 1.1026709
+                        float exposure:time = 0.02
+                        custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -10425.995086295423)
+                        float3 xformOp:rotateZYX = (84.82138, 63.094864, 4.732233)
+                        float3 xformOp:scale = (1, 1, 1)
+                        float3 xformOp:translate = (9297.454, -4698.6577, 425.99036)
+                        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
+                    }
+                }
+            }
+
+            over "left_wheel_link"
+            {
+                vector3f physics:angularVelocity = (0, 0, 0)
+                vector3f physics:velocity = (0, 0, 0)
+                quatf xformOp:orient = (0.9999977, -3.4091863e-7, 0.00215619, -4.2372852e-7)
+                double3 xformOp:translate = (0.0005930924338004573, 0.31420508952742865, -0.010126650333404541)
+
+                over "side_wheel_obj"
+                {
+                    float3 xformOp:rotateZYX = (0, 0, 0)
+                    float3 xformOp:scale = (1, 1, 1)
+                    double3 xformOp:translate = (0, 0, 0)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
+                }
+            }
+
+            over "right_wheel_link"
+            {
+                vector3f physics:angularVelocity = (0, 0, 0)
+                vector3f physics:velocity = (0, 0, 0)
+                quatf xformOp:orient = (0.9999977, -3.4089678e-7, 0.0021561903, -4.237286e-7)
+                double3 xformOp:translate = (0.0005927147545135014, -0.31420609214451456, -0.010126113891601562)
+            }
+
+            over "rear_pivot_link"
+            {
+                vector3f physics:angularVelocity = (0, 0, 0)
+                vector3f physics:velocity = (0, 0, 0)
+                quatf xformOp:orient = (0.9999977, -3.668933e-7, 0.002156171, -0.000012210307)
+                double3 xformOp:translate = (-0.31586674463517905, 2.0876813355830137e-7, -0.0845622718334198)
+            }
+
+            over "rear_wheel_link"
+            {
+                vector3f physics:angularVelocity = (0, 0, 0)
+                vector3f physics:velocity = (0, 0, 0)
+                quatf xformOp:orient = (0.9999977, -3.6406004e-7, 0.0021507435, -0.000012198711)
+                double3 xformOp:translate = (-0.3543499133923964, 0.0000010766438748310847, -0.1740073412656784)
+            }
+
+            over "com_offset"
+            {
+                vector3f physics:angularVelocity = (0, 0, 0)
+                vector3f physics:velocity = (0, 0, 0)
+                quatf xformOp:orient = (0.9999977, -3.4088225e-7, 0.0021561903, -4.1856725e-7)
+                double3 xformOp:translate = (-0.2994042473308349, 2.734131366866066e-7, -0.008826404809951782)
+            }
+
+            over "imu"
+            {
+                vector3f physics:angularVelocity = (0, 0, 0)
+                vector3f physics:velocity = (0, 0, 0)
+                quatf xformOp:orient = (0.9999977, -3.4086779e-7, 0.0021561903, -4.1856725e-7)
+                float3 xformOp:translate = (0.00059300393, 2.5665392e-8, -0.0101263225)
+            }
+        }
+
+        over "franka" (
+            delete apiSchemas = ["PhysicsArticulationRootAPI"]
+        )
+        {
+            double3 xformOp:translate = (-0.06223540101007127, 0.00017267892258962655, -0.0035814722663630727)
+
+            over "panda_link0" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.020371813, 0.30525494, 0.001431186)
+                vector3f physics:velocity = (0.0011808198, -0.000021903621, -0.00028187473)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.9999688, -0.004858992, -0.006219709, 0.0002881495)
+                float3 xformOp:translate = (-0.00443335, 0.0023431259, -0.0005077938)
+
+                over "panda_joint1"
+                {
+                    float state:angular:physics:position = 0.66457045
+                    float state:angular:physics:velocity = -0.57715106
+                }
+            }
+
+            over "panda_link1" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.025978314, 0.2980742, -0.5756478)
+                vector3f physics:velocity = (0.0029546197, 0.00009656159, -0.00030058224)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.99995035, -0.0048949807, -0.006191432, 0.006087445)
+                float3 xformOp:translate = (-0.0085764695, 0.005577989, 0.33245057)
+
+                over "panda_joint2"
+                {
+                    float state:angular:physics:position = -32.727886
+                    float state:angular:physics:velocity = 0.22895782
+                }
+            }
+
+            over "panda_link2" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.20295152, 0.30084765, -0.5779064)
+                vector3f physics:velocity = (0.0029546197, 0.00009656159, -0.00030058224)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (-0.6750875, 0.6793042, 0.20851442, 0.19830397)
+                float3 xformOp:translate = (-0.0085764695, 0.005577989, 0.33245057)
+
+                over "panda_joint3"
+                {
+                    float state:angular:physics:position = 0.052873984
+                    float state:angular:physics:velocity = 0.66838664
+                }
+            }
+
+            over "panda_link3" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.2039924, 0.6691518, -0.020150512)
+                vector3f physics:velocity = (0.006095538, -0.00084245845, 0.00031362125)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.9576961, -0.0031143732, -0.28766266, 0.0076617952)
+                float3 xformOp:translate = (-0.18270333, 0.0060700793, 0.5961465)
+
+                over "panda_joint4"
+                {
+                    float state:angular:physics:position = -161.33566
+                    float state:angular:physics:velocity = 1.6228998
+                }
+            }
+
+            over "panda_link4" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-1.4186852, 0.6482431, -0.0033158388)
+                vector3f physics:velocity = (0.0066021634, -0.0010047626, 0.000052668267)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (-0.3162314, -0.30482513, -0.63395184, 0.63654095)
+                float3 xformOp:translate = (-0.11386676, 0.007430021, 0.641599)
+
+                over "panda_joint5"
+                {
+                    float state:angular:physics:position = -0.00013890323
+                    float state:angular:physics:velocity = -0.14807986
+                }
+            }
+
+            over "panda_link5" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-1.419247, 0.7650896, 0.08764696)
+                vector3f physics:velocity = (0.0046493784, -0.0052338145, 0.008778369)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.4391533, -0.008066459, 0.898374, -0.0018312591)
+                float3 xformOp:translate = (0.23980694, 0.010214762, 0.4708088)
+
+                over "panda_joint6"
+                {
+                    float state:angular:physics:position = 173.90622
+                    float state:angular:physics:velocity = 0.5204776
+                }
+            }
+
+            over "panda_link6" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-1.9396534, 0.7583833, 0.09304686)
+                vector3f physics:velocity = (0.0046493784, -0.0052338145, 0.008778369)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.65245026, 0.6492577, -0.27069697, 0.2819508)
+                float3 xformOp:translate = (0.23980694, 0.010214762, 0.4708088)
+
+                over "panda_joint7"
+                {
+                    float state:angular:physics:position = 42.469707
+                    float state:angular:physics:velocity = 0.1632467
+                }
+
+                over "geometry"
+                {
+                    float3 xformOp:rotateZYX = (0, 0, 0.0000011319547)
+                    float3 xformOp:scale = (1, 1.0000004, 1.0000004)
+                    double3 xformOp:translate = (0.01653850344562624, 1.4911445500587206e-7, 1.0436096431476471e-14)
+                    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZYX", "xformOp:scale"]
+                }
+            }
+
+            over "panda_link7" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-1.9393165, 0.64094007, -0.020339418)
+                vector3f physics:velocity = (0.0055865156, -0.003088459, 0.010828086)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (-0.13943346, 0.86083376, -0.3259606, 0.365066)
+                float3 xformOp:translate = (0.3009188, 0.011660535, 0.53411156)
+            }
+
+            over "panda_hand" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-1.9393165, 0.64094007, -0.020339418)
+                vector3f physics:velocity = (0.004727819, -0.0056040464, 0.013431125)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.010885106, 0.92004645, 0.028278613, 0.3906359)
+                float3 xformOp:translate = (0.37789693, 0.011881789, 0.45979255)
+
+                over "panda_finger_joint1"
+                {
+                    float state:linear:physics:position = 0.000021554431
+                    float state:linear:physics:velocity = 0.0000019008148
+                }
+
+                over "panda_finger_joint2"
+                {
+                    float state:linear:physics:position = 0.000021601198
+                    float state:linear:physics:velocity = 0.0000882508
+                }
+            }
+
+            over "panda_leftfinger" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-1.9393165, 0.64094007, -0.020339418)
+                vector3f physics:velocity = (0.0042572594, -0.006977084, 0.014852202)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.010885106, 0.92004645, 0.028278613, 0.3906359)
+                float3 xformOp:translate = (0.41991207, 0.011980973, 0.41923052)
+            }
+
+            over "panda_rightfinger" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-1.9393165, 0.64094007, -0.020339418)
+                vector3f physics:velocity = (0.004347226, -0.006973235, 0.014847862)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.010885106, 0.92004645, 0.028278613, 0.3906359)
+                float3 xformOp:translate = (0.41991022, 0.012022935, 0.41922873)
+            }
+        }
+
+        over "arm_mount" (
+            active = false
+        )
+        {
+            vector3f physics:angularVelocity = (0, 0, 0)
+            vector3f physics:velocity = (0, 0, 0)
+            quatf xformOp:orient = (1, -0, 0, 0)
+            double3 xformOp:translate = (-1.5511517137412056e-7, 5.159991534053887e-8, -0.3007859606103538)
+        }
+
+        def Xform "kaya" (
+            prepend apiSchemas = ["PhysicsArticulationRootAPI", "PhysxArticulationAPI"]
+            prepend references = @../kaya/kaya.usd@
+        )
+        {
+            bool physxArticulation:enabledSelfCollisions = 0
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (-0.0069332133550326636, -0.000969215959602282, -0.26575542255756224)
+            uniform token[] xformOpOrder = ["xformOp:translate"]
+
+            over "base_link" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.020371813, 0.30525494, 0.001431186)
+                vector3f physics:velocity = (0.0007623299, -0.00005133205, 0.000037981452)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.9999688, -0.0048589744, -0.0062197144, 0.00028806523)
+                float3 xformOp:translate = (-0.059852123, -0.052592937, 0.18208946)
+
+                over "axle_0_joint"
+                {
+                    custom float isaacmecanumwheel:angle = -90
+                }
+
+                over "axle_1_joint"
+                {
+                    custom float isaacmecanumwheel:angle = -90
+                }
+
+                over "axle_2_joint"
+                {
+                    custom float isaacmecanumwheel:angle = -90
+                }
+            }
+
+            over "axle_0" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.020427424, 0.39258024, 0.0003451032)
+                vector3f physics:velocity = (0.00019728941, -0.000088548026, -0.00006719452)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.70729834, 0.0019102333, -0.006885226, -0.7068791)
+                float3 xformOp:translate = (-0.25466728, -0.052425575, 0.07864908)
+            }
+
+            over "roller_0_0_0" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.030300753, 0.39257485, 0.00041460543)
+                vector3f physics:velocity = (-0.000093140225, -0.000103667866, -0.00005844549)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.70684755, 0.025319373, -0.030277766, -0.7062639)
+                float3 xformOp:translate = (-0.2742052, -0.052692126, 0.035753537)
+            }
+
+            over "roller_0_0_1" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.0030533737, 0.39191008, -0.054430332)
+                vector3f physics:velocity = (0.000110661924, -0.00009330615, 0.00021785333)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (-0.56031555, 0.42451808, 0.41050223, 0.58079153)
+                float3 xformOp:translate = (-0.27454948, -0.09303493, 0.065498084)
+            }
+
+            over "roller_0_0_2" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.0001597345, 0.39277357, 0.014852516)
+                vector3f physics:velocity = (0.0004365091, -0.0000762556, 0.000109216795)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (-0.21757425, 0.6699128, 0.6766092, 0.21465844)
+                float3 xformOp:translate = (-0.275151, -0.07721109, 0.11305492)
+            }
+
+            over "roller_0_0_3" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.037009675, 0.39209014, -0.042002857)
+                vector3f physics:velocity = (0.00043409143, -0.0000760795, -0.0002342249)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.20904681, 0.67803645, 0.6652108, -0.23250936)
+                float3 xformOp:translate = (-0.27517855, -0.027088355, 0.112702094)
+            }
+
+            over "roller_0_0_4" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.025386173, 0.39239177, -0.014557721)
+                vector3f physics:velocity = (0.00010675, -0.00009302121, -0.00033784483)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.57446903, 0.41950682, 0.40771687, -0.5725088)
+                float3 xformOp:translate = (-0.27459395, -0.011934946, 0.06492719)
+            }
+
+            over "roller_0_1_0" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.6287188, 0.38704097, -0.47826543)
+                vector3f physics:velocity = (-0.00003961723, -0.000101021404, 0.000099435194)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (-0.468139, 0.526699, -0.14712837, 0.69410896)
+                float3 xformOp:translate = (-0.31237376, -0.07772036, 0.043598603)
+            }
+
+            over "roller_0_1_1" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.09913747, 0.39712554, 0.35968107)
+                vector3f physics:velocity = (0.00028772446, -0.000084079875, 0.00020305849)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (-0.52112246, 0.47162572, 0.651138, 0.28639117)
+                float3 xformOp:translate = (-0.31295836, -0.092874244, 0.09137352)
+            }
+
+            over "roller_0_1_2" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.7977192, 0.39302954, -0.0054142307)
+                vector3f physics:velocity = (0.00048761445, -0.000073433024, -0.00007634419)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (-0.40543318, 0.5790936, 0.5765418, -0.40972447)
+                float3 xformOp:translate = (-0.3133471, -0.052116584, 0.12054715)
+            }
+
+            over "roller_0_1_3" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.11955257, 0.38718063, -0.44097233)
+                vector3f physics:velocity = (0.00028381223, -0.00008379495, -0.00035264296)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.27775672, 0.65473825, 0.45734754, -0.5338561)
+                float3 xformOp:translate = (-0.31300282, -0.011773777, 0.09080262)
+            }
+
+            over "roller_0_1_4" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.61044025, 0.39859813, 0.45191407)
+                vector3f physics:velocity = (-0.000042034728, -0.00010084531, -0.00024400649)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.69462204, -0.14621386, 0.5191553, -0.47602463)
+                float3 xformOp:translate = (-0.3124013, -0.027597617, 0.043245777)
+            }
+
+            over "axle_1" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.10405088, 0.2568827, 0.0028460678)
+                vector3f physics:velocity = (0.00023996519, -0.00009142567, 0.0011434406)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.8930051, 0.091681466, -0.36793154, 0.24241048)
+                float3 xformOp:translate = (0.04017902, -0.22255296, 0.08397078)
+            }
+
+            over "roller_1_0_0" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.089254364, 0.23211697, 0.031249413)
+                vector3f physics:velocity = (0.000103342776, -0.0001455757, 0.0010361078)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.8921049, -0.100061975, -0.41102028, 0.15874118)
+                float3 xformOp:translate = (0.07632495, -0.22535199, 0.053846642)
+            }
+
+            over "roller_1_0_1" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.06335235, 0.18146671, -0.16849467)
+                vector3f physics:velocity = (0.00032533935, -0.000055555938, 0.001027121)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (-0.5036011, -0.22261225, 0.82082343, -0.15191658)
+                float3 xformOp:translate = (0.0830803, -0.22061127, 0.1032865)
+            }
+
+            over "roller_1_0_2" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.19803716, -0.26305246, 0.093346596)
+                vector3f physics:velocity = (0.00042696655, -0.000014704699, 0.0010553756)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.033986446, -0.26708388, 0.9500719, 0.15771669)
+                float3 xformOp:translate = (0.044398196, -0.24258155, 0.12638226)
+            }
+
+            over "roller_1_0_3" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.10148659, 0.2532289, 0.029586885)
+                vector3f physics:velocity = (0.00026777896, -0.00007947698, 0.001081825)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.6271493, -0.19823532, 0.73661596, 0.15742773)
+                float3 xformOp:translate = (0.013736017, -0.26090068, 0.091216356)
+            }
+
+            over "roller_1_0_4" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.09149795, 0.2347814, -0.010349861)
+                vector3f physics:velocity = (0.000067768306, -0.0001603598, 0.0010699177)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.92630196, -0.16681916, 0.19963235, 0.27254912)
+                float3 xformOp:translate = (0.033467777, -0.25025243, 0.046386845)
+            }
+
+            over "roller_1_1_0" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.0920191, 0.23973879, 0.12831552)
+                vector3f physics:velocity = (0.00021214536, -0.00010341754, 0.001208732)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.7181769, 0.22717494, -0.60530835, 0.25732327)
+                float3 xformOp:translate = (0.10572464, -0.25194615, 0.077788524)
+            }
+
+            over "roller_1_1_1" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.30032244, -0.45507592, -0.42224064)
+                vector3f physics:velocity = (0.00041215567, -0.000022534798, 0.0012206413)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (-0.2752714, -0.19586162, 0.93172824, 0.13321531)
+                float3 xformOp:translate = (0.08599282, -0.26259488, 0.122618)
+            }
+
+            over "roller_1_1_2" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.018601434, 0.051592983, 0.23828897)
+                vector3f physics:velocity = (0.00037658168, -0.00003731877, 0.0012544495)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.33651102, -0.2844235, 0.8757778, 0.19717224)
+                float3 xformOp:translate = (0.04313577, -0.28749484, 0.11515825)
+            }
+
+            over "roller_1_1_3" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.080034666, 0.21237966, -0.09826229)
+                vector3f physics:velocity = (0.00015458494, -0.0001273386, 0.0012634385)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.8213089, -0.14926954, 0.5043162, 0.22098754)
+                float3 xformOp:translate = (0.036380418, -0.29223603, 0.06571838)
+            }
+
+            over "roller_1_1_4" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.008604628, 0.06298699, 0.03659571)
+                vector3f physics:velocity = (0.00005295773, -0.00016818987, 0.0012351836)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.9630113, -0.010967934, -0.080198355, 0.2570158)
+                float3 xformOp:translate = (0.0750624, -0.27026576, 0.042622622)
+            }
+
+            over "axle_2" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.02057649, 0.28164446, 0.0013271578)
+                vector3f physics:velocity = (0.00021899036, -0.00008259152, -0.0010274752)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.25852528, -0.008087154, 0.0033035912, 0.965965)
+                float3 xformOp:translate = (0.040366527, 0.11786872, 0.08066584)
+            }
+
+            over "roller_2_0_0" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.09904182, 0.0741688, 0.005478582)
+                vector3f physics:velocity = (0.0000094186535, -0.00006768026, -0.000942648)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.25846666, -0.009784626, -0.0030396222, 0.96596587)
+                float3 xformOp:translate = (0.051024906, 0.13478118, 0.03797899)
+            }
+
+            over "roller_2_0_1" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.0019400945, 0.24316402, -0.12820227)
+                vector3f physics:velocity = (0.00014994336, -0.000077530625, -0.0010309622)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.22449632, 0.5560118, -0.16810316, 0.782428)
+                float3 xformOp:translate = (0.015489572, 0.1553443, 0.06673379)
+            }
+
+            over "roller_2_0_2" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.024988128, 0.20231682, 0.07024646)
+                vector3f physics:velocity = (0.000385854, -0.000094911804, -0.000999994)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.120904125, 0.91196334, -0.2573224, 0.29578742)
+                float3 xformOp:translate = (0.02824294, 0.14811164, 0.11466571)
+            }
+
+            over "roller_2_0_3" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.091728315, 0.4046066, 0.10082686)
+                vector3f physics:velocity = (0.00039113007, -0.00009580359, -0.0008925428)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.096701175, 0.91930586, -0.18821715, -0.33181307)
+                float3 xformOp:translate = (0.07166027, 0.123081505, 0.115534455)
+            }
+
+            over "roller_2_0_4" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.029363027, 0.2971398, -0.056910217)
+                vector3f physics:velocity = (0.00015848015, -0.00007897358, -0.00085710053)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.24676801, -0.55846906, 0.20843576, 0.76405)
+                float3 xformOp:translate = (0.08574032, 0.11484176, 0.068139434)
+            }
+
+            over "roller_2_1_0" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.41229153, -0.46642354, -0.6040017)
+                vector3f physics:velocity = (0.0000468293, -0.000069362, -0.0011657672)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.35290492, 0.14485797, -0.4914149, 0.782934)
+                float3 xformOp:translate = (0.04822611, 0.18037635, 0.045602683)
+            }
+
+            over "roller_2_1_1" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.023659747, 0.20363243, 0.29452646)
+                vector3f physics:velocity = (0.0002794789, -0.00008619214, -0.0012012091)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.04138034, 0.7908891, -0.12250691, 0.5981423)
+                float3 xformOp:translate = (0.034146063, 0.18861419, 0.092997685)
+            }
+
+            over "roller_2_1_2" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (-0.4065295, -0.45916256, 0.01615007)
+                vector3f physics:velocity = (0.00042854054, -0.00009748542, -0.0011156619)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (-0.3431118, 0.9029804, -0.23845316, 0.10020376)
+                float3 xformOp:translate = (0.06886148, 0.16867477, 0.12315815)
+            }
+
+            over "roller_2_1_3" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.05192807, 0.3352237, 0.18168068)
+                vector3f physics:velocity = (0.00028801587, -0.000087634995, -0.0010273475)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (-0.04346272, 0.79910165, -0.134627, -0.5843142)
+                float3 xformOp:translate = (0.10439681, 0.14811355, 0.09440335)
+            }
+
+            over "roller_2_1_4" (
+                prepend apiSchemas = ["PhysxRigidBodyAPI"]
+            )
+            {
+                vector3f physics:angularVelocity = (0.050821796, 0.3343013, -0.04442077)
+                vector3f physics:velocity = (0.00005210523, -0.00007025383, -0.0010583159)
+                int physxRigidBody:solverPositionIterationCount = 64
+                int physxRigidBody:solverVelocityIterationCount = 16
+                quatf xformOp:orient = (0.29159543, -0.2620635, 0.23163092, 0.8903044)
+                float3 xformOp:translate = (0.091643445, 0.1553443, 0.046471443)
+            }
+        }
+
+        over "plate_joint" (
+            active = false
+        )
+        {
+            rel physics:body0 = </World/mobot/kaya/base_link>
+            rel physics:body1 = None
+            point3f physics:localPos0 = (0, -2.220446e-16, 0.18179935)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+
+        over "mount_joint" (
+            active = true
+        )
+        {
+            rel physics:body0 = </World/mobot/kaya/base_link>
+            rel physics:body1 = </World/mobot/franka/panda_link0>
+            point3f physics:localPos0 = (0.0011419448, 0.055302307, 0.080110095)
+            point3f physics:localPos1 = (0, 0, 0)
+            quatf physics:localRot0 = (1, 0, 0, 0)
+            quatf physics:localRot1 = (1, 0, 0, 0)
+        }
+    }
+
+    def Xform "Environment"
+    {
+        quatd xformOp:orient = (1, 0, 0, 0)
+        double3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+
+        def DistantLight "defaultLight" (
+            prepend apiSchemas = ["ShapingAPI"]
+        )
+        {
+            float inputs:angle = 1
+            float inputs:exposure = 1.5
+            float inputs:intensity = 1500
+            bool inputs:normalize = 1
+            float inputs:shaping:cone:angle = 180
+            float inputs:shaping:cone:softness
+            float inputs:shaping:focus
+            color3f inputs:shaping:focusTint
+            asset inputs:shaping:ies:file
+            custom int omni:rtx:usdluxVersion = 2505
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:scale = (1, 1, 1)
+            double3 xformOp:translate = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+    }
+
+    def PhysicsScene "PhysicsScene" (
+        prepend apiSchemas = ["NewtonSceneAPI", "PhysxSceneAPI"]
+    )
+    {
+        bool physxScene:enableCCD = 0
+        bool physxScene:enableStabilization = 0
+        uint physxScene:timeStepsPerSecond = 60
+    }
+
+    def Xform "Group" (
+        kind = "group"
+    )
+    {
+        float3 xformOp:rotateXYZ = (0, 0, 0)
+        float3 xformOp:scale = (1, 1, 1)
+        double3 xformOp:translate = (0, 0, 0)
+        float3 xformOp:translate:pivot = (4.7, -2.65, 0.99975)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:translate:pivot", "xformOp:rotateXYZ", "xformOp:scale", "!invert!xformOp:translate:pivot"]
+
+        def Mesh "Checkpoint" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/xuxian> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:scale = (1, 1, 0.001)
+            double3 xformOp:translate = (4.9, -5.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Mesh "Finish" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/xuxian> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:scale = (1, 1, 0.001)
+            double3 xformOp:translate = (2.2, 0.6, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Mesh "Start" (
+            prepend apiSchemas = ["MaterialBindingAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/xuxian> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            quatd xformOp:orient = (1, 0, 0, 0)
+            double3 xformOp:scale = (1, 1, 0.001)
+            double3 xformOp:translate = (8, 1.5, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+        }
+
+        def Mesh "Wall_0" (
+            prepend apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/BlueWall_Mat> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token physics:approximation = "none"
+            bool physics:collisionEnabled = 1
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            color3f[] primvars:displayColor = [(0.03, 0.22, 0.85)] (
+                interpolation = "constant"
+            )
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            float3 xformOp:rotateXYZ = (0, 0, 90)
+            double3 xformOp:scale = (0.5, 4, 1)
+            double3 xformOp:translate = (1.9, -1.5, 0.5)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "Wall_01" (
+            prepend apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/BlueWall_Mat> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token physics:approximation = "none"
+            bool physics:collisionEnabled = 1
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            color3f[] primvars:displayColor = [(0.03, 0.22, 0.85)] (
+                interpolation = "constant"
+            )
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            float3 xformOp:rotateXYZ = (0, 0, 90)
+            double3 xformOp:scale = (0.5, 5, 1)
+            double3 xformOp:translate = (4.9, -3.6, 0.5)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "Wall_02" (
+            prepend apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/BlueWall_Mat> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token physics:approximation = "none"
+            bool physics:collisionEnabled = 1
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            color3f[] primvars:displayColor = [(0.03, 0.22, 0.85)] (
+                interpolation = "constant"
+            )
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (0.5, 6, 1)
+            double3 xformOp:translate = (5.7, -0.7, 0.5)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "Wall_03" (
+            prepend apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/OmniPBR> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token physics:approximation = "none"
+            bool physics:collisionEnabled = 1
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            float3 xformOp:rotateXYZ = (0, 0, 90)
+            double3 xformOp:scale = (0.5, 10, 2)
+            double3 xformOp:translate = (4.7, -9.5, 1)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "Wall_04" (
+            prepend apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/OmniPBR> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token physics:approximation = "none"
+            bool physics:collisionEnabled = 1
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (0.5, 15, 2)
+            double3 xformOp:translate = (-0.3, -2.6, 1)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "Wall_05" (
+            prepend apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/OmniPBR> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token physics:approximation = "none"
+            bool physics:collisionEnabled = 1
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            float3 xformOp:rotateXYZ = (0, 0, 90)
+            double3 xformOp:scale = (0.5, 10, 2)
+            double3 xformOp:translate = (4.7, 4.4, 1)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+
+        def Mesh "Wall_06" (
+            prepend apiSchemas = ["MaterialBindingAPI", "PhysicsCollisionAPI", "PhysxCollisionAPI", "PhysxTriangleMeshCollisionAPI", "PhysicsMeshCollisionAPI"]
+        )
+        {
+            float3[] extent = [(-0.5, -0.5, -0.5), (0.5, 0.5, 0.5)]
+            int[] faceVertexCounts = [4, 4, 4, 4, 4, 4]
+            int[] faceVertexIndices = [0, 1, 3, 2, 4, 6, 7, 5, 6, 2, 3, 7, 4, 5, 1, 0, 4, 0, 2, 6, 5, 7, 3, 1]
+            rel material:binding = </World/Looks/OmniPBR> (
+                bindMaterialAs = "weakerThanDescendants"
+            )
+            normal3f[] normals = [(0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, 1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 0, -1), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, 1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (0, -1, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (-1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0), (1, 0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token physics:approximation = "none"
+            bool physics:collisionEnabled = 1
+            point3f[] points = [(-0.5, -0.5, 0.5), (0.5, -0.5, 0.5), (-0.5, 0.5, 0.5), (0.5, 0.5, 0.5), (-0.5, -0.5, -0.5), (0.5, -0.5, -0.5), (-0.5, 0.5, -0.5), (0.5, 0.5, -0.5)]
+            texCoord2f[] primvars:st = [(0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0), (0, 1), (0, 0), (1, 0), (1, 1), (0, 0), (1, 0), (1, 1), (0, 1), (0, 0), (1, 0), (1, 1), (0, 1), (1, 0), (1, 1), (0, 1), (0, 0)] (
+                interpolation = "faceVarying"
+            )
+            uniform token subdivisionScheme = "none"
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            double3 xformOp:scale = (0.5, 15, 2)
+            double3 xformOp:translate = (9.7, -2.7, 1)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+        }
+    }
+
+    def Xform "bobac" (
+        prepend references = @../isaacsimassets-dev/assets/robot/bobac.usd@
+    )
+    {
+        double3 xformOp:translate = (8, 1.082, 0.008656199456783401)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+
+        over "bobac3_serverbot"
+        {
+            over "bobac3_serverbot"
+            {
+                over "base_footprint"
+                {
+                    over "ECO65_B"
+                    {
+                        over "base_link_arm" (
+                            delete apiSchemas = ["PhysicsArticulationRootAPI"]
+                            prepend apiSchemas = ["PhysxRigidBodyAPI"]
+                        )
+                        {
+                        }
+
+                        over "lebai_gripper" (
+                            delete apiSchemas = ["PhysicsArticulationRootAPI"]
+                        )
+                        {
+                            over "gripper_base_link"
+                            {
+                            }
+
+                            over "gripper_l_link1"
+                            {
+                            }
+
+                            over "gripper_l_link_finger"
+                            {
+                                over "gripper_l_link_finger2link1"
+                                {
+                                    float state:angular:physics:position = -0.00023649997
+                                    float state:angular:physics:velocity = -0.0000060898074
+                                }
+                            }
+
+                            over "gripper_l_link2"
+                            {
+                            }
+
+                            over "gripper_r_link1"
+                            {
+                            }
+
+                            over "gripper_r_link_finger"
+                            {
+                                over "gripper_r_link_finger2link1"
+                                {
+                                    float state:angular:physics:position = 0.00039215418
+                                    float state:angular:physics:velocity = 0.000012086233
+                                }
+                            }
+
+                            over "gripper_r_link2"
+                            {
+                            }
+
+                            over "joints"
+                            {
+                                over "gripper_l_joint1"
+                                {
+                                    float state:angular:physics:position = 8.757119e-8
+                                    float state:angular:physics:velocity = -0.000010933868
+                                }
+
+                                over "gripper_r_joint1"
+                                {
+                                    float state:angular:physics:position = 2.0522728e-11
+                                    float state:angular:physics:velocity = -1.2514633e-7
+                                }
+
+                                over "gripper_l_joint_finger"
+                                {
+                                    float state:angular:physics:position = -0.0000881512
+                                    float state:angular:physics:velocity = -0.000034487788
+                                }
+
+                                over "gripper_r_joint_finger"
+                                {
+                                    float state:angular:physics:position = 0.00047591023
+                                    float state:angular:physics:velocity = 0.000049233724
+                                }
+                            }
+                        }
+
+                        over "link_1"
+                        {
+                        }
+
+                        over "link_2"
+                        {
+                        }
+
+                        over "link_3"
+                        {
+                        }
+
+                        over "link_4"
+                        {
+                        }
+
+                        over "link_5"
+                        {
+                        }
+
+                        over "link_6"
+                        {
+                            over "arm_camera"
+                            {
+                                over "arm_Camera" (
+                                    prepend apiSchemas = ["OmniRtxCameraAutoExposureAPI_1", "OmniRtxCameraExposureAPI_1", "OmniSensorAPI"]
+                                )
+                                {
+                                    float omni:sensor:tickRate = 30
+                                }
+                            }
+                        }
+
+                        over "joints"
+                        {
+                            over "joint_1"
+                            {
+                                float state:angular:physics:position = -2.1895463e-9
+                                float state:angular:physics:velocity = -0.00012341051
+                            }
+
+                            over "joint_2"
+                            {
+                                float state:angular:physics:position = 1.7642408e-9
+                                float state:angular:physics:velocity = 0.000025279718
+                            }
+
+                            over "joint_3"
+                            {
+                                float state:angular:physics:position = 2.1934567e-9
+                                float state:angular:physics:velocity = -0.00005388491
+                            }
+
+                            over "joint_4"
+                            {
+                                float state:angular:physics:position = 4.3836206e-8
+                                float state:angular:physics:velocity = 0.000105683306
+                            }
+
+                            over "joint_5"
+                            {
+                                float state:angular:physics:position = 6.1587514e-8
+                                float state:angular:physics:velocity = 0.000145316
+                            }
+
+                            over "joint_6"
+                            {
+                                float state:angular:physics:position = -6.62231e-7
+                                float state:angular:physics:velocity = 0.00007197438
+                            }
+                        }
+                    }
+
+                    over "base_link"
+                    {
+                        over "Camera" (
+                            prepend apiSchemas = ["OmniRtxCameraAutoExposureAPI_1", "OmniRtxCameraExposureAPI_1"]
+                        )
+                        {
+                            float exposure:fStop = 5
+                            float exposure:responsivity = 1.1026709
+                            float exposure:time = 0.02
+                        }
+                    }
+
+                    over "left_wheel_link"
+                    {
+                    }
+
+                    over "Angellun_OW_01"
+                    {
+                        over "OW1_wheel"
+                        {
+                        }
+
+                        over "OW1_wheel_passive_0"
+                        {
+                        }
+
+                        over "OW1_wheel_passive_1"
+                        {
+                        }
+
+                        over "OW1_wheel_passive_2"
+                        {
+                        }
+
+                        over "OW1_wheel_passive_3"
+                        {
+                        }
+
+                        over "OW1_wheel_passive_4"
+                        {
+                        }
+
+                        over "OW1_wheel_passive_5"
+                        {
+                        }
+
+                        over "OW1_wheel_passive_6"
+                        {
+                        }
+
+                        over "OW1_wheel_passive_7"
+                        {
+                        }
+
+                        over "OW1_wheel_passive_8"
+                        {
+                        }
+
+                        over "OW1_wheel_passive_9"
+                        {
+                        }
+                    }
+
+                    over "right_wheel_link"
+                    {
+                    }
+
+                    over "Angellun_OW_02"
+                    {
+                        over "OW2_wheel"
+                        {
+                        }
+
+                        over "OW2_wheel_passive_0"
+                        {
+                        }
+
+                        over "OW2_wheel_passive_1"
+                        {
+                        }
+
+                        over "OW2_wheel_passive_2"
+                        {
+                        }
+
+                        over "OW2_wheel_passive_3"
+                        {
+                        }
+
+                        over "OW2_wheel_passive_4"
+                        {
+                        }
+
+                        over "OW2_wheel_passive_5"
+                        {
+                        }
+
+                        over "OW2_wheel_passive_6"
+                        {
+                        }
+
+                        over "OW2_wheel_passive_7"
+                        {
+                        }
+
+                        over "OW2_wheel_passive_8"
+                        {
+                        }
+
+                        over "OW2_wheel_passive_9"
+                        {
+                        }
+                    }
+
+                    over "front_wheel_link"
+                    {
+                    }
+
+                    over "Angellun_OW"
+                    {
+                        over "OW0_wheel"
+                        {
+                        }
+
+                        over "OW0_wheel_passive_0"
+                        {
+                        }
+
+                        over "OW0_wheel_passive_1"
+                        {
+                        }
+
+                        over "OW0_wheel_passive_2"
+                        {
+                        }
+
+                        over "OW0_wheel_passive_3"
+                        {
+                        }
+
+                        over "OW0_wheel_passive_4"
+                        {
+                        }
+
+                        over "OW0_wheel_passive_5"
+                        {
+                        }
+
+                        over "OW0_wheel_passive_6"
+                        {
+                        }
+
+                        over "OW0_wheel_passive_7"
+                        {
+                        }
+
+                        over "OW0_wheel_passive_8"
+                        {
+                        }
+
+                        over "OW0_wheel_passive_9"
+                        {
+                        }
+                    }
+
+                    over "joints"
+                    {
+                        over "left_wheel_joint"
+                        {
+                            custom double isaacmecanumwheel:angle = -90
+                            custom double isaacmecanumwheel:radius = 0.035
+                            float state:angular:physics:position = 0.020859437
+                            float state:angular:physics:velocity = -2.5190914e-7
+                        }
+
+                        over "right_wheel_joint"
+                        {
+                            custom double isaacmecanumwheel:angle = -90
+                            custom double isaacmecanumwheel:radius = 0.035
+                            float state:angular:physics:position = -0.020697197
+                            float state:angular:physics:velocity = -8.911761e-8
+                        }
+
+                        over "front_wheel_joint"
+                        {
+                            custom double isaacmecanumwheel:angle = -90
+                            custom double isaacmecanumwheel:radius = 0.035
+                        }
+                    }
+                }
+            }
+
+            over "Graph"
+            {
+                over "Ros_Lidar" (
+                    active = false
+                )
+                {
+                    over "ros2_publish_laser_scan"
+                    {
+                        custom uint64 inputs:bufferSize
+                        custom uint64 inputs:dataPtr
+                        int node:typeVersion = 3
+                    }
+
+                    over "isaac_read_simulation_time"
+                    {
+                        custom uint64 inputs:referenceTimeDenominator
+                        custom int64 inputs:referenceTimeNumerator
+                    }
+                }
+
+                over "transform_tree_robot" (
+                    active = false
+                )
+                {
+                    over "isaac_read_simulation_time"
+                    {
+                        custom uint64 inputs:referenceTimeDenominator
+                        custom int64 inputs:referenceTimeNumerator
+                    }
+
+                    over "ros2_publish_transform_tree_to_robot_01"
+                    {
+                        custom token[] inputs:childFrames
+                        custom double4[] inputs:orientations
+                        custom token[] inputs:parentFrames
+                        custom double3[] inputs:translations
+                    }
+
+                    over "ros2_publish_transform_tree_to_camera"
+                    {
+                        custom token[] inputs:childFrames
+                        custom double4[] inputs:orientations
+                        custom token[] inputs:parentFrames
+                        custom double3[] inputs:translations
+                    }
+
+                    over "ros2_publish_transform_tree_to_robot_02"
+                    {
+                        custom token[] inputs:childFrames
+                        custom double4[] inputs:orientations
+                        custom token[] inputs:parentFrames
+                        custom double3[] inputs:translations
+                    }
+                }
+
+                over "ROS_Clock" (
+                    active = false
+                )
+                {
+                    over "isaac_read_simulation_time"
+                    {
+                        custom uint64 inputs:referenceTimeDenominator
+                        custom int64 inputs:referenceTimeNumerator
+                    }
+                }
+
+                over "ROSPublisher_odom2Base_link" (
+                    active = false
+                )
+                {
+                    over "ReadSimTime"
+                    {
+                        custom uint64 inputs:referenceTimeDenominator
+                        custom int64 inputs:referenceTimeNumerator
+                    }
+
+                    over "ComputeOdometry"
+                    {
+                        custom vector3d outputs:globalLinearAcceleration
+                        custom vector3d outputs:globalLinearVelocity
+                    }
+
+                    over "PublisherOdometry"
+                    {
+                        custom bool inputs:publishRawVelocities
+                    }
+                }
+
+                over "ROS_JointStates" (
+                    active = false
+                )
+                {
+                    over "ReadSimTime"
+                    {
+                        custom uint64 inputs:referenceTimeDenominator
+                        custom int64 inputs:referenceTimeNumerator
+                    }
+
+                    over "PublisherJointState_01"
+                    {
+                        custom uchar[] inputs:jointDofTypes
+                        custom double[] inputs:jointEfforts
+                        custom token[] inputs:jointNames
+                        custom double[] inputs:jointPositions
+                        custom double[] inputs:jointVelocities
+                        custom float inputs:sensorTime
+                        custom float inputs:stageMetersPerUnit
+                    }
+
+                    over "PublisherJointState"
+                    {
+                        custom uchar[] inputs:jointDofTypes
+                        custom double[] inputs:jointEfforts
+                        custom token[] inputs:jointNames
+                        custom double[] inputs:jointPositions
+                        custom double[] inputs:jointVelocities
+                        custom float inputs:sensorTime
+                        custom float inputs:stageMetersPerUnit
+                    }
+                }
+
+                over "ROS_Camera" (
+                    active = false
+                )
+                {
+                    over "RGBPublish"
+                    {
+                        custom string inputs:srtxCompressionType
+                        custom token inputs:type (
+                            allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d", "camera_info", "rgb_h264"]
+                        )
+                    }
+
+                    over "DepthPublish"
+                    {
+                        custom string inputs:srtxCompressionType
+                        custom token inputs:type (
+                            allowedTokens = ["rgb", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d", "camera_info", "rgb_h264"]
+                        )
+                    }
+
+                    over "RenderProduct"
+                    {
+                        custom rel inputs:renderProductPrim (
+                            customData = {
+                                dictionary omni = {
+                                    dictionary graph = {
+                                        string relType = "target"
+                                    }
+                                }
+                            }
+                        )
+                    }
+                }
+
+                over "Hand_Controller" (
+                    active = false
+                )
+                {
+                }
+
+                over "HolonomicController" (
+                    active = false
+                )
+                {
+                }
+            }
+        }
+    }
+}
+
+def "Render" (
+    hide_in_stage_window = true
+    no_delete = true
+)
+{
+    def "OmniverseKit"
+    {
+        def "HydraTextures" (
+            hide_in_stage_window = true
+            no_delete = true
+        )
+        {
+            def RenderProduct "omni_kit_widget_viewport_ViewportTexture_0" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </OmniverseKit_Top>
+                custom string ogPostProcessPath = "/Render/OmniverseKit/HydraTextures/omni_kit_widget_viewport_ViewportTexture_0/PostRender"
+                token omni:rtx:ambientOcclusion:denoiserMode = "none"
+                token omni:rtx:background:source:texture:textureMode = "repeatMirrored"
+                token omni:rtx:background:source:type = "domeLight"
+                bool omni:rtx:debug:view:pixelDebug:enableFixedTextPos = 1
+                token omni:rtx:directLighting:sampledLighting:denoisingTechnique = "None"
+                bool omni:rtx:dlss:frameGeneration = 0
+                float3 omni:rtx:domeLight:rotationAxis = (0, 0, 1)
+                bool omni:rtx:indirectDiffuse:denoiser:enabled = 0
+                bool omni:rtx:material:db:syncLoads = 1
+                token omni:rtx:post:dlss:execMode = "performance"
+                bool omni:rtx:post:registeredCompositing:invertColorCorrection = 1
+                bool omni:rtx:post:registeredCompositing:invertToneMap = 1
+                bool omni:rtx:pt:adaptiveSampling:filterError = 0
+                uint omni:rtx:pt:adaptiveSampling:fixedSppIterations = 2
+                int omni:rtx:pt:clampSpp = 64
+                uint omni:rtx:pt:limits:maxBounces = 3
+                uint omni:rtx:pt:limits:maxGlossyBounces = 3
+                uint omni:rtx:pt:maxSamplesPerLaunch = 2073600
+                uint omni:rtx:pt:mgpu:maxPixelsPerRegionExponent = 12
+                int omni:rtx:pt:samplesPerIteration = 64
+                uint omni:rtx:pt:samplesPerPixel = 64
+                bool omni:rtx:reflections:denoiser:enabled = 0
+                token omni:rtx:rendermode = "RealTimePathTracing"
+                color3f omni:rtx:rt:ambientLight:color = (0.1, 0.1, 0.1)
+                bool omni:rtx:rt:demoire = 0
+                bool omni:rtx:rt:ecoMode:enabled
+                bool omni:rtx:rt:lightcache:spatialCache:dontResolveConflicts = 1
+                int omni:rtx:rt:sss:samples = 1
+                uint omni:rtx:rtpt:maxVolumeBounces = 15
+                float omni:rtx:rtpt:modulatingRoughnessThreshold = 0.08
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:scene:hydra:mdlMaterialWarmup = 1
+                bool omni:rtx:scene:useViewLightingMode
+                bool omni:rtx:shadows:denoiser:enabled = 0
+                bool omni:rtx:shadows:enabled = 0
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (1280, 720)
+            }
+
+            def RenderProduct "Replicator" (
+                prepend apiSchemas = ["OmniRtxSettingsCommonAdvancedAPI_1", "OmniRtxSettingsRtAdvancedAPI_1", "OmniRtxSettingsPtAdvancedAPI_1", "OmniRtxPostColorGradingAPI_1", "OmniRtxPostChromaticAberrationAPI_1", "OmniRtxPostBloomPhysicalAPI_1", "OmniRtxPostMatteObjectAPI_1", "OmniRtxPostCompositingAPI_1", "OmniRtxPostDofAPI_1", "OmniRtxPostMotionBlurAPI_1", "OmniRtxPostTvNoiseAPI_1", "OmniRtxPostTonemapIrayReinhardAPI_1", "OmniRtxPostDebugSettingsAPI_1", "OmniRtxDebugSettingsAPI_1"]
+                hide_in_stage_window = true
+                no_delete = true
+            )
+            {
+                rel camera = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_6/arm_camera/arm_Camera>
+                bool omni:rtx:material:db:syncLoads = 1
+                bool omni:rtx:rt:ecoMode:enabled
+                bool omni:rtx:scene:hydra:materialSyncLoads = 1
+                bool omni:rtx:shadows:enabled = 0
+                rel orderedVars = </Render/Vars/LdrColor>
+                custom bool overrideClipRange = 0
+                uniform int2 resolution = (640, 480)
+            }
+        }
+    }
+
+    def RenderSettings "OmniverseGlobalRenderSettings" (
+        prepend apiSchemas = ["OmniRtxSettingsGlobalRtAdvancedAPI_1", "OmniRtxSettingsGlobalPtAdvancedAPI_1"]
+        no_delete = true
+    )
+    {
+        rel products = [
+            </Render/OmniverseKit/HydraTextures/omni_kit_widget_viewport_ViewportTexture_0>,
+            </Render/OmniverseKit/HydraTextures/Replicator>,
+        ]
+    }
+
+    def "Vars"
+    {
+        def RenderVar "LdrColor" (
+            hide_in_stage_window = true
+            no_delete = true
+        )
+        {
+            uniform string sourceName = "LdrColor"
+            uniform token sourceType = "raw"
+        }
+    }
+}
+
+over "OmniverseKit_Persp" (
+    prepend apiSchemas = ["OmniRtxCameraAutoExposureAPI_1", "OmniRtxCameraExposureAPI_1"]
+    customData = {
+        dictionary omni = {
+            dictionary kit = {
+                bool hide_in_stage_window = 1
+                bool no_delete = 1
+            }
+        }
+    }
+    hide_in_stage_window = true
+    kind = "component"
+    no_delete = true
+)
+{
+    float2 clippingRange = (0.01, 10000000)
+    float exposure:fStop = 5
+    float exposure:responsivity = 1.1026709
+    float exposure:time = 0.02
+    float focalLength = 18.147562
+    float focusDistance = 400
+    custom uniform vector3d omni:kit:centerOfInterest = (8.4168469309891, 1.138383617306727, 0.5786588943719789)
+    quatd xformOp:orient = (0.7346832660593557, 0.5154049135126019, -0.2533446678194814, -0.36112982843689606)
+    float3 xformOp:rotateXYZ = (63.0986, 0, 165.71172)
+    float3 xformOp:scale = (1, 1, 1)
+    matrix4d xformOp:transform = ( (-0.8899787357677766, 0.4560020283739863, 0, 0), (-0.22693904608332935, -0.44291672572110113, 0.8673658071651703, 0), (0.3955205674095575, 0.7719371245090554, 0.4976711329389245, 0), (8.99171496339052, 4.311937405130453, 4.942556193290302, 1) )
+    double3 xformOp:translate = (6.001517357055154, 0.06680204455293795, 1.2872319153972844)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:orient", "xformOp:scale"]
+}
+
+over "OmniverseKit_Front" (
+    prepend apiSchemas = ["OmniRtxCameraAutoExposureAPI_1", "OmniRtxCameraExposureAPI_1"]
+    customData = {
+        dictionary omni = {
+            dictionary kit = {
+                bool hide_in_stage_window = 1
+                bool no_delete = 1
+            }
+        }
+    }
+    hide_in_stage_window = true
+    kind = "component"
+    no_delete = true
+)
+{
+    float2 clippingRange = (1, 10000000)
+    float exposure:fStop = 5
+    float exposure:responsivity = 1.1026709
+    float exposure:time = 0.02
+    float horizontalAperture = 64.906906
+    custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -5)
+    token projection = "orthographic"
+    float verticalAperture = 64.906906
+    float3 xformOp:rotateXYZ = (90, -2.5444438e-14, 90)
+    float3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (5, 0.4319361336734314, 1.807489291899795)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+}
+
+over "OmniverseKit_Right" (
+    customData = {
+        dictionary omni = {
+            dictionary kit = {
+                bool hide_in_stage_window = 1
+                bool no_delete = 1
+            }
+        }
+    }
+    hide_in_stage_window = true
+    kind = "component"
+    no_delete = true
+)
+{
+    float2 clippingRange = (1, 10000000)
+    float horizontalAperture = 50
+    custom uniform vector3d omni:kit:centerOfInterest = (0, 0, -5)
+    token projection = "orthographic"
+    float verticalAperture = 50
+    float3 xformOp:rotateXYZ = (90, -1.41245e-30, 1.2722219e-14)
+    float3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (0, -5, 0)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+}
+
+over "OmniverseKit_Top" (
+    prepend apiSchemas = ["OmniRtxCameraAutoExposureAPI_1", "OmniRtxCameraExposureAPI_1"]
+    customData = {
+        dictionary omni = {
+            dictionary kit = {
+                bool hide_in_stage_window = 1
+                bool no_delete = 1
+            }
+        }
+    }
+    hide_in_stage_window = true
+    kind = "component"
+    no_delete = true
+)
+{
+    float2 clippingRange = (1, 10000000)
+    float exposure:fStop = 5
+    float exposure:responsivity = 1.1026709
+    float exposure:time = 0.02
+    float horizontalAperture = 226.44536
+    custom uniform vector3d omni:kit:centerOfInterest = (8, 1.0800000429153442, 0.6200000047683716)
+    token projection = "orthographic"
+    float verticalAperture = 226.44536
+    float3 xformOp:rotateXYZ = (-1.2722219e-14, -7.016709e-15, -90)
+    float3 xformOp:scale = (1, 1, 1)
+    double3 xformOp:translate = (3.8345558096509444, -1.8934114088705898, 5)
+    uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ", "xformOp:scale"]
+}
+
+over "base_link"
+{
+    string isaac:nameOverride (
+        displayName = "Name Override"
+        doc = "Name override for prim lookup in base name search"
+    )
+}
+
+over "base_link_01"
+{
+    string isaac:nameOverride (
+        displayName = "Name Override"
+        doc = "Name override for prim lookup in base name search"
+    )
+}
+
+over "base_link_02"
+{
+    string isaac:nameOverride (
+        displayName = "Name Override"
+        doc = "Name override for prim lookup in base name search"
+    )
+}
+
+def PhysicsScene "PhysicsScene" (
+    active = false
+    prepend apiSchemas = ["NewtonSceneAPI", "PhysxSceneAPI"]
+)
+{
+    bool physxScene:enableCCD = 0
+    bool physxScene:enableStabilization = 0
+    uint physxScene:timeStepsPerSecond = 60
+}
+
+def "Graphs"
+{
+    def OmniGraph "kaya_holonomic_controller" (
+        active = false
+    )
+    {
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "Shared"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def ComputeGraphSettings "computegraphSettings" (
+            active = false
+        )
+        {
+            custom token evaluator:type = "execution"
+            custom int2 fileFormatVersion = (1, 3)
+            custom token flatCacheBacking = "Shared"
+            custom token pipelineStage = "pipelineStageSimulation"
+        }
+
+        def OmniGraphNode "on_playback_tick" (
+            active = true
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds = 0.01374099962413311
+            custom double outputs:frame = 0
+            custom uint outputs:tick = 0 (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time = 0
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (119.27443, -248.43976)
+        }
+
+        def OmniGraphNode "make_3_vector" (
+            active = true
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom token inputs:x = ""
+            token inputs:x.connect = </Graphs/kaya_holonomic_controller/SpeedLinear.outputs:product>
+            custom token inputs:y = ""
+            token inputs:y.connect = </Graphs/kaya_holonomic_controller/SpeedStrafe.outputs:product>
+            custom token inputs:z = ""
+            token inputs:z.connect = </Graphs/kaya_holonomic_controller/SpeedAngular.outputs:product>
+            token node:type = "omni.graph.nodes.MakeVector3"
+            int node:typeVersion = 1
+            custom token outputs:tuple
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (150.19559, 14.427179)
+        }
+
+        def OmniGraphNode "usd_setup_holonomic_robot" (
+            active = true
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom rel inputs:comPrim = None (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "bundle"
+                        }
+                    }
+                }
+            )
+            custom token inputs:comPrimPath = "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link"
+            custom rel inputs:robotPrim = None (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "bundle"
+                        }
+                    }
+                }
+            )
+            custom token inputs:robotPrimPath = "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint"
+            custom bool inputs:usePath = 1
+            token node:type = "isaacsim.robot.wheeled_robots.HolonomicRobotUsdSetup"
+            int node:typeVersion = 1
+            custom double[] outputs:mecanumAngles
+            custom double3 outputs:upAxis
+            custom double3 outputs:wheelAxis
+            custom token[] outputs:wheelDofNames
+            custom double4[] outputs:wheelOrientations
+            custom double3[] outputs:wheelPositions
+            custom double[] outputs:wheelRadius
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (182.43396, 160.71152)
+        }
+
+        def OmniGraphNode "articulation_controller" (
+            active = true
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom double[] inputs:effortCommand
+            custom uint inputs:execIn = 0
+            prepend uint inputs:execIn.connect = </Graphs/kaya_holonomic_controller/on_playback_tick.outputs:tick>
+            custom int[] inputs:jointIndices
+            custom token[] inputs:jointNames = []
+            prepend token[] inputs:jointNames.connect = </Graphs/kaya_holonomic_controller/usd_setup_holonomic_robot.outputs:wheelDofNames>
+            custom double[] inputs:positionCommand
+            custom string inputs:robotPath = "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link"
+            custom rel inputs:targetPrim = None (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "bundle"
+                        }
+                    }
+                }
+            )
+            custom bool inputs:usePath = 1
+            custom double[] inputs:velocityCommand = []
+            prepend double[] inputs:velocityCommand.connect = </Graphs/kaya_holonomic_controller/holonomic_controller.outputs:jointVelocityCommand>
+            token node:type = "isaacsim.core.nodes.IsaacArticulationController"
+            int node:typeVersion = 1
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (979.87573, 205.55568)
+        }
+
+        def OmniGraphNode "holonomic_controller" (
+            active = true
+            prepend apiSchemas = ["NodeGraphNodeAPI"]
+        )
+        {
+            custom double inputs:angularGain
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            prepend uint inputs:execIn.connect = </Graphs/kaya_holonomic_controller/on_playback_tick.outputs:tick>
+            custom double3 inputs:inputVelocity
+            prepend double3 inputs:inputVelocity.connect = </Graphs/kaya_holonomic_controller/make_3_vector.outputs:tuple>
+            custom double inputs:linearGain
+            custom double inputs:maxAngularSpeed
+            custom double inputs:maxLinearSpeed
+            custom double inputs:maxWheelSpeed
+            custom double[] inputs:mecanumAngles
+            prepend double[] inputs:mecanumAngles.connect = </Graphs/kaya_holonomic_controller/usd_setup_holonomic_robot.outputs:mecanumAngles>
+            custom double3 inputs:upAxis
+            prepend double3 inputs:upAxis.connect = </Graphs/kaya_holonomic_controller/usd_setup_holonomic_robot.outputs:upAxis>
+            custom double3 inputs:wheelAxis
+            prepend double3 inputs:wheelAxis.connect = </Graphs/kaya_holonomic_controller/usd_setup_holonomic_robot.outputs:wheelAxis>
+            custom double4[] inputs:wheelOrientations
+            prepend double4[] inputs:wheelOrientations.connect = </Graphs/kaya_holonomic_controller/usd_setup_holonomic_robot.outputs:wheelOrientations>
+            custom double3[] inputs:wheelPositions
+            prepend double3[] inputs:wheelPositions.connect = </Graphs/kaya_holonomic_controller/usd_setup_holonomic_robot.outputs:wheelPositions>
+            custom double[] inputs:wheelRadius
+            prepend double[] inputs:wheelRadius.connect = </Graphs/kaya_holonomic_controller/usd_setup_holonomic_robot.outputs:wheelRadius>
+            token node:type = "isaacsim.robot.wheeled_robots.HolonomicController"
+            int node:typeVersion = 2
+            custom double[] outputs:jointVelocityCommand
+            uniform token ui:nodegraph:node:expansionState = "open"
+            uniform float2 ui:nodegraph:node:pos = (581.2901, 120.36697)
+        }
+
+        def OmniGraphNode "W" (
+            active = true
+        )
+        {
+            custom token inputs:key = "W" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "A" (
+            active = true
+        )
+        {
+            custom token inputs:key = "A" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "S" (
+            active = true
+        )
+        {
+            custom token inputs:key = "S" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "D" (
+            active = true
+        )
+        {
+            custom token inputs:key = "D" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "ToDoubleW"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            token inputs:value.connect = </Graphs/kaya_holonomic_controller/W.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "ToDoubleA"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            token inputs:value.connect = </Graphs/kaya_holonomic_controller/A.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "ToDoubleS"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            token inputs:value.connect = </Graphs/kaya_holonomic_controller/S.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "ToDoubleD"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            token inputs:value.connect = </Graphs/kaya_holonomic_controller/D.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "NegateLinear"
+        {
+            custom token inputs:a
+            token inputs:a.connect = </Graphs/kaya_holonomic_controller/ToDoubleS.outputs:converted>
+            custom token inputs:b
+            token inputs:b.connect = </Graphs/kaya_holonomic_controller/NegOne.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "NegateAngular"
+        {
+            custom token inputs:a
+            token inputs:a.connect = </Graphs/kaya_holonomic_controller/ToDoubleD.outputs:converted>
+            custom token inputs:b
+            token inputs:b.connect = </Graphs/kaya_holonomic_controller/NegOne.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "AddLinear"
+        {
+            custom token inputs:a
+            token inputs:a.connect = </Graphs/kaya_holonomic_controller/ToDoubleW.outputs:converted>
+            custom token inputs:b
+            token inputs:b.connect = </Graphs/kaya_holonomic_controller/NegateLinear.outputs:product>
+            token node:type = "omni.graph.nodes.Add"
+            int node:typeVersion = 2
+            custom token outputs:sum
+        }
+
+        def OmniGraphNode "AddAngular"
+        {
+            custom token inputs:a
+            token inputs:a.connect = </Graphs/kaya_holonomic_controller/ToDoubleA.outputs:converted>
+            custom token inputs:b
+            token inputs:b.connect = </Graphs/kaya_holonomic_controller/NegateAngular.outputs:product>
+            token node:type = "omni.graph.nodes.Add"
+            int node:typeVersion = 2
+            custom token outputs:sum
+        }
+
+        def OmniGraphNode "SpeedLinear"
+        {
+            custom token inputs:a
+            token inputs:a.connect = </Graphs/kaya_holonomic_controller/AddLinear.outputs:sum>
+            custom token inputs:b
+            token inputs:b.connect = </Graphs/kaya_holonomic_controller/ScaleLinear.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "ScaleLinear"
+        {
+            custom double inputs:value = 5
+            token node:type = "omni.graph.nodes.ConstantDouble"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "SpeedAngular"
+        {
+            custom token inputs:a
+            token inputs:a.connect = </Graphs/kaya_holonomic_controller/AddAngular.outputs:sum>
+            custom token inputs:b
+            token inputs:b.connect = </Graphs/kaya_holonomic_controller/ScaleAngular.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "ScaleAngular"
+        {
+            custom double inputs:value = 6
+            token node:type = "omni.graph.nodes.ConstantDouble"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "NegOne"
+        {
+            custom int inputs:value = -1
+            token node:type = "omni.graph.nodes.ConstantInt"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "Q" (
+            active = true
+        )
+        {
+            custom token inputs:key = "Q" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "E" (
+            active = true
+        )
+        {
+            custom token inputs:key = "E" (
+                allowedTokens = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "Apostrophe", "Backslash", "Backspace", "CapsLock", "Comma", "Del", "Down", "End", "Enter", "Equal", "Escape", "F1", "F10", "F11", "F12", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "GraveAccent", "Home", "Insert", "Key0", "Key1", "Key2", "Key3", "Key4", "Key5", "Key6", "Key7", "Key8", "Key9", "Left", "LeftAlt", "LeftBracket", "LeftControl", "LeftShift", "LeftSuper", "Menu", "Minus", "NumLock", "Numpad0", "Numpad1", "Numpad2", "Numpad3", "Numpad4", "Numpad5", "Numpad6", "Numpad7", "Numpad8", "Numpad9", "NumpadAdd", "NumpadDel", "NumpadDivide", "NumpadEnter", "NumpadEqual", "NumpadMultiply", "NumpadSubtract", "PageDown", "PageUp", "Pause", "Period", "PrintScreen", "Right", "RightAlt", "RightBracket", "RightControl", "RightShift", "RightSuper", "ScrollLock", "Semicolon", "Slash", "Space", "Tab", "Up"]
+            )
+            token node:type = "omni.graph.nodes.ReadKeyboardState"
+            int node:typeVersion = 1
+            custom bool outputs:altOut
+            custom bool outputs:ctrlOut
+            custom bool outputs:isPressed
+            custom bool outputs:shiftOut
+        }
+
+        def OmniGraphNode "ToDoubleQ"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            token inputs:value.connect = </Graphs/kaya_holonomic_controller/Q.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "ToDoubleE"
+        {
+            custom token inputs:role (
+                allowedTokens = ["None", "Color", "Frame", "Matrix", "Normal", "Point", "Quaternion", "TexCoord", "Timecode", "Vector"]
+            )
+            custom token inputs:value
+            token inputs:value.connect = </Graphs/kaya_holonomic_controller/E.outputs:isPressed>
+            token node:type = "omni.graph.nodes.ToDouble"
+            int node:typeVersion = 1
+            custom token outputs:converted
+        }
+
+        def OmniGraphNode "NegateStrafe"
+        {
+            custom token inputs:a
+            token inputs:a.connect = </Graphs/kaya_holonomic_controller/ToDoubleE.outputs:converted>
+            custom token inputs:b
+            token inputs:b.connect = </Graphs/kaya_holonomic_controller/NegOne.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "AddStrafe"
+        {
+            custom token inputs:a
+            token inputs:a.connect = </Graphs/kaya_holonomic_controller/ToDoubleQ.outputs:converted>
+            custom token inputs:b
+            token inputs:b.connect = </Graphs/kaya_holonomic_controller/NegateStrafe.outputs:product>
+            token node:type = "omni.graph.nodes.Add"
+            int node:typeVersion = 2
+            custom token outputs:sum
+        }
+
+        def OmniGraphNode "SpeedStrafe"
+        {
+            custom token inputs:a
+            token inputs:a.connect = </Graphs/kaya_holonomic_controller/AddStrafe.outputs:sum>
+            custom token inputs:b
+            token inputs:b.connect = </Graphs/kaya_holonomic_controller/ScaleStrafe.inputs:value>
+            token node:type = "omni.graph.nodes.Multiply"
+            int node:typeVersion = 2
+            custom token outputs:product
+        }
+
+        def OmniGraphNode "ScaleStrafe"
+        {
+            custom double inputs:value = 5
+            token node:type = "omni.graph.nodes.ConstantDouble"
+            int node:typeVersion = 1
+        }
+    }
+}
+
+def "CourseGraphs"
+{
+    def OmniGraph "g00_Hand_Controller"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "ArticulationController"
+        {
+            custom double[] inputs:effortCommand
+            double[] inputs:effortCommand.connect = </CourseGraphs/g00_Hand_Controller/SubscriberJointState.outputs:effortCommand>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g00_Hand_Controller/OnPlaybackTick.outputs:tick>
+            custom int[] inputs:jointIndices
+            custom token[] inputs:jointNames
+            token[] inputs:jointNames.connect = </CourseGraphs/g00_Hand_Controller/SubscriberJointState.outputs:jointNames>
+            custom double[] inputs:positionCommand
+            double[] inputs:positionCommand.connect = </CourseGraphs/g00_Hand_Controller/SubscriberJointState.outputs:positionCommand>
+            custom string inputs:robotPath
+            custom rel inputs:targetPrim = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double[] inputs:velocityCommand
+            double[] inputs:velocityCommand.connect = </CourseGraphs/g00_Hand_Controller/SubscriberJointState.outputs:velocityCommand>
+            token node:type = "isaacsim.core.nodes.IsaacArticulationController"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "Context"
+        {
+            custom uchar inputs:domain_id = 44
+            custom bool inputs:useDomainIDEnvVar = 1
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+
+        def OmniGraphNode "OnPlaybackTick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "SubscriberJointState"
+        {
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g00_Hand_Controller/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g00_Hand_Controller/OnPlaybackTick.outputs:tick>
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom string inputs:topicName = "/hand_command"
+            token node:type = "isaacsim.ros2.bridge.ROS2SubscribeJointState"
+            int node:typeVersion = 2
+            custom double[] outputs:effortCommand
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom token[] outputs:jointNames
+            custom double[] outputs:positionCommand
+            custom double outputs:timeStamp
+            custom double[] outputs:velocityCommand
+        }
+    }
+
+    def OmniGraph "g01_ROS_Camera"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "OnPlaybackTick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "CameraInfoPublish"
+        {
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g01_ROS_Camera/Context.outputs:context>
+            custom bool inputs:enabled
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g01_ROS_Camera/RenderProduct.outputs:execOut>
+            custom string inputs:frameId = "arm_Camera"
+            custom string inputs:frameIdRight = "arm_camera_right"
+            custom uint inputs:frameSkipCount = 0
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            token inputs:renderProductPath.connect = </CourseGraphs/g01_ROS_Camera/RenderProduct.outputs:renderProductPath>
+            custom token inputs:renderProductPathRight
+            custom bool inputs:resetSimulationTimeOnStop = 1
+            custom string inputs:topicName = "/arm_camera/camera_info"
+            custom string inputs:topicNameRight = "arm_camera_info_right"
+            custom bool inputs:useSystemTime = 0
+            token node:type = "isaacsim.ros2.bridge.ROS2CameraInfoHelper"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "RenderProduct"
+        {
+            custom rel inputs:cameraPrim = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_6/arm_camera/arm_Camera> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom bool inputs:enabled
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g01_ROS_Camera/OnPlaybackTick.outputs:tick>
+            custom uint inputs:height = 480
+            custom rel inputs:renderProductPrim = None (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom uint inputs:width = 640
+            token node:type = "isaacsim.core.nodes.IsaacCreateRenderProduct"
+            int node:typeVersion = 3
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom token outputs:renderProductPath
+        }
+
+        def OmniGraphNode "RunOnce"
+        {
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g01_ROS_Camera/OnPlaybackTick.outputs:tick>
+            token node:type = "isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame"
+            int node:typeVersion = 1
+            custom uint outputs:step (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+        }
+
+        def OmniGraphNode "Context"
+        {
+            custom uchar inputs:domain_id = 44
+            custom bool inputs:useDomainIDEnvVar = 1
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+
+        def OmniGraphNode "RGBPublish"
+        {
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g01_ROS_Camera/Context.outputs:context>
+            custom bool inputs:enabled
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g01_ROS_Camera/RenderProduct.outputs:execOut>
+            custom string inputs:frameId = "arm_Camera"
+            custom uint inputs:frameSkipCount = 0
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            token inputs:renderProductPath.connect = </CourseGraphs/g01_ROS_Camera/RenderProduct.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop = 1
+            custom string inputs:semanticLabelsTopicName
+            custom string inputs:srtxCompressionType
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName = "/arm_camera/rgb"
+            custom token inputs:type = "rgb" (
+                allowedTokens = ["rgb", "rgb_h264", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d"]
+            )
+            custom bool inputs:useSystemTime = 0
+            token node:type = "isaacsim.ros2.bridge.ROS2CameraHelper"
+            int node:typeVersion = 3
+        }
+
+        def OmniGraphNode "DepthPublish"
+        {
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g01_ROS_Camera/Context.outputs:context>
+            custom bool inputs:enabled
+            custom bool inputs:enableSemanticLabels
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g01_ROS_Camera/RenderProduct.outputs:execOut>
+            custom string inputs:frameId = "arm_Camera"
+            custom uint inputs:frameSkipCount = 0
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom token inputs:renderProductPath
+            token inputs:renderProductPath.connect = </CourseGraphs/g01_ROS_Camera/RenderProduct.outputs:renderProductPath>
+            custom bool inputs:resetSimulationTimeOnStop = 1
+            custom string inputs:semanticLabelsTopicName
+            custom string inputs:srtxCompressionType
+            custom float2 inputs:stereoOffset
+            custom string inputs:topicName = "/arm_camera/depth"
+            custom token inputs:type = "depth" (
+                allowedTokens = ["rgb", "rgb_h264", "depth", "depth_pcl", "instance_segmentation", "semantic_segmentation", "bbox_2d_tight", "bbox_2d_loose", "bbox_3d"]
+            )
+            custom bool inputs:useSystemTime = 0
+            token node:type = "isaacsim.ros2.bridge.ROS2CameraHelper"
+            int node:typeVersion = 3
+        }
+    }
+
+    def OmniGraph "g02_ROS_Clock"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "ros2_context"
+        {
+            custom uchar inputs:domain_id = 44
+            custom bool inputs:useDomainIDEnvVar = 1
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+
+        def OmniGraphNode "isaac_read_simulation_time"
+        {
+            custom uint64 inputs:referenceTimeDenominator
+            custom int64 inputs:referenceTimeNumerator
+            custom bool inputs:resetOnStop = 1
+            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
+            int node:typeVersion = 1
+            custom double outputs:simulationTime
+        }
+
+        def OmniGraphNode "ros2_publish_clock"
+        {
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g02_ROS_Clock/ros2_context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g02_ROS_Clock/on_playback_tick.outputs:tick>
+            custom string inputs:nodeNamespace
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom double inputs:timeStamp
+            double inputs:timeStamp.connect = </CourseGraphs/g02_ROS_Clock/isaac_read_simulation_time.outputs:simulationTime>
+            custom string inputs:topicName = "/clock"
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishClock"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "on_playback_tick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+    }
+
+    def OmniGraph "g03_ROS_JointStates"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "OnPlaybackTick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "Context"
+        {
+            custom uchar inputs:domain_id = 44
+            custom bool inputs:useDomainIDEnvVar = 1
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+
+        def OmniGraphNode "ReadSimTime"
+        {
+            custom uint64 inputs:referenceTimeDenominator
+            custom int64 inputs:referenceTimeNumerator
+            custom bool inputs:resetOnStop = 1
+            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
+            int node:typeVersion = 1
+            custom double outputs:simulationTime
+        }
+
+        def OmniGraphNode "PublisherJointState"
+        {
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g03_ROS_JointStates/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState.outputs:execOut>
+            custom uchar[] inputs:jointDofTypes
+            uchar[] inputs:jointDofTypes.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState.outputs:jointDofTypes>
+            custom double[] inputs:jointEfforts
+            double[] inputs:jointEfforts.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState.outputs:jointEfforts>
+            custom token[] inputs:jointNames
+            token[] inputs:jointNames.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState.outputs:jointNames>
+            custom double[] inputs:jointPositions
+            double[] inputs:jointPositions.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState.outputs:jointPositions>
+            custom double[] inputs:jointVelocities
+            double[] inputs:jointVelocities.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState.outputs:jointVelocities>
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom float inputs:sensorTime
+            float inputs:sensorTime.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState.outputs:sensorTime>
+            custom float inputs:stageMetersPerUnit
+            float inputs:stageMetersPerUnit.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState.outputs:stageMetersPerUnit>
+            custom double inputs:timeStamp
+            double inputs:timeStamp.connect = </CourseGraphs/g03_ROS_JointStates/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName = "/joint_states"
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishJointState"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "PublisherJointState_01"
+        {
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g03_ROS_JointStates/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState_01.outputs:execOut>
+            custom uchar[] inputs:jointDofTypes
+            uchar[] inputs:jointDofTypes.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState_01.outputs:jointDofTypes>
+            custom double[] inputs:jointEfforts
+            double[] inputs:jointEfforts.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState_01.outputs:jointEfforts>
+            custom token[] inputs:jointNames
+            token[] inputs:jointNames.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState_01.outputs:jointNames>
+            custom double[] inputs:jointPositions
+            double[] inputs:jointPositions.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState_01.outputs:jointPositions>
+            custom double[] inputs:jointVelocities
+            double[] inputs:jointVelocities.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState_01.outputs:jointVelocities>
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom float inputs:sensorTime
+            float inputs:sensorTime.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState_01.outputs:sensorTime>
+            custom float inputs:stageMetersPerUnit
+            float inputs:stageMetersPerUnit.connect = </CourseGraphs/g03_ROS_JointStates/course_source_PublisherJointState_01.outputs:stageMetersPerUnit>
+            custom double inputs:timeStamp
+            double inputs:timeStamp.connect = </CourseGraphs/g03_ROS_JointStates/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName = "/arm/joint_states"
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishJointState"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "course_source_PublisherJointState"
+        {
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g03_ROS_JointStates/OnPlaybackTick.outputs:tick>
+            custom rel inputs:prim = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            token node:type = "isaacsim.sensors.physics.IsaacReadJointState"
+            int node:typeVersion = 1
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom uchar[] outputs:jointDofTypes
+            custom double[] outputs:jointEfforts
+            custom token[] outputs:jointNames
+            custom double[] outputs:jointPositions
+            custom double[] outputs:jointVelocities
+            custom float outputs:sensorTime
+            custom float outputs:stageMetersPerUnit
+        }
+
+        def OmniGraphNode "course_source_PublisherJointState_01"
+        {
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g03_ROS_JointStates/OnPlaybackTick.outputs:tick>
+            custom rel inputs:prim = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            token node:type = "isaacsim.sensors.physics.IsaacReadJointState"
+            int node:typeVersion = 1
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom uchar[] outputs:jointDofTypes
+            custom double[] outputs:jointEfforts
+            custom token[] outputs:jointNames
+            custom double[] outputs:jointPositions
+            custom double[] outputs:jointVelocities
+            custom float outputs:sensorTime
+            custom float outputs:stageMetersPerUnit
+        }
+    }
+
+    def OmniGraph "g04_HolonomicController"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "usd_setup_holonomic_robot"
+        {
+            custom rel inputs:comPrim = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom token inputs:comPrimPath
+            custom rel inputs:robotPrim = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom token inputs:robotPrimPath
+            custom bool inputs:usePath
+            token node:type = "isaacsim.robot.wheeled_robots.HolonomicRobotUsdSetup"
+            int node:typeVersion = 1
+            custom double[] outputs:mecanumAngles
+            custom double3 outputs:upAxis
+            custom double3 outputs:wheelAxis
+            custom token[] outputs:wheelDofNames
+            custom double4[] outputs:wheelOrientations
+            custom double3[] outputs:wheelPositions
+            custom double[] outputs:wheelRadius
+        }
+
+        def OmniGraphNode "holonomic_controller"
+        {
+            custom double inputs:angularGain = 1
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g04_HolonomicController/on_playback_tick.outputs:tick>
+            custom double3 inputs:inputVelocity
+            double3 inputs:inputVelocity.connect = </CourseGraphs/g04_HolonomicController/make_3_vector.outputs:tuple>
+            custom double inputs:linearGain = -1.25
+            custom double inputs:maxAngularSpeed
+            custom double inputs:maxLinearSpeed
+            custom double inputs:maxWheelSpeed
+            custom double[] inputs:mecanumAngles
+            double[] inputs:mecanumAngles.connect = </CourseGraphs/g04_HolonomicController/usd_setup_holonomic_robot.outputs:mecanumAngles>
+            custom double3 inputs:upAxis
+            double3 inputs:upAxis.connect = </CourseGraphs/g04_HolonomicController/usd_setup_holonomic_robot.outputs:upAxis>
+            custom double3 inputs:wheelAxis
+            double3 inputs:wheelAxis.connect = </CourseGraphs/g04_HolonomicController/usd_setup_holonomic_robot.outputs:wheelAxis>
+            custom double4[] inputs:wheelOrientations
+            double4[] inputs:wheelOrientations.connect = </CourseGraphs/g04_HolonomicController/usd_setup_holonomic_robot.outputs:wheelOrientations>
+            custom double3[] inputs:wheelPositions
+            double3[] inputs:wheelPositions.connect = </CourseGraphs/g04_HolonomicController/usd_setup_holonomic_robot.outputs:wheelPositions>
+            custom double[] inputs:wheelRadius
+            double[] inputs:wheelRadius.connect = </CourseGraphs/g04_HolonomicController/usd_setup_holonomic_robot.outputs:wheelRadius>
+            token node:type = "isaacsim.robot.wheeled_robots.HolonomicController"
+            int node:typeVersion = 2
+            custom double[] outputs:jointVelocityCommand
+        }
+
+        def OmniGraphNode "articulation_controller"
+        {
+            custom double[] inputs:effortCommand
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g04_HolonomicController/on_playback_tick.outputs:tick>
+            custom int[] inputs:jointIndices
+            custom token[] inputs:jointNames
+            token[] inputs:jointNames.connect = </CourseGraphs/g04_HolonomicController/usd_setup_holonomic_robot.outputs:wheelDofNames>
+            custom double[] inputs:positionCommand
+            custom string inputs:robotPath
+            custom rel inputs:targetPrim = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom double[] inputs:velocityCommand
+            double[] inputs:velocityCommand.connect = </CourseGraphs/g04_HolonomicController/holonomic_controller.outputs:jointVelocityCommand>
+            token node:type = "isaacsim.core.nodes.IsaacArticulationController"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "ros2_subscribe_twist"
+        {
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g04_HolonomicController/ros2_context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g04_HolonomicController/on_playback_tick.outputs:tick>
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom string inputs:topicName = "/cmd_vel"
+            token node:type = "isaacsim.ros2.bridge.ROS2SubscribeTwist"
+            int node:typeVersion = 1
+            custom vector3d outputs:angularVelocity
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom vector3d outputs:linearVelocity
+        }
+
+        def OmniGraphNode "break_3_vector"
+        {
+            custom token inputs:tuple
+            token inputs:tuple.connect = </CourseGraphs/g04_HolonomicController/ros2_subscribe_twist.outputs:angularVelocity>
+            token node:type = "omni.graph.nodes.BreakVector3"
+            int node:typeVersion = 1
+            custom token outputs:x
+            custom token outputs:y
+            custom token outputs:z
+        }
+
+        def OmniGraphNode "break_3_vector_01"
+        {
+            custom token inputs:tuple
+            token inputs:tuple.connect = </CourseGraphs/g04_HolonomicController/ros2_subscribe_twist.outputs:linearVelocity>
+            token node:type = "omni.graph.nodes.BreakVector3"
+            int node:typeVersion = 1
+            custom token outputs:x
+            custom token outputs:y
+            custom token outputs:z
+        }
+
+        def OmniGraphNode "make_3_vector"
+        {
+            custom token inputs:x
+            token inputs:x.connect = </CourseGraphs/g04_HolonomicController/break_3_vector_01.outputs:x>
+            custom token inputs:y
+            token inputs:y.connect = </CourseGraphs/g04_HolonomicController/break_3_vector_01.outputs:y>
+            custom token inputs:z
+            token inputs:z.connect = </CourseGraphs/g04_HolonomicController/break_3_vector.outputs:z>
+            token node:type = "omni.graph.nodes.MakeVector3"
+            int node:typeVersion = 1
+            custom token outputs:tuple
+        }
+
+        def OmniGraphNode "on_playback_tick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "ros2_context"
+        {
+            custom uchar inputs:domain_id = 44
+            custom bool inputs:useDomainIDEnvVar = 1
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+    }
+
+    def OmniGraph "g05_transform_tree_robot"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "ros2_context"
+        {
+            custom uchar inputs:domain_id = 44
+            custom bool inputs:useDomainIDEnvVar = 1
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+
+        def OmniGraphNode "ros2_qos_profile"
+        {
+            custom token inputs:createProfile (
+                allowedTokens = ["Default for publishers/subscribers", "Services", "Sensor Data", "System Default", "Custom"]
+            )
+            custom double inputs:deadline
+            custom uint64 inputs:depth
+            custom token inputs:durability = "transientLocal" (
+                allowedTokens = ["systemDefault", "transientLocal", "volatile", "unknown"]
+            )
+            custom token inputs:history (
+                allowedTokens = ["systemDefault", "keepLast", "keepAll", "unknown"]
+            )
+            custom double inputs:leaseDuration
+            custom double inputs:lifespan
+            custom token inputs:liveliness (
+                allowedTokens = ["systemDefault", "automatic", "manualByTopic", "unknown"]
+            )
+            custom token inputs:reliability (
+                allowedTokens = ["systemDefault", "reliable", "bestEffort", "unknown"]
+            )
+            token node:type = "isaacsim.ros2.bridge.ROS2QoSProfile"
+            int node:typeVersion = 1
+            custom string outputs:qosProfile
+        }
+
+        def OmniGraphNode "isaac_read_simulation_time"
+        {
+            custom uint64 inputs:referenceTimeDenominator
+            custom int64 inputs:referenceTimeNumerator
+            custom bool inputs:resetOnStop = 1
+            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
+            int node:typeVersion = 1
+            custom double outputs:simulationTime
+        }
+
+        def OmniGraphNode "ros2_publish_transform_tree_to_camera"
+        {
+            custom token[] inputs:childFrames
+            token[] inputs:childFrames.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_camera.outputs:childFrames>
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g05_transform_tree_robot/ros2_context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_camera.outputs:execOut>
+            custom string inputs:nodeNamespace
+            custom double4[] inputs:orientations
+            double4[] inputs:orientations.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_camera.outputs:orientations>
+            custom token[] inputs:parentFrames
+            token[] inputs:parentFrames.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_camera.outputs:parentFrames>
+            custom string inputs:qosProfile
+            string inputs:qosProfile.connect = </CourseGraphs/g05_transform_tree_robot/ros2_qos_profile_01.outputs:qosProfile>
+            custom uint64 inputs:queueSize = 10
+            custom bool inputs:staticPublisher = 1
+            custom double inputs:timeStamp
+            double inputs:timeStamp.connect = </CourseGraphs/g05_transform_tree_robot/isaac_read_simulation_time.outputs:simulationTime>
+            custom string inputs:topicName = "tf_static"
+            custom double3[] inputs:translations
+            double3[] inputs:translations.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_camera.outputs:translations>
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "ros2_publish_transform_tree_to_robot_01"
+        {
+            custom token[] inputs:childFrames
+            token[] inputs:childFrames.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_robot_01.outputs:childFrames>
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g05_transform_tree_robot/ros2_context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_robot_01.outputs:execOut>
+            custom string inputs:nodeNamespace
+            custom double4[] inputs:orientations
+            double4[] inputs:orientations.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_robot_01.outputs:orientations>
+            custom token[] inputs:parentFrames
+            token[] inputs:parentFrames.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_robot_01.outputs:parentFrames>
+            custom string inputs:qosProfile
+            string inputs:qosProfile.connect = </CourseGraphs/g05_transform_tree_robot/ros2_qos_profile_01.outputs:qosProfile>
+            custom uint64 inputs:queueSize = 10
+            custom bool inputs:staticPublisher = 1
+            custom double inputs:timeStamp
+            double inputs:timeStamp.connect = </CourseGraphs/g05_transform_tree_robot/isaac_read_simulation_time.outputs:simulationTime>
+            custom string inputs:topicName = "tf_static"
+            custom double3[] inputs:translations
+            double3[] inputs:translations.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_robot_01.outputs:translations>
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "ros2_publish_transform_tree_to_robot_02"
+        {
+            custom token[] inputs:childFrames
+            token[] inputs:childFrames.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_robot_02.outputs:childFrames>
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g05_transform_tree_robot/ros2_context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_robot_02.outputs:execOut>
+            custom string inputs:nodeNamespace
+            custom double4[] inputs:orientations
+            double4[] inputs:orientations.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_robot_02.outputs:orientations>
+            custom token[] inputs:parentFrames
+            token[] inputs:parentFrames.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_robot_02.outputs:parentFrames>
+            custom string inputs:qosProfile
+            string inputs:qosProfile.connect = </CourseGraphs/g05_transform_tree_robot/ros2_qos_profile.outputs:qosProfile>
+            custom uint64 inputs:queueSize = 10
+            custom bool inputs:staticPublisher = 0
+            custom double inputs:timeStamp
+            double inputs:timeStamp.connect = </CourseGraphs/g05_transform_tree_robot/isaac_read_simulation_time.outputs:simulationTime>
+            custom string inputs:topicName = "tf"
+            custom double3[] inputs:translations
+            double3[] inputs:translations.connect = </CourseGraphs/g05_transform_tree_robot/course_source_ros2_publish_transform_tree_to_robot_02.outputs:translations>
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishTransformTree"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "ros2_qos_profile_01"
+        {
+            custom token inputs:createProfile = "Custom" (
+                allowedTokens = ["Default for publishers/subscribers", "Services", "Sensor Data", "System Default", "Custom"]
+            )
+            custom double inputs:deadline
+            custom uint64 inputs:depth = 10
+            custom token inputs:durability = "transientLocal" (
+                allowedTokens = ["systemDefault", "transientLocal", "volatile", "unknown"]
+            )
+            custom token inputs:history (
+                allowedTokens = ["systemDefault", "keepLast", "keepAll", "unknown"]
+            )
+            custom double inputs:leaseDuration
+            custom double inputs:lifespan
+            custom token inputs:liveliness (
+                allowedTokens = ["systemDefault", "automatic", "manualByTopic", "unknown"]
+            )
+            custom token inputs:reliability (
+                allowedTokens = ["systemDefault", "reliable", "bestEffort", "unknown"]
+            )
+            token node:type = "isaacsim.ros2.bridge.ROS2QoSProfile"
+            int node:typeVersion = 1
+            custom string outputs:qosProfile
+        }
+
+        def OmniGraphNode "on_playback_tick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "isaac_simulation_gate"
+        {
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g05_transform_tree_robot/on_playback_tick.outputs:tick>
+            custom uint inputs:step = 6
+            token node:type = "isaacsim.core.nodes.IsaacSimulationGate"
+            int node:typeVersion = 1
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+        }
+
+        def OmniGraphNode "course_source_ros2_publish_transform_tree_to_camera"
+        {
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g05_transform_tree_robot/on_playback_tick.outputs:tick>
+            custom rel inputs:parentPrim = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom rel inputs:targetPrims = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_6/arm_camera/arm_Camera> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            token node:type = "isaacsim.core.nodes.IsaacComputeTransformTree"
+            int node:typeVersion = 1
+            custom token[] outputs:childFrames
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double4[] outputs:orientations
+            custom token[] outputs:parentFrames
+            custom double3[] outputs:translations
+        }
+
+        def OmniGraphNode "course_source_ros2_publish_transform_tree_to_robot_01"
+        {
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g05_transform_tree_robot/on_playback_tick.outputs:tick>
+            custom rel inputs:parentPrim = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom rel inputs:targetPrims = [
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/front_lidar_link>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/rear_lidar_link>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/fuse_lidar_link>,
+            ] (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            token node:type = "isaacsim.core.nodes.IsaacComputeTransformTree"
+            int node:typeVersion = 1
+            custom token[] outputs:childFrames
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double4[] outputs:orientations
+            custom token[] outputs:parentFrames
+            custom double3[] outputs:translations
+        }
+
+        def OmniGraphNode "course_source_ros2_publish_transform_tree_to_robot_02"
+        {
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g05_transform_tree_robot/isaac_simulation_gate.outputs:execOut>
+            custom rel inputs:parentPrim = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom rel inputs:targetPrims = [
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/front_wheel_link>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/left_wheel_link>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/right_wheel_link>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_0>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_1>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_2>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_3>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_4>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_5>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_6>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_7>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_8>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_9>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_0>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_1>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_2>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_3>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_4>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_5>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_6>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_7>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_8>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_9>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_0>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_1>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_2>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_3>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_4>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_5>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_6>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_7>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_8>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_9>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_1>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_2>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_3>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_4>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_5>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/link_6>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/base_link_arm>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_base_link>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_l_link1>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_l_link2>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_l_link_finger>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_r_link1>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_r_link2>,
+                </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/ECO65_B/lebai_gripper/gripper_r_link_finger>,
+            ] (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            token node:type = "isaacsim.core.nodes.IsaacComputeTransformTree"
+            int node:typeVersion = 1
+            custom token[] outputs:childFrames
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double4[] outputs:orientations
+            custom token[] outputs:parentFrames
+            custom double3[] outputs:translations
+        }
+    }
+
+    def OmniGraph "g06_ROSPublisher_odom2Base_link"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "Context"
+        {
+            custom uchar inputs:domain_id = 44
+            custom bool inputs:useDomainIDEnvVar = 1
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+
+        def OmniGraphNode "ReadSimTime"
+        {
+            custom uint64 inputs:referenceTimeDenominator
+            custom int64 inputs:referenceTimeNumerator
+            custom bool inputs:resetOnStop = 1
+            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
+            int node:typeVersion = 1
+            custom double outputs:simulationTime
+        }
+
+        def OmniGraphNode "TFOdom2Robot"
+        {
+            custom string inputs:childFrameId = "base_link"
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/isaac_simulation_gate.outputs:execOut>
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:parentFrameId = "odom"
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom quatd inputs:rotation
+            quatd inputs:rotation.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/ComputeOdometry.outputs:orientation>
+            custom bool inputs:staticPublisher
+            custom double inputs:timeStamp
+            double inputs:timeStamp.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName = "tf"
+            custom vector3d inputs:translation
+            vector3d inputs:translation.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/ComputeOdometry.outputs:position>
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishRawTransformTree"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "ComputeOdometry"
+        {
+            custom rel inputs:chassisPrim = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/on_playback_tick.outputs:tick>
+            token node:type = "isaacsim.core.nodes.IsaacComputeOdometry"
+            int node:typeVersion = 1
+            custom vector3d outputs:angularAcceleration
+            custom vector3d outputs:angularVelocity
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom vector3d outputs:globalLinearAcceleration
+            custom vector3d outputs:globalLinearVelocity
+            custom vector3d outputs:linearAcceleration
+            custom vector3d outputs:linearVelocity
+            custom quatd outputs:orientation
+            custom vector3d outputs:position
+        }
+
+        def OmniGraphNode "PublisherOdometry"
+        {
+            custom vector3d inputs:angularVelocity
+            vector3d inputs:angularVelocity.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/ComputeOdometry.outputs:angularVelocity>
+            custom string inputs:chassisFrameId = "base_link"
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/Context.outputs:context>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/ComputeOdometry.outputs:execOut>
+            custom vector3d inputs:linearVelocity
+            vector3d inputs:linearVelocity.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/ComputeOdometry.outputs:linearVelocity>
+            custom string inputs:nodeNamespace = ""
+            custom string inputs:odomFrameId = "odom"
+            custom quatd inputs:orientation
+            quatd inputs:orientation.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/ComputeOdometry.outputs:orientation>
+            custom vector3d inputs:position
+            vector3d inputs:position.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/ComputeOdometry.outputs:position>
+            custom bool inputs:publishRawVelocities
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom vector3d inputs:robotFront
+            custom double inputs:timeStamp
+            double inputs:timeStamp.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/ReadSimTime.outputs:simulationTime>
+            custom string inputs:topicName = "odom"
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishOdometry"
+            int node:typeVersion = 1
+        }
+
+        def OmniGraphNode "on_playback_tick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "isaac_simulation_gate"
+        {
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g06_ROSPublisher_odom2Base_link/on_playback_tick.outputs:tick>
+            custom uint inputs:step = 6
+            token node:type = "isaacsim.core.nodes.IsaacSimulationGate"
+            int node:typeVersion = 1
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+        }
+    }
+
+    def OmniGraph "g07_Ros_Lidar"
+    {
+        token evaluationMode = "Automatic"
+        token evaluator:type = "execution"
+        token fabricCacheBacking = "StageWithoutHistory"
+        int2 fileFormatVersion = (1, 9)
+        token pipelineStage = "pipelineStageSimulation"
+
+        def OmniGraphNode "on_playback_tick"
+        {
+            token node:type = "omni.graph.action.OnPlaybackTick"
+            int node:typeVersion = 2
+            custom double outputs:deltaSeconds
+            custom double outputs:frame
+            custom uint outputs:tick (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom double outputs:time
+        }
+
+        def OmniGraphNode "ros2_context"
+        {
+            custom uchar inputs:domain_id = 44
+            custom bool inputs:useDomainIDEnvVar = 1
+            token node:type = "isaacsim.ros2.bridge.ROS2Context"
+            int node:typeVersion = 2
+            custom uint64 outputs:context
+        }
+
+        def OmniGraphNode "isaac_read_lidar_beams_node"
+        {
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g07_Ros_Lidar/on_playback_tick.outputs:tick>
+            custom rel inputs:lidarPrim = </World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link/fuse_lidar_link/Lidar> (
+                customData = {
+                    dictionary omni = {
+                        dictionary graph = {
+                            string relType = "target"
+                        }
+                    }
+                }
+            )
+            token node:type = "isaacsim.sensors.physx.IsaacReadLidarBeams"
+            int node:typeVersion = 1
+            custom float2 outputs:azimuthRange
+            custom float[] outputs:beamTimeData
+            custom float2 outputs:depthRange
+            custom uint outputs:execOut (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            custom float outputs:horizontalFov
+            custom float outputs:horizontalResolution
+            custom uchar[] outputs:intensitiesData
+            custom float[] outputs:linearDepthData
+            custom int outputs:numCols
+            custom int outputs:numRows
+            custom float outputs:rotationRate
+            custom float outputs:verticalFov
+            custom float outputs:verticalResolution
+            custom float2 outputs:zenithRange
+        }
+
+        def OmniGraphNode "isaac_read_simulation_time"
+        {
+            custom uint64 inputs:referenceTimeDenominator
+            custom int64 inputs:referenceTimeNumerator
+            custom bool inputs:resetOnStop = 1
+            token node:type = "isaacsim.core.nodes.IsaacReadSimulationTime"
+            int node:typeVersion = 1
+            custom double outputs:simulationTime
+        }
+
+        def OmniGraphNode "ros2_publish_laser_scan"
+        {
+            custom float2 inputs:azimuthRange
+            float2 inputs:azimuthRange.connect = </CourseGraphs/g07_Ros_Lidar/isaac_read_lidar_beams_node.outputs:azimuthRange>
+            custom uint64 inputs:bufferSize
+            custom uint64 inputs:context
+            uint64 inputs:context.connect = </CourseGraphs/g07_Ros_Lidar/ros2_context.outputs:context>
+            custom uint64 inputs:dataPtr
+            custom float2 inputs:depthRange
+            float2 inputs:depthRange.connect = </CourseGraphs/g07_Ros_Lidar/isaac_read_lidar_beams_node.outputs:depthRange>
+            custom uint inputs:execIn (
+                customData = {
+                    bool isExecution = 1
+                }
+            )
+            uint inputs:execIn.connect = </CourseGraphs/g07_Ros_Lidar/isaac_read_lidar_beams_node.outputs:execOut>
+            custom string inputs:frameId = "fuse_lidar_link"
+            custom float inputs:horizontalFov
+            float inputs:horizontalFov.connect = </CourseGraphs/g07_Ros_Lidar/isaac_read_lidar_beams_node.outputs:horizontalFov>
+            custom float inputs:horizontalResolution
+            float inputs:horizontalResolution.connect = </CourseGraphs/g07_Ros_Lidar/isaac_read_lidar_beams_node.outputs:horizontalResolution>
+            custom uchar[] inputs:intensitiesData
+            uchar[] inputs:intensitiesData.connect = </CourseGraphs/g07_Ros_Lidar/isaac_read_lidar_beams_node.outputs:intensitiesData>
+            custom float[] inputs:linearDepthData
+            float[] inputs:linearDepthData.connect = </CourseGraphs/g07_Ros_Lidar/isaac_read_lidar_beams_node.outputs:linearDepthData>
+            custom string inputs:nodeNamespace
+            custom int inputs:numCols
+            int inputs:numCols.connect = </CourseGraphs/g07_Ros_Lidar/isaac_read_lidar_beams_node.outputs:numCols>
+            custom int inputs:numRows
+            int inputs:numRows.connect = </CourseGraphs/g07_Ros_Lidar/isaac_read_lidar_beams_node.outputs:numRows>
+            custom string inputs:qosProfile
+            custom uint64 inputs:queueSize
+            custom float inputs:rotationRate
+            float inputs:rotationRate.connect = </CourseGraphs/g07_Ros_Lidar/isaac_read_lidar_beams_node.outputs:rotationRate>
+            custom double inputs:timeStamp
+            double inputs:timeStamp.connect = </CourseGraphs/g07_Ros_Lidar/isaac_read_simulation_time.outputs:simulationTime>
+            custom string inputs:topicName = "laser_scan_fuse"
+            token node:type = "isaacsim.ros2.bridge.ROS2PublishLaserScan"
+            int node:typeVersion = 3
+        }
+    }
+}
+

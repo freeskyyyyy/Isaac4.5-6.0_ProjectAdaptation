@@ -1,0 +1,57 @@
+{
+  "status": "passed",
+  "errors": [],
+  "image_reliability": "reliable",
+  "messages_received": {
+    "/clock": 101,
+    "/odom": 102,
+    "/laser_scan_fuse": 34,
+    "/joint_states": 102,
+    "/arm/joint_states": 101,
+    "/arm_camera/rgb": 45,
+    "/arm_camera/depth": 50,
+    "/arm_camera/camera_info": 50
+  },
+  "topics": {
+    "/clock": {
+      "message_type": "Clock",
+      "frame_id": null,
+      "encoding": null
+    },
+    "/laser_scan_fuse": {
+      "message_type": "LaserScan",
+      "frame_id": "fuse_lidar_link",
+      "encoding": null
+    },
+    "/odom": {
+      "message_type": "Odometry",
+      "frame_id": "odom",
+      "encoding": null
+    },
+    "/joint_states": {
+      "message_type": "JointState",
+      "frame_id": "",
+      "encoding": null
+    },
+    "/arm/joint_states": {
+      "message_type": "JointState",
+      "frame_id": "",
+      "encoding": null
+    },
+    "/arm_camera/camera_info": {
+      "message_type": "CameraInfo",
+      "frame_id": "arm_Camera",
+      "encoding": null
+    },
+    "/arm_camera/depth": {
+      "message_type": "Image",
+      "frame_id": "arm_Camera",
+      "encoding": "32FC1"
+    },
+    "/arm_camera/rgb": {
+      "message_type": "Image",
+      "frame_id": "arm_Camera",
+      "encoding": "rgb8"
+    }
+  }
+}

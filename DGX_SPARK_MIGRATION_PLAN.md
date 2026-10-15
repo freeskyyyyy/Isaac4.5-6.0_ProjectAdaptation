@@ -8,13 +8,14 @@
 
 ## 当前基线与状态
 
-- 源项目位于 `bobac_robotac_src/src`，USD 入口为 `test_scene_bobac.usd`。
-- 已选定官方多架构镜像摘要 `nvcr.io/nvidia/isaac-sim:6.0.0@sha256:68735a60b6c15c85e0dd0098570c6d2cc79e928f2d068ce2790aa43284ac165d`；目标只构建和运行 ARM64。
-- 工作区已有 Dockerfile、Compose、容器入口脚本和视觉依赖清单作为实施脚手架。它们尚不能证明 Spark 上镜像构建、驱动兼容或课程闭环已通过。
-- `reports/host-jazzy-build.log` 的最新宿主机 Jazzy 预检已成功编译 9 个包。首次 ROS Action 接口生成失败由中文工作路径引起，移至 ASCII 临时目录后解决；随后发现的 MoveIt 轨迹字段改名错误也已修复。该结果仅代表宿主机预检通过，不等于目标 ARM64 容器构建验收；容器内仍须干净构建和复核。
-- `reports/assets-source.json` 记录桌面 ZIP 的 616 个条目 CRC 全部通过，资产已同步到项目 `isaacsimassets-dev`。最新 `reports/scene-audit.json` 的 Isaac Sim 6.0 静态审计结果为 `missing_assets=[]`。`mobot` 和 Kaya 位于 inactive 分支，不是活跃依赖；缺失虚线 JPEG 已在迁移副本以浅色替代并记录。此前资产阻塞已消除，但场景图加载和完整闭环仍待运行验证。
-- 当前记录的宿主机驱动为 `580.82.09`；虽然低于 Isaac Sim 6.0 Spark 文档测试版本 `580.142`，但 `reports/compatibility-check.log` 的实际兼容性检查结果为 `PASSED`，当前无需改驱动。仍以容器内实际启动结果作为最终运行验证。
-- 官方镜像已下载，`reports/compatibility-check.log` 明确显示兼容性检查 `PASSED`，当前无需更改宿主机驱动。官方 SDK 约 17 GB 已复制到 `/home/nvidia/桌面/IsaacSim-6.0.0`，Compose 已加入其到 `/isaac-sim` 的绑定挂载；仍需验证挂载权限和容器内运行。`tools/setup_desktop_sdk.sh` 负责初始化桌面 SDK。课程镜像当前处于 apt 安装阶段，目标容器尚未完成运行验收。
+实施状态只在 [MIGRATION_TODO.md](MIGRATION_TODO.md) 持续更新。本计划保留目标与验收标准，不另行维护一份进度台账。
+
+- 源代码位于 `bobac_robotac_src/src`，原始入口 `test_scene_bobac.usd` 保留；6.0 副本为 `scenes/test_scene_bobac_6.0.usda`。
+- 官方 ARM64 基础摘要固定为 `sha256:68735a60b6c15c85e0dd0098570c6d2cc79e928f2d068ce2790aa43284ac165d`；镜像内 SDK 实际版本为 `6.0.0-rc.59+release.41464.5f2772bc.gl`。
+- 步骤 09–11 已在目标容器取得证据：镜像及 9 个 ROS 包编译、桌面 SDK 挂载、GPU/视觉依赖、GUI、真实场景与传感器、采样 TF 以及暂停/停止重播通过。精选验收摘要为 `reports/scene-runtime-acceptance.json`。
+- 活跃资产已补齐；停用 mobot/Kaya 不计为活跃依赖。虚线 JPEG 在副本采用浅色替代；原始 USD 哈希不变。
+- 当前驱动 `580.82.09` 已通过实际兼容性和运行检查，无证据要求更换驱动。
+- 图像跨进程传输使用与真实发布端一致的 RELIABLE 订阅；BEST_EFFORT 在小接收缓冲下严重丢包。视觉模块配置尚待 B 交接；导航目标、机械臂/夹爪控制、完整抓取及三次/重启复现尚未验收。
 
 ## 实施阶段
 
@@ -70,12 +71,12 @@
 
 **最终通过标准：** 固定初始条件下完整流程连续三次成功，容器重启后再次成功；所有依赖和运行入口均在容器内，关键资产引用完整，验收证据随交付材料保存。
 
-## 当前阻塞与处理顺序
+## 后续处理顺序
 
-1. **场景图及完整闭环待运行验证。** 资产 ZIP 的 616 条目 CRC 全部通过，资产已同步，静态审计 `missing_assets=[]`；当前资产缺失阻塞已解除。仍需在 Isaac Sim 6.0 中实际加载场景、检查图和传感器并完成运行时验证。
-2. **目标容器构建尚待验证。** 宿主机预检已成功编译 9 个包；中文路径导致的 Action 接口生成问题和 MoveIt 轨迹字段改名问题均已修复。课程镜像正在 apt 安装，仍需在目标 ARM64 容器中干净构建，不能用宿主机结果替代。
-3. **桌面 SDK 挂载与运行待验证。** 官方 SDK 已复制，Compose 已绑定 `/home/nvidia/桌面/IsaacSim-6.0.0` 到 `/isaac-sim`；仍需核实权限、执行 `tools/setup_desktop_sdk.sh` 并在容器中启动。
-4. **端到端执行与稳定性尚未验收。** 当前配置文件和局部代码只能作为准备工作；在前述阻塞关闭、全链路首次通过前，不开始三次连续与重启复现的最终计数。
+1. 接收 B 的视觉订阅可靠性配置，重编译并验收真实相机/TF/Action。
+2. 完成机械臂仅规划无命令输出的回归和修复，再验证机械臂与夹爪实际反馈。
+3. 核验 Nav2 地图与仿真初始姿态，先通过 C 的 navigation_readiness，再执行真实目标。
+4. 完成完整抓取提升后，才开始三次连续与容器重启复现的计数。详细状态与证据见 TODO。
 
 ## 官方参考
 

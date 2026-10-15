@@ -1,0 +1,156 @@
+{
+  "status": "passed",
+  "errors": [],
+  "image_reliability": "reliable",
+  "messages_received": {
+    "/clock": 880,
+    "/odom": 880,
+    "/laser_scan_fuse": 294,
+    "/joint_states": 880,
+    "/arm/joint_states": 880,
+    "/arm_camera/rgb": 422,
+    "/arm_camera/depth": 438,
+    "/arm_camera/camera_info": 440
+  },
+  "topics": {
+    "/clock": {
+      "message_type": "Clock",
+      "frame_id": null,
+      "encoding": null
+    },
+    "/joint_states": {
+      "message_type": "JointState",
+      "frame_id": "",
+      "encoding": null
+    },
+    "/arm/joint_states": {
+      "message_type": "JointState",
+      "frame_id": "",
+      "encoding": null
+    },
+    "/odom": {
+      "message_type": "Odometry",
+      "frame_id": "odom",
+      "encoding": null
+    },
+    "/laser_scan_fuse": {
+      "message_type": "LaserScan",
+      "frame_id": "fuse_lidar_link",
+      "encoding": null
+    },
+    "/arm_camera/camera_info": {
+      "message_type": "CameraInfo",
+      "frame_id": "arm_Camera",
+      "encoding": null
+    },
+    "/arm_camera/rgb": {
+      "message_type": "Image",
+      "frame_id": "arm_Camera",
+      "encoding": "rgb8"
+    },
+    "/arm_camera/depth": {
+      "message_type": "Image",
+      "frame_id": "arm_Camera",
+      "encoding": "32FC1"
+    }
+  },
+  "scope": "real course simulator sensor streams only; no motion or task success",
+  "observation_wall_seconds": 20.0,
+  "rates": {
+    "/clock": {
+      "messages": 879,
+      "unique_stamps": 879,
+      "sim_time_span": 14.633333332999996,
+      "hz_sim_time": 60.00000000136676
+    },
+    "/odom": {
+      "messages": 879,
+      "unique_stamps": 879,
+      "sim_time_span": 14.633333332999996,
+      "hz_sim_time": 60.00000000136676
+    },
+    "/laser_scan_fuse": {
+      "messages": 293,
+      "unique_stamps": 293,
+      "sim_time_span": 14.599999999999994,
+      "hz_sim_time": 20.000000000000007
+    },
+    "/joint_states": {
+      "messages": 879,
+      "unique_stamps": 879,
+      "sim_time_span": 14.633338929000018,
+      "hz_sim_time": 59.999977056500725
+    },
+    "/arm/joint_states": {
+      "messages": 879,
+      "unique_stamps": 879,
+      "sim_time_span": 14.633338929000018,
+      "hz_sim_time": 59.999977056500725
+    },
+    "/arm_camera/rgb": {
+      "messages": 422,
+      "unique_stamps": 422,
+      "sim_time_span": 14.433333333000007,
+      "hz_sim_time": 29.1685912246921,
+      "observed_wall_span": 19.67165605199989,
+      "max_wall_gap": 0.5370754270006728,
+      "startup_delay": 0.06675833799818065
+    },
+    "/arm_camera/depth": {
+      "messages": 437,
+      "unique_stamps": 437,
+      "sim_time_span": 14.599999999000005,
+      "hz_sim_time": 29.863013700675538,
+      "observed_wall_span": 19.89600536999933,
+      "max_wall_gap": 0.5033419570027036,
+      "startup_delay": 0.06799602799947024
+    },
+    "/arm_camera/camera_info": {
+      "messages": 440,
+      "unique_stamps": 440,
+      "sim_time_span": 14.633333332000007,
+      "hz_sim_time": 30.000000002733472,
+      "observed_wall_span": 19.987491761003184,
+      "max_wall_gap": 0.11807928499911213,
+      "startup_delay": 0.015276340996933868
+    }
+  },
+  "image_pairing": {
+    "/arm_camera/depth": {
+      "fraction_within_50ms": 1.0,
+      "max_nearest_delta_seconds": 0.03333333300000163
+    },
+    "/arm_camera/camera_info": {
+      "fraction_within_50ms": 1.0,
+      "max_nearest_delta_seconds": 0.0
+    }
+  },
+  "rgb_image": "/workspace/course/reports/arm-camera-rgb.png",
+  "depth": {
+    "encoding": "32FC1",
+    "unit_after_conversion": "meters",
+    "finite_positive_pixels": 195876,
+    "total_pixels": 307200,
+    "percentiles_m": [
+      1.545477420091629,
+      2.8810529708862305,
+      10.331011772155762
+    ]
+  },
+  "depth_capture_tf": {
+    "parent": "base_link_arm",
+    "child": "arm_Camera",
+    "translation": [
+      -0.08734483180471622,
+      0.0010379283132959786,
+      0.8974897799276667
+    ],
+    "rotation_xyzw": [
+      -0.7071188948102685,
+      -4.572679785909264e-05,
+      -7.214622692417717e-05,
+      0.7070946621961494
+    ],
+    "stamp": 130.733333332
+  }
+}

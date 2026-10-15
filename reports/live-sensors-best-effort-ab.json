@@ -1,0 +1,144 @@
+{
+  "status": "failed",
+  "errors": [
+    "No data: /arm_camera/rgb; check Play, graph, ROS_DOMAIN_ID and QoS",
+    "Stale data (>1s): /arm_camera/depth",
+    "Camera did not cover observation window without >1s gaps: /arm_camera/rgb",
+    "Insufficient sustained camera output: /arm_camera/rgb",
+    "Camera did not cover observation window without >1s gaps: /arm_camera/depth",
+    "Insufficient sustained camera output: /arm_camera/depth",
+    "RGB pairing below 90% within 50ms: /arm_camera/depth",
+    "RGB pairing below 90% within 50ms: /arm_camera/camera_info",
+    "TF at depth capture timestamp unavailable: Lookup would require extrapolation into the past.  Requested time 233.966667 but the earliest data is at time 240.333333, when looking up transform from frame [arm_Camera] to frame [base_link_arm]"
+  ],
+  "messages_received": {
+    "/clock": 1003,
+    "/odom": 1003,
+    "/laser_scan_fuse": 334,
+    "/joint_states": 1003,
+    "/arm/joint_states": 1002,
+    "/arm_camera/rgb": 0,
+    "/arm_camera/depth": 1,
+    "/arm_camera/camera_info": 501
+  },
+  "topics": {
+    "/clock": {
+      "message_type": "Clock",
+      "frame_id": null,
+      "encoding": null
+    },
+    "/odom": {
+      "message_type": "Odometry",
+      "frame_id": "odom",
+      "encoding": null
+    },
+    "/joint_states": {
+      "message_type": "JointState",
+      "frame_id": "",
+      "encoding": null
+    },
+    "/arm/joint_states": {
+      "message_type": "JointState",
+      "frame_id": "",
+      "encoding": null
+    },
+    "/arm_camera/camera_info": {
+      "message_type": "CameraInfo",
+      "frame_id": "arm_Camera",
+      "encoding": null
+    },
+    "/laser_scan_fuse": {
+      "message_type": "LaserScan",
+      "frame_id": "fuse_lidar_link",
+      "encoding": null
+    },
+    "/arm_camera/depth": {
+      "message_type": "Image",
+      "frame_id": "arm_Camera",
+      "encoding": "32FC1"
+    }
+  },
+  "scope": "real course simulator sensor streams only; no motion or task success",
+  "observation_wall_seconds": 20.0,
+  "image_reliability": "best_effort",
+  "rates": {
+    "/clock": {
+      "messages": 911,
+      "unique_stamps": 911,
+      "sim_time_span": 15.166666667000015,
+      "hz_sim_time": 59.99999999868126
+    },
+    "/odom": {
+      "messages": 911,
+      "unique_stamps": 911,
+      "sim_time_span": 15.166666667000015,
+      "hz_sim_time": 59.99999999868126
+    },
+    "/laser_scan_fuse": {
+      "messages": 304,
+      "unique_stamps": 304,
+      "sim_time_span": 15.150000000000006,
+      "hz_sim_time": 19.999999999999993
+    },
+    "/joint_states": {
+      "messages": 910,
+      "unique_stamps": 910,
+      "sim_time_span": 15.149993896000012,
+      "hz_sim_time": 60.00002417426712
+    },
+    "/arm/joint_states": {
+      "messages": 910,
+      "unique_stamps": 910,
+      "sim_time_span": 15.149993896000012,
+      "hz_sim_time": 60.00002417426712
+    },
+    "/arm_camera/rgb": {
+      "messages": 0,
+      "unique_stamps": 0,
+      "sim_time_span": 0,
+      "hz_sim_time": null,
+      "observed_wall_span": 0,
+      "max_wall_gap": null,
+      "startup_delay": null
+    },
+    "/arm_camera/depth": {
+      "messages": 1,
+      "unique_stamps": 1,
+      "sim_time_span": 0,
+      "hz_sim_time": null,
+      "observed_wall_span": 0,
+      "max_wall_gap": null,
+      "startup_delay": 0.3504363620013464
+    },
+    "/arm_camera/camera_info": {
+      "messages": 455,
+      "unique_stamps": 455,
+      "sim_time_span": 15.133333332999996,
+      "hz_sim_time": 30.0000000006608,
+      "observed_wall_span": 19.946736030000466,
+      "max_wall_gap": 0.048499260999960825,
+      "startup_delay": 0.03579166200142936
+    }
+  },
+  "image_pairing": {
+    "/arm_camera/depth": {
+      "fraction_within_50ms": 0,
+      "max_nearest_delta_seconds": null
+    },
+    "/arm_camera/camera_info": {
+      "fraction_within_50ms": 0,
+      "max_nearest_delta_seconds": null
+    }
+  },
+  "depth": {
+    "encoding": "32FC1",
+    "unit_after_conversion": "meters",
+    "finite_positive_pixels": 195874,
+    "total_pixels": 307200,
+    "percentiles_m": [
+      1.545535055398941,
+      2.881080389022827,
+      10.331255912780762
+    ]
+  }
+}
