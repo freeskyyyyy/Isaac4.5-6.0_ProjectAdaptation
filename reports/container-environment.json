@@ -1,0 +1,27 @@
+{
+  "status": "passed",
+  "scope": "target container environment only; live sensor and course acceptance separate",
+  "verified_at": "2026-10-15T20:19:00+08:00",
+  "image_id": "sha256:40dfb2bdee1ad5d40a2a4d6cdca02e021cbfd6ccb5fd6fb5610d642df7df1a92",
+  "network": "isaac45-60_projectadaptation_default",
+  "gpu_python_smoke": "passed",
+  "gui": {
+    "isaac_sim_6_0_window": true,
+    "rviz_window": true
+  },
+  "dependencies": [
+    "reports/apt-resolved.txt",
+    "reports/vision-resolved.txt",
+    "docker/vendor/clip-source.json"
+  ],
+  "evidence": [
+    "reports/container-mounts.json",
+    "reports/vision-check.json",
+    "reports/gui-windows.log",
+    "reports/container-jazzy-build.log"
+  ],
+  "limits": [
+    "YOLOE input was synthetic; actual camera/TF/Action acceptance pending",
+    "Live sensor readiness failed before schema/TF correction; rechecking"
+  ]
+}

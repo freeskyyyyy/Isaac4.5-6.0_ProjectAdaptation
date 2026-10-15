@@ -1,0 +1,11 @@
+{
+  "repository": "https://github.com/ultralytics/CLIP",
+  "commit": "7ffa84b3bfa40c42ecc1c77147a855e69cb2dd40",
+  "source_archive_sha256": "ea6799c740f2725175edee0881de9f354086e801dd33d4f43b17d18c8238fb54",
+  "wheel": "clip-1.0-py3-none-any.whl",
+  "wheel_sha256": "462c229d575f57293da0d93d4350171b2f71428839f23e02c9eca903306d859e",
+  "license_files": [
+    "clip-1.0.dist-info/LICENSE"
+  ],
+  "purpose": "Ultralytics 8.4.26 MobileCLIPTS tokenizer (clip.clip.tokenize)"
+}

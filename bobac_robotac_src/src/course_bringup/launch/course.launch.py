@@ -6,7 +6,7 @@ from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, Regi
 from launch.events import Shutdown
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import EnvironmentVariable, LaunchConfiguration
 from launch_ros.actions import Node
 
 
@@ -23,7 +23,8 @@ def generate_launch_description():
     vision = Node(
         package='yoloe_grasp', executable='yoloe_grasp_node', output='screen',
         prefix=[os.environ.get('VISION_PYTHON', '/opt/course-vision/bin/python')],
-        parameters=[os.path.join(vision_share, 'config', 'pen_grasp_params.yaml'), {'use_sim_time': True}],
+        parameters=[os.path.join(vision_share, 'config', 'pen_grasp_params.yaml'),
+                    {'use_sim_time': True, 'text_model_cache_dir': LaunchConfiguration('vision_cache_dir')}],
     )
     motion = Node(
         package='eco65b_moveit_grasp', executable='grasp_moveit_node', output='screen',
@@ -47,6 +48,8 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('readiness_timeout', default_value='60'),
         DeclareLaunchArgument('rviz', default_value='true'),
+        DeclareLaunchArgument('vision_cache_dir', default_value=EnvironmentVariable(
+            'COURSE_VISION_CACHE', default_value='/workspace/course/.runtime/arm64/vision/weights')),
         RegisterEventHandler(OnProcessExit(target_action=readiness, on_exit=checked)),
         readiness,
     ])

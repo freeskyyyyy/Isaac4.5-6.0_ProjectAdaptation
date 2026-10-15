@@ -1,0 +1,137 @@
+{
+  "status": "passed",
+  "scope": "GPU and Python dependency smoke check; not live-camera acceptance",
+  "python": "/opt/course-vision/bin/python",
+  "python_version": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "vision_python_expected": "/opt/course-vision/bin/python",
+  "ros_domain_id": "44",
+  "rmw_implementation": "rmw_cyclonedds_cpp",
+  "input": "synthetic black BGR image",
+  "checks": {
+    "interpreter": {
+      "status": "passed",
+      "seconds": 0.0,
+      "details": "/opt/course-vision/bin/python"
+    },
+    "import_numpy": {
+      "status": "passed",
+      "seconds": 0.045,
+      "details": {
+        "version": "1.26.4",
+        "file": "/usr/lib/python3/dist-packages/numpy/__init__.py"
+      }
+    },
+    "import_torch": {
+      "status": "passed",
+      "seconds": 0.7,
+      "details": {
+        "version": "2.9.0+cu130",
+        "file": "/opt/course-vision/lib/python3.12/site-packages/torch/__init__.py"
+      }
+    },
+    "import_torchvision": {
+      "status": "passed",
+      "seconds": 0.465,
+      "details": {
+        "version": "0.24.0",
+        "file": "/opt/course-vision/lib/python3.12/site-packages/torchvision/__init__.py"
+      }
+    },
+    "import_cv2": {
+      "status": "passed",
+      "seconds": 0.029,
+      "details": {
+        "version": "4.11.0",
+        "file": "/opt/course-vision/lib/python3.12/site-packages/cv2/__init__.py"
+      }
+    },
+    "import_cv_bridge": {
+      "status": "passed",
+      "seconds": 0.095,
+      "details": {
+        "version": null,
+        "file": "/opt/ros/jazzy/lib/python3.12/site-packages/cv_bridge/__init__.py"
+      }
+    },
+    "import_sensor_msgs.msg": {
+      "status": "passed",
+      "seconds": 0.0,
+      "details": {
+        "version": null,
+        "file": "/opt/ros/jazzy/lib/python3.12/site-packages/sensor_msgs/msg/__init__.py"
+      }
+    },
+    "import_ultralytics": {
+      "status": "passed",
+      "seconds": 0.024,
+      "details": {
+        "version": "8.4.26",
+        "file": "/opt/course-vision/lib/python3.12/site-packages/ultralytics/__init__.py"
+      }
+    },
+    "cuda_kernels": {
+      "status": "passed",
+      "seconds": 0.414,
+      "details": {
+        "gpu": "NVIDIA GB10",
+        "capability": [
+          12,
+          1
+        ],
+        "cuda": "13.0",
+        "torch_arch_list": [
+          "sm_80",
+          "sm_90",
+          "sm_100",
+          "sm_110",
+          "sm_120",
+          "compute_120"
+        ]
+      }
+    },
+    "cuda_nms": {
+      "status": "passed",
+      "seconds": 0.072,
+      "details": {
+        "indices": [
+          0,
+          2
+        ],
+        "device": "cuda:0"
+      }
+    },
+    "cv_bridge_roundtrip": {
+      "status": "passed",
+      "seconds": 0.037,
+      "details": {
+        "rgb_to_bgr": true,
+        "depth_encodings": [
+          "16UC1",
+          "32FC1"
+        ],
+        "numpy": "1.26.4"
+      }
+    },
+    "yoloe_inference": {
+      "status": "passed",
+      "seconds": 1.558,
+      "details": {
+        "checkpoint": "/workspace/bobac_ws/install/share/yoloe_grasp/weights/yoloe-26l-seg.pt",
+        "cache": "/workspace/course/.runtime/arm64/vision/weights",
+        "device": "cuda:0",
+        "input_shape": [
+          640,
+          640,
+          3
+        ],
+        "detections": 0,
+        "classes": {
+          "0": "pencil",
+          "1": "pen"
+        },
+        "synthetic_input": true
+      }
+    }
+  },
+  "errors": []
+}

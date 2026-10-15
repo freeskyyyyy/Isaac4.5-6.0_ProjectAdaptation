@@ -35,14 +35,19 @@ prepare() {
     # Only task-owned runtime directories are changed; source files retain their ownership.
     docker run --rm --user 0:0 --entrypoint bash \
       -v "$runtime:/runtime" \
+      -e COURSE_HOST_GID \
       --mount "type=bind,source=$auth,target=/tmp/source-auth,readonly" \
       bobac-course:isaac6.0-jazzy-spark \
-      -c 'cat /tmp/source-auth > /runtime/Xauthority; chown -R 1234:1234 /runtime; chmod 600 /runtime/Xauthority'
+      -c 'cat /tmp/source-auth > /runtime/Xauthority; chown -R 1234:"$COURSE_HOST_GID" /runtime; chmod -R g+rwX /runtime; find /runtime -type d -exec chmod g+s {} +; chmod 600 /runtime/Xauthority'
     if [[ -n "$empty_auth" ]]; then rm -- "$empty_auth"; fi
 }
 
 inside() {
-    docker exec -it "$container" /opt/course/entrypoint.sh "$@"
+    if [[ -t 0 && -t 1 ]]; then
+        docker exec -it "$container" /opt/course/entrypoint.sh "$@"
+    else
+        docker exec -i "$container" /opt/course/entrypoint.sh "$@"
+    fi
 }
 
 case "${1:-help}" in
@@ -55,7 +60,7 @@ case "${1:-help}" in
         # Copy the image's verified install into its persistent workspace once.
         if ! docker exec "$container" test -f /workspace/bobac_ws/install/setup.bash; then
             docker exec --user 0:0 "$container" bash -c \
-                'cp -a /opt/course/prebuilt-install/. /workspace/bobac_ws/install/; chown -R 1234:1234 /workspace/bobac_ws/install'
+                'cp -a /opt/course/prebuilt-install/. /workspace/bobac_ws/install/; chown -R 1234:$(stat -c %g /workspace/course) /workspace/bobac_ws/install; chmod -R g+rwX /workspace/bobac_ws/install'
         fi
         ;;
     check)
@@ -90,13 +95,23 @@ case "${1:-help}" in
           --report /workspace/course/reports/ros-readiness.json
         ;;
     vision-check)
-        inside /opt/course-vision/bin/python /workspace/course/tools/vision_check.py
+        inside /opt/course-vision/bin/python /workspace/course/tools/vision_check.py \
+          --cache-dir /workspace/course/.runtime/arm64/vision/weights \
+          --report /workspace/course/reports/vision-check.json
+        ;;
+    nav-ready)
+        inside ros2 run bobac3_navigation navigation_readiness.py --timeout 60 \
+          --report /workspace/course/reports/navigation-readiness.json
         ;;
     grasp)
+        inside ros2 run bobac3_navigation navigation_readiness.py --timeout 60 \
+          --report /workspace/course/reports/navigation-readiness.json
         inside python3 /workspace/course/tools/action_readiness.py
         inside ros2 run grasp_control grasp_state_machine --ros-args -p use_sim_time:=true
         ;;
     place)
+        inside ros2 run bobac3_navigation navigation_readiness.py --timeout 60 \
+          --report /workspace/course/reports/navigation-readiness.json
         inside python3 /workspace/course/tools/action_readiness.py
         inside ros2 run grasp_control place_state_machine --ros-args -p use_sim_time:=true
         ;;
@@ -112,6 +127,6 @@ case "${1:-help}" in
         docker compose down
         ;;
     *)
-        echo 'Usage: bash tools/course.sh {build|up|check|compile|audit|migrate|sim|ros|ready|vision-check|grasp|place|locks|shell|down}'
+        echo 'Usage: bash tools/course.sh {build|up|check|compile|audit|migrate|sim|ros|ready|vision-check|nav-ready|grasp|place|locks|shell|down}'
         ;;
 esac

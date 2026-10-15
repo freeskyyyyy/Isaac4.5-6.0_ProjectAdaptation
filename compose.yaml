@@ -6,7 +6,8 @@ services:
       dockerfile: Dockerfile
     container_name: bobac-isaac6-course
     gpus: all
-    network_mode: host
+    # All course processes share this container. A private Compose network keeps
+    # other machines' ROS domain 44 publishers out of the acceptance checks.
     shm_size: 8gb
     user: "1234:1234"
     group_add:
@@ -22,6 +23,7 @@ services:
       COURSE_ROOT: /workspace/course
       COURSE_WS: /workspace/bobac_ws
       YOLO_CONFIG_DIR: /workspace/course/.runtime/${COURSE_ARCH:-arm64}/vision/config
+      COURSE_VISION_CACHE: /workspace/course/.runtime/${COURSE_ARCH:-arm64}/vision/weights
     volumes:
       - ${ISAAC_SIM_HOST_DIR:-../IsaacSim-6.0.0}:/isaac-sim:rw
       - ${COURSE_DESKTOP_DIR:-..}:/workspace/Desktop:ro

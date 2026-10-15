@@ -32,6 +32,10 @@ RUN /usr/bin/python3 -m venv --system-site-packages /opt/course-vision \
     && /opt/course-vision/bin/python -m pip check \
     && /opt/course-vision/bin/python -m pip freeze --local > /opt/course/vision-resolved.txt \
     && dpkg-query -W > /opt/course/apt-resolved.txt
+COPY docker/vendor /opt/course/vendor
+RUN /opt/course-vision/bin/python -m pip install /opt/course/vendor/clip-1.0-py3-none-any.whl \
+    && /opt/course-vision/bin/python -m pip check \
+    && /opt/course-vision/bin/python -m pip freeze --local > /opt/course/vision-resolved.txt
 COPY bobac_robotac_src/src /workspace/bobac_ws/src
 COPY docker/entrypoint.sh docker/usd-python.sh /opt/course/
 COPY tools /opt/course/tools

@@ -1,0 +1,71 @@
+{
+  "image_id": "sha256:40dfb2bdee1ad5d40a2a4d6cdca02e021cbfd6ccb5fd6fb5610d642df7df1a92",
+  "network": "isaac45-60_projectadaptation_default",
+  "mounts": [
+    {
+      "source": "/tmp/.X11-unix",
+      "destination": "/tmp/.X11-unix",
+      "rw": false
+    },
+    {
+      "source": "/home/nvidia/桌面/IsaacSim-6.0.0",
+      "destination": "/isaac-sim",
+      "rw": true
+    },
+    {
+      "source": "/home/nvidia/桌面/Isaac4.5-6.0_ProjectAdaptation/bobac_robotac_src/src",
+      "destination": "/workspace/bobac_ws/src",
+      "rw": false
+    },
+    {
+      "source": "/home/nvidia/桌面/Isaac4.5-6.0_ProjectAdaptation/.runtime/arm64/install",
+      "destination": "/workspace/bobac_ws/install",
+      "rw": true
+    },
+    {
+      "source": "/home/nvidia/桌面/Isaac4.5-6.0_ProjectAdaptation/.runtime/arm64/isaac-cache",
+      "destination": "/isaac-sim/.cache",
+      "rw": true
+    },
+    {
+      "source": "/home/nvidia/桌面",
+      "destination": "/workspace/Desktop",
+      "rw": false
+    },
+    {
+      "source": "/home/nvidia/桌面/Isaac4.5-6.0_ProjectAdaptation/.runtime/arm64/build",
+      "destination": "/workspace/bobac_ws/build",
+      "rw": true
+    },
+    {
+      "source": "/home/nvidia/桌面/Isaac4.5-6.0_ProjectAdaptation/.runtime/arm64/Xauthority",
+      "destination": "/tmp/course.Xauthority",
+      "rw": false
+    },
+    {
+      "source": "/home/nvidia/桌面/Isaac4.5-6.0_ProjectAdaptation",
+      "destination": "/workspace/course",
+      "rw": true
+    },
+    {
+      "source": "/home/nvidia/桌面/Isaac4.5-6.0_ProjectAdaptation/.runtime/arm64/log",
+      "destination": "/workspace/bobac_ws/log",
+      "rw": true
+    },
+    {
+      "source": "/home/nvidia/桌面/Isaac4.5-6.0_ProjectAdaptation/.runtime/arm64/compute-cache",
+      "destination": "/isaac-sim/.nv/ComputeCache",
+      "rw": true
+    },
+    {
+      "source": "/home/nvidia/桌面/Isaac4.5-6.0_ProjectAdaptation/.runtime/arm64/isaac-config",
+      "destination": "/isaac-sim/.nvidia-omniverse/config",
+      "rw": true
+    },
+    {
+      "source": "/home/nvidia/桌面/Isaac4.5-6.0_ProjectAdaptation/.runtime/arm64/isaac-logs",
+      "destination": "/isaac-sim/.nvidia-omniverse/logs",
+      "rw": true
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "scope": "course image build only; runtime acceptance pending",
+  "image_id": "sha256:40dfb2bdee1ad5d40a2a4d6cdca02e021cbfd6ccb5fd6fb5610d642df7df1a92",
+  "image_tag": "bobac-course:isaac6.0-jazzy-spark",
+  "architecture": "arm64",
+  "created": "2026-10-15T18:58:21.619933645+08:00",
+  "packages_built": 9,
+  "build_log": "reports/container-integration-build.log",
+  "clip_commit": "7ffa84b3bfa40c42ecc1c77147a855e69cb2dd40"
+}

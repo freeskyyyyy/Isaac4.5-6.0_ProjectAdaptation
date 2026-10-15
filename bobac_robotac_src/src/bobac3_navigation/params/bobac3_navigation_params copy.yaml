@@ -129,7 +129,6 @@ controller_server:
       vx_max: 1.25
       vx_min: -1.25
       vy_max: 1.25
-      vy_min: -1.25
       wz_max: 0.3
       iteration_count: 1
       prune_distance: 1.5
@@ -247,7 +246,6 @@ local_costmap:
         scan:
           topic: /laser_scan_fuse
           sensor_frame: fuse_lidar_link
-          queue_size: 50
           max_obstacle_height: 2.0
           clearing: true
           marking: true
@@ -257,7 +255,6 @@ local_costmap:
           obstacle_max_range: 6.0
           obstacle_min_range: 0.05
           expected_update_rate: 0.0
-          reliability: 1
           inf_is_valid: false
   local_costmap_client:
     ros__parameters:
@@ -339,8 +336,10 @@ smoother_server:
       do_refinement: true
 behavior_server:
   ros__parameters:
-    costmap_topic: local_costmap/costmap_raw
-    footprint_topic: local_costmap/published_footprint
+    local_costmap_topic: local_costmap/costmap_raw
+    global_costmap_topic: global_costmap/costmap_raw
+    local_footprint_topic: local_costmap/published_footprint
+    global_footprint_topic: global_costmap/published_footprint
     cycle_frequency: 5.0
     behavior_plugins:
     - spin
@@ -355,13 +354,14 @@ behavior_server:
       plugin: nav2_behaviors::DriveOnHeading
     wait:
       plugin: nav2_behaviors::Wait
-    global_frame: odom
+    local_frame: odom
+    global_frame: map
     robot_base_frame: base_link
     transform_tolerance: 1.0
     use_sim_time: true
     simulate_ahead_time: 2.0
     max_rotational_vel: 0.3
-    min_rotational_vel: -0.3
+    min_rotational_vel: 0.1
     rotational_acc_lim: 1.0
     enable_stamped_cmd_vel: false
 waypoint_follower:

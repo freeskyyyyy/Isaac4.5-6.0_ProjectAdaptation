@@ -5,118 +5,122 @@
 ## distribution of this software and related documentation without an express
 ## license agreement from NVIDIA CORPORATION is strictly prohibited.
 
+"""Course Nav2 nodes and interfaces, independent of upstream bringup additions."""
 import os
 
 from ament_index_python.packages import get_package_share_directory
-
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.actions import IncludeLaunchDescription
-from launch.actions import RegisterEventHandler
+from launch.actions import DeclareLaunchArgument, EmitEvent, RegisterEventHandler, SetEnvironmentVariable
+from launch.conditions import IfCondition
+from launch.event_handlers import OnProcessExit
+from launch.events import Shutdown
+from launch.substitutions import LaunchConfiguration, PythonExpression
 from launch_ros.actions import Node
-from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration
-from launch import conditions
+from launch_ros.descriptions import ParameterFile
+from launch_ros.parameter_descriptions import ParameterValue
 from nav2_common.launch import RewrittenYaml
 
 
+LOCALIZATION_NODES = ['map_server', 'amcl']
+NAVIGATION_NODES = [
+    'controller_server', 'smoother_server', 'planner_server', 'behavior_server',
+    'bt_navigator', 'waypoint_follower', 'velocity_smoother',
+]
+
+
 def generate_launch_description():
-    share_path = get_package_share_directory("bobac3_navigation")
-    nav2_bringup_launch_dir = os.path.join(get_package_share_directory("nav2_bringup"), "launch")
-    nav2_localization_launch = os.path.join(nav2_bringup_launch_dir, "localization_launch.py")
-    nav2_navigation_launch = os.path.join(nav2_bringup_launch_dir, "navigation_launch.py")
-
-    # 动态获取behavior tree XML文件路径
-    bt_xml_path = os.path.join(share_path, "behavior_trees", "navigate_to_pose_no_spin.xml")
-
-    declare_map_arg = DeclareLaunchArgument(
-        "map",
-        default_value=os.path.join(share_path, "maps", "map.yaml"),
-        description="Full path to map file to load",
-    )
-
-    declare_params_file_arg = DeclareLaunchArgument(
-        "params_file",
-        default_value=os.path.join(share_path, "params", "bobac3_navigation_params.yaml"),
-        description="Full path to param file to load",
-    )
-
-    declare_use_sim_time_arg = DeclareLaunchArgument(
-        "use_sim_time",
-        default_value="True",
-        description="Use simulation (Omniverse Isaac Sim) clock if true",
-    )
-
-    declare_rviz_arg = DeclareLaunchArgument(
-        "rviz",
-        default_value="True",
-        description="Launch RViz2 if true",
-    )
-
-    declare_rviz_config_arg = DeclareLaunchArgument(
-        "rviz_config",
-        default_value=os.path.join(share_path, "rviz2", "bobac3_navigation.rviz"),
-        description="Full path to RViz2 config file",
-    )
-
-    map_dir = LaunchConfiguration("map")
-    param_dir = LaunchConfiguration("params_file")
-    use_sim_time = LaunchConfiguration("use_sim_time")
-    rviz = LaunchConfiguration("rviz")
-    rviz_config = LaunchConfiguration("rviz_config")
-
-    # 使用RewrittenYaml动态替换bt_xml路径
-    configured_params = RewrittenYaml(
-        source_file=param_dir,
-        root_key='',
+    share = get_package_share_directory('bobac3_navigation')
+    sim_time = LaunchConfiguration('use_sim_time')
+    scan_relay = LaunchConfiguration('use_scan_relay')
+    scan_topic = PythonExpression([
+        "'/laser_scan_fuse_best_effort' if '", scan_relay,
+        "'.lower() == 'true' else '/laser_scan_fuse'",
+    ])
+    # Full paths also INSERT missing parameters; leaf-only rewrites do not.
+    params = ParameterFile(RewrittenYaml(
+        source_file=LaunchConfiguration('params_file'),
         param_rewrites={
-            'default_nav_to_pose_bt_xml': bt_xml_path
+            'use_sim_time': sim_time,
+            'bt_navigator.ros__parameters.default_nav_to_pose_bt_xml': os.path.join(
+                share, 'behavior_trees', 'navigate_to_pose_no_spin.xml'),
+            'map_server.ros__parameters.yaml_filename': LaunchConfiguration('map'),
+            'amcl.ros__parameters.scan_topic': scan_topic,
+            'local_costmap.local_costmap.ros__parameters.front_rplidar_obstacle_layer.scan.topic': scan_topic,
         },
-        convert_types=True
+        convert_types=True,
+    ), allow_substs=True)
+    common = [params, {'use_sim_time': ParameterValue(sim_time, value_type=bool)}]
+    tf_remaps = [('/tf', 'tf'), ('/tf_static', 'tf_static')]
+
+    def server(package, executable, remaps=None):
+        return Node(package=package, executable=executable, name=executable,
+                    output='screen', parameters=common,
+                    remappings=tf_remaps + (remaps or []))
+
+    servers = [
+        server('nav2_map_server', 'map_server'),
+        server('nav2_amcl', 'amcl'),
+        server('nav2_controller', 'controller_server', [('cmd_vel', 'cmd_vel_nav')]),
+        server('nav2_smoother', 'smoother_server'),
+        server('nav2_planner', 'planner_server'),
+        server('nav2_behaviors', 'behavior_server', [('cmd_vel', 'cmd_vel_nav')]),
+        server('nav2_bt_navigator', 'bt_navigator'),
+        server('nav2_waypoint_follower', 'waypoint_follower'),
+        server('nav2_velocity_smoother', 'velocity_smoother',
+               [('cmd_vel', 'cmd_vel_nav'), ('cmd_vel_smoothed', 'cmd_vel')]),
+    ]
+    managers = [Node(
+        package='nav2_lifecycle_manager', executable='lifecycle_manager',
+        name='lifecycle_manager_' + group, output='screen',
+        parameters=[{'use_sim_time': ParameterValue(sim_time, value_type=bool),
+                     'autostart': ParameterValue(LaunchConfiguration('autostart'), value_type=bool),
+                     'node_names': names}],
+    ) for group, names in [('localization', LOCALIZATION_NODES), ('navigation', NAVIGATION_NODES)]]
+    relay = Node(
+        package='bobac3_navigation', executable='laser_qos_relay.py',
+        name='laser_qos_relay', output='screen',
+        parameters=[{'use_sim_time': ParameterValue(sim_time, value_type=bool)}],
+        condition=IfCondition(scan_relay),
+    )
+    readiness = Node(
+        package='bobac3_navigation', executable='navigation_readiness.py',
+        output='screen', arguments=['--timeout', LaunchConfiguration('readiness_timeout'),
+                                    '--scan-topic', scan_topic],
+        parameters=[{'use_sim_time': ParameterValue(sim_time, value_type=bool)}],
+        condition=IfCondition(LaunchConfiguration('check_readiness')),
     )
 
-    localization = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([nav2_localization_launch]),
-        launch_arguments={
-            "namespace": "",
-            "use_namespace": "False",
-            "autostart": "True",
-            "use_composition": "False",
-            "map": map_dir,
-            "use_sim_time": use_sim_time,
-            "params_file": configured_params,
-        }.items(),
-    )
+    def failure(event, context):
+        if event.returncode != 0:
+            return [EmitEvent(event=Shutdown(reason=
+                'Navigation process failed; inspect Nav2 and navigation_readiness diagnostics'))]
+        return []
 
-    navigation = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource([nav2_navigation_launch]),
-        launch_arguments={
-            "namespace": "",
-            "use_namespace": "False",
-            "autostart": "True",
-            "use_composition": "False",
-            "use_sim_time": use_sim_time,
-            "params_file": configured_params,
-        }.items(),
-    )
-    rviz2 = Node(
-        package="rviz2",
-        executable="rviz2",
-        name="rviz2",
-        output="screen",
-        arguments=["-d", rviz_config],
-        parameters=[{"use_sim_time": use_sim_time}],
-        condition=conditions.IfCondition(rviz),
-    )
-    return LaunchDescription(
-        [
-            declare_map_arg,
-            declare_params_file_arg,
-            declare_use_sim_time_arg,
-            declare_rviz_arg,
-            declare_rviz_config_arg,
-            localization,
-            navigation,
-            rviz2,
-        ]
-    )
+    actions = [
+        DeclareLaunchArgument('map', default_value=os.path.join(share, 'maps', 'map.yaml')),
+        DeclareLaunchArgument('params_file', default_value=os.path.join(
+            share, 'params', 'bobac3_navigation_params.yaml')),
+        DeclareLaunchArgument('use_sim_time', default_value='true', choices=['true', 'True'],
+                              description='Course navigation requires the simulator clock'),
+        DeclareLaunchArgument('autostart', default_value='true'),
+        DeclareLaunchArgument('use_scan_relay', default_value='false',
+                              description='Relay the raw scan to the existing best_effort topic'),
+        DeclareLaunchArgument('check_readiness', default_value='true',
+                              description='Fail launch if navigation is not ready before timeout'),
+        DeclareLaunchArgument('readiness_timeout', default_value='90'),
+        DeclareLaunchArgument('rviz', default_value='true'),
+        DeclareLaunchArgument('rviz_config', default_value=os.path.join(
+            share, 'rviz2', 'bobac3_navigation.rviz')),
+        SetEnvironmentVariable('ROS_DOMAIN_ID', '44'),
+        SetEnvironmentVariable('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'),
+    ]
+    for process in servers + managers + [relay, readiness]:
+        actions.append(RegisterEventHandler(OnProcessExit(target_action=process, on_exit=failure)))
+    actions.extend([relay] + servers + managers + [readiness])
+    actions.append(Node(
+        package='rviz2', executable='rviz2', name='rviz2', output='screen',
+        arguments=['-d', LaunchConfiguration('rviz_config')],
+        parameters=[{'use_sim_time': ParameterValue(sim_time, value_type=bool)}],
+        condition=IfCondition(LaunchConfiguration('rviz')),
+    ))
+    return LaunchDescription(actions)

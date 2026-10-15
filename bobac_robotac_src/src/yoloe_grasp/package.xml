@@ -3,7 +3,7 @@
 <package format="3">
   <name>yoloe_grasp</name>
   <version>0.0.0</version>
-  <description>YOLOE segmentation + depth + TF grasp action client</description>
+  <description>YOLOE segmentation + depth + TF localization action server</description>
   <maintainer email="shqd0w123@outlook.com">root</maintainer>
   <license>TODO: License declaration</license>
 
@@ -13,7 +13,7 @@
   <depend>tf2_ros</depend>
   <depend>tf2_geometry_msgs</depend>
   <depend>cv_bridge</depend>
-  <depend>image_geometry</depend>
+  <exec_depend>ament_index_python</exec_depend>
 
   <depend>eco65b_grasp_interfaces</depend>
 

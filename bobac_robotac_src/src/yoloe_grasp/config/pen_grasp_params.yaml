@@ -11,8 +11,13 @@ yoloe_grasp_node:
 
     # 坐标系
     base_frame: 'base_link_arm'
-    camera_frame: 'arm_Camera'  # 注意：C 是大写
-    disable_optical_compensation: true  # arm_Camera 已经是 optical frame 形式，不需要手动旋转
+    camera_frame: ''  # 使用配对 RGB 的 frame_id，不自动搜索其他相机
+    camera_frame_convention: 'optical'  # ROS 消息契约；A 必须核验 arm_Camera 的真实 TF 轴
+    # 若 TF 为原始 USD Camera 轴，A 确认后改为 usd；若发布 optical TF，保持 optical
+    disable_optical_compensation: true  # 停用旧启发式旋转，改用上方显式约定
+    sync_tolerance_sec: 0.05
+    max_data_age_sec: 1.0
+    allow_static_camera_info: false  # CameraInfo 默认须与图像同步
 
     # YOLOE 模型配置
     model_path: 'yoloe-26l-seg.pt'
@@ -24,11 +29,7 @@ yoloe_grasp_node:
     save_debug_images: true
     debug_image_dir: '/workspace/course/.runtime/vision/debug'
 
-    # Action 配置
-    action_name: '/grasp_to_point'
-    ee_link: 'link_6'
-    finger_link: 'gripper_l_link_finger'
-    plan_only: false
+    # /detect_object Action 接口保持不变，超时采用墙钟
 
     # ===== 关键参数：法向量模式 =====
     # 对于平放在桌面上的笔，从上往下抓取，使用固定法向量

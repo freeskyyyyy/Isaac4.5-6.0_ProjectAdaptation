@@ -26,6 +26,7 @@ log/
 .DS_Store
 .idea/
 .vscode/
+/scenes/.course-load-prepared.usda
 
 # Keep selected audit summaries; raw runtime output stays on this machine.
 /reports/*
