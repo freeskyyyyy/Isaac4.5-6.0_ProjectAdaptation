@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "scope": "real plan-only finger offset geometry; no arm motion",
+  "errors": [],
+  "expected_ee_position": [
+    -0.09787985500721694,
+    0.019729584988863097,
+    0.7725002599123537
+  ],
+  "commanded_ee_position": [
+    -0.09787985500721694,
+    0.01972958498886318,
+    0.7725002599123538
+  ],
+  "position_error_m": 1.3877787807814457e-16,
+  "orientation_error_rad": 0.0,
+  "command_messages": 0,
+  "action_status": 4,
+  "action_message": "Planned (plan_only)",
+  "action_success": true,
+  "expect_orientation_refusal": false
+}

@@ -83,6 +83,7 @@ class NavigationDiagnosticsTest(unittest.TestCase):
         node.tf.can_transform.return_value = True
         node.tf.lookup_transform.return_value = Mock(header=Mock(stamp=clock.clock))
         node.states = dict.fromkeys(diagnostic_module.LIFECYCLE_NODES, 'active')
+        node.lifecycle_nodes = list(diagnostic_module.LIFECYCLE_NODES)
         node.sim_times = dict.fromkeys(diagnostic_module.LIFECYCLE_NODES, True)
         node.checked_at = {(name, kind): now for name in diagnostic_module.LIFECYCLE_NODES
                            for kind in ['state', 'sim_time']}
@@ -98,6 +99,12 @@ class NavigationDiagnosticsTest(unittest.TestCase):
         node.checked_at[('bt_navigator', 'state')] -= 10
         self.assertTrue(any('Lifecycle /bt_navigator' in error
                             for error in diagnostic_module.NavigationReadiness.problems(node)))
+
+    def test_optional_world_obstacle_server_must_also_be_active(self):
+        node = self.healthy_diagnostic()
+        node.lifecycle_nodes.append('world_obstacle_map_server')
+        errors = diagnostic_module.NavigationReadiness.problems(node)
+        self.assertTrue(any('Lifecycle /world_obstacle_map_server' in error for error in errors))
 
     def test_detects_sensor_frame_stamp_qos_and_command_interface_problems(self):
         node = self.healthy_diagnostic()

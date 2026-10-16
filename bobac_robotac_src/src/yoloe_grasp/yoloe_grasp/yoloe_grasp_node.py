@@ -13,6 +13,8 @@ import numpy as np
 import rclpy
 from rclpy.action import ActionServer, CancelResponse, GoalResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
+from rclpy.clock import JumpThreshold
+from rclpy.duration import Duration
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.node import Node
 from rclpy.qos import ReliabilityPolicy, qos_profile_sensor_data
@@ -67,6 +69,7 @@ class YoloEGraspNode(Node):
             # Kept for old parameter files; explicit convention replaces guessing.
             'disable_optical_compensation': True,
             'sync_tolerance_sec': 0.05, 'max_data_age_sec': 1.0,
+            'tf_wait_timeout_sec': 0.2,
             'allow_static_camera_info': False,
             'normal_mode': 'local_plane', 'fixed_normal': [0., 0., 1.],
             'axis_mode': 'mask_long', 'axis_step_px': 10,
@@ -85,6 +88,8 @@ class YoloEGraspNode(Node):
         if not (math.isfinite(self.sync_tolerance_sec) and self.sync_tolerance_sec >= 0
                 and math.isfinite(self.max_data_age_sec) and self.max_data_age_sec > 0):
             raise ValueError('Invalid sync_tolerance_sec or max_data_age_sec')
+        if not math.isfinite(self.tf_wait_timeout_sec) or self.tf_wait_timeout_sec <= 0:
+            raise ValueError('tf_wait_timeout_sec must be finite and positive')
         if not math.isfinite(self.conf) or not 0 < self.conf <= 1:
             raise ValueError('conf must be in (0, 1]')
         if self.normal_mode not in ('local_plane', 'camera_side', 'fixed_base', 'fixed', 'pca'):
@@ -99,6 +104,11 @@ class YoloEGraspNode(Node):
         depth_qos = camera_subscription_qos(self.depth_qos_reliability)
         info_qos = camera_subscription_qos(self.camera_info_qos_reliability)
         self.debug_image_dir = str(Path(self.debug_image_dir).expanduser().resolve())
+        self._clock_epoch = 0
+        self._clock_jump_handle = self.get_clock().create_jump_callback(
+            JumpThreshold(min_forward=None, min_backward=Duration(nanoseconds=-1), on_clock_change=True),
+            post_callback=self._on_clock_jump,
+        )
         self._frames = CameraFrames()
         self.bridge = CvBridge()
         self.tf_buffer = Buffer(node=self)
@@ -129,7 +139,7 @@ class YoloEGraspNode(Node):
             f'python={sys.executable}, camera axes={self.camera_frame_convention}, '
             f'cache={self.text_model_cache_dir}, use_sim_time=true, '
             f'camera QoS rgb={self.rgb_qos_reliability}, depth={self.depth_qos_reliability}, '
-            f'camera_info={self.camera_info_qos_reliability}'
+            f'camera_info={self.camera_info_qos_reliability}, TF wait={self.tf_wait_timeout_sec:.3f}s'
         )
 
     def _load_model(self):
@@ -150,6 +160,10 @@ class YoloEGraspNode(Node):
                 model.set_classes(list(self.classes))
                 self._active_classes = list(self.classes)
         return model
+
+    def _on_clock_jump(self, time_jump):
+        # Capture even a rewind followed by recovery between execute-loop polls.
+        self._clock_epoch += 1
 
     def goal_callback(self, request):
         if (not math.isfinite(request.timeout) or request.timeout < 0
@@ -182,6 +196,9 @@ class YoloEGraspNode(Node):
         future = None
         previous_pair = None
         sample_received_at = None
+        pending_tf = None
+        clock_epoch = self._clock_epoch
+        last_sim_ns = self.get_clock().now().nanoseconds
         self._last_diagnostic = 'Waiting for synchronized camera data'
         self._saved_debug = False
         goal_handle.publish_feedback(feedback)
@@ -199,6 +216,13 @@ class YoloEGraspNode(Node):
                     self.get_logger().error(result.message)
                     goal_handle.abort()
                     return result
+                now_ns = self.get_clock().now().nanoseconds
+                if self._clock_epoch != clock_epoch or now_ns < last_sim_ns:
+                    result.message = 'Simulation time moved backwards or clock source changed; discarded pending image/TF result'
+                    self.get_logger().error(result.message)
+                    goal_handle.abort()
+                    return result
+                last_sim_ns = now_ns
                 if future is not None:
                     if not future.done():
                         time.sleep(0.02)
@@ -208,6 +232,10 @@ class YoloEGraspNode(Node):
                     if detection is not None:
                         age = (self.get_clock().now().nanoseconds - stamp_ns(detection['position'])) / 1e9
                         wall_age = time.monotonic() - sample_received_at
+                        if self._clock_epoch != clock_epoch:
+                            result.message = 'Simulation time moved backwards or clock source changed during inference'
+                            goal_handle.abort()
+                            return result
                         if (age < -self.sync_tolerance_sec or age > self.max_data_age_sec
                                 or wall_age > self.max_data_age_sec):
                             self._diagnose('Result became stale or simulation reset during inference')
@@ -223,38 +251,74 @@ class YoloEGraspNode(Node):
                             goal_handle.publish_feedback(feedback)
                             goal_handle.succeed()
                             return result
-                snapshot, reason = self._frames.snapshot(
-                    self.get_clock().now().nanoseconds, self.sync_tolerance_sec,
-                    self.max_data_age_sec, self.allow_static_camera_info,
-                )
-                if snapshot is None:
-                    self._diagnose(reason)
-                    feedback.state = 'WAITING_IMAGE'
-                else:
-                    pair = tuple(stamp_ns(m) for m in snapshot)
-                    if pair == previous_pair:
-                        # Retain the useful detection failure in the eventual timeout result.
+                if pending_tf is None:
+                    snapshot, reason = self._frames.snapshot(
+                        now_ns, self.sync_tolerance_sec,
+                        self.max_data_age_sec, self.allow_static_camera_info,
+                    )
+                    if snapshot is None:
+                        self._diagnose(reason)
                         feedback.state = 'WAITING_IMAGE'
                     else:
-                        try:
-                            k = validate_calibration(*snapshot)
-                            frame = self.camera_frame or snapshot[0].header.frame_id
-                            tf = self.tf_buffer.lookup_transform(
-                                self.base_frame, frame, Time.from_msg(snapshot[0].header.stamp),
-                            )
-                        except (ValueError, TransformException) as exc:
-                            self._diagnose(str(exc))
+                        pair = tuple(stamp_ns(m) for m in snapshot)
+                        if pair == previous_pair:
+                            # Preserve the useful final failure for this sample.
+                            feedback.state = 'WAITING_IMAGE'
                         else:
-                            previous_pair = pair
-                            sample_received_at = getattr(snapshot, 'received_at', time.monotonic())
+                            try:
+                                k = validate_calibration(*snapshot)
+                                if pair[0] <= 0:
+                                    raise ValueError('TF lookup requires a nonzero original image stamp')
+                            except ValueError as exc:
+                                self._diagnose(str(exc))
+                            else:
+                                pending_tf = {
+                                    'snapshot': snapshot, 'pair': pair, 'k': k,
+                                    'frame': self.camera_frame or snapshot[0].header.frame_id,
+                                    'stamp': Time.from_msg(snapshot[0].header.stamp),
+                                    'received_at': getattr(snapshot, 'received_at', time.monotonic()),
+                                    'deadline': min(deadline, time.monotonic() + self.tf_wait_timeout_sec),
+                                    'error': 'TF not yet queried',
+                                }
+                                feedback.state = 'WAITING_IMAGE'
+                if pending_tf is not None:
+                    pending = pending_tf
+                    age = (now_ns - pending['stamp'].nanoseconds) / 1e9
+                    wall_age = time.monotonic() - pending['received_at']
+                    diagnostic = None
+                    if (age < -self.sync_tolerance_sec or age > self.max_data_age_sec
+                            or wall_age > self.max_data_age_sec):
+                        diagnostic = 'Image became stale while waiting for TF'
+                    elif time.monotonic() >= pending['deadline']:
+                        diagnostic = (f'TF wait expired after {self.tf_wait_timeout_sec:.3f}s for '
+                                      f"{pending['frame']} -> {self.base_frame} at image stamp "
+                                      f"{pending['stamp'].nanoseconds}ns; last TF error: {pending['error']}")
+                    if diagnostic is not None:
+                        self._diagnose(diagnostic)
+                        previous_pair = pending['pair']
+                        pending_tf = None
+                    else:
+                        try:
+                            # Non-blocking lookup, always at this retained image's exact stamp.
+                            tf = self.tf_buffer.lookup_transform(self.base_frame, pending['frame'], pending['stamp'])
+                        except TransformException as exc:
+                            pending['error'] = str(exc)
+                            self._diagnose(f"Waiting for TF at image stamp {pending['stamp'].nanoseconds}ns: {exc}")
+                        else:
+                            previous_pair = pending['pair']
+                            sample_received_at = pending['received_at']
                             feedback.state = 'DETECTING'
                             feedback.detection_attempts += 1
                             self._last_diagnostic = 'YOLOE inference in progress'
                             with self._goal_lock:
-                                future = self._worker.submit(self._detect_once, snapshot, k, frame, tf, classes, confidence, stop)
+                                future = self._worker.submit(
+                                    self._detect_once, pending['snapshot'], pending['k'],
+                                    pending['frame'], tf, classes, confidence, stop,
+                                )
                                 self._inference_future = future
+                            pending_tf = None
                 goal_handle.publish_feedback(feedback)
-                time.sleep(0.05)
+                time.sleep(0.01 if pending_tf is not None else 0.05)
             result.message = 'ROS shutdown during detection'
             goal_handle.abort()
             return result

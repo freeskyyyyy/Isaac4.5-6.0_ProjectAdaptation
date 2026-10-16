@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "scope": "offline static whole-polyline check only; no navigation execution",
+  "map_yaml": "world_scene.yaml",
+  "map_image_sha256": "c689da004ae5a073fd27f78ce2df1d458c6c371fbb03acbd1f8ece9411a72982",
+  "map_yaml_sha256": "88ea6b2405b7befe14678c4773d14d3d6f64aeaca40d7e344acbf9f8741898a1",
+  "transport_radius_m": 0.45,
+  "required_transport_reserve_m": 0.1,
+  "required_center_clearance_m": 0.55,
+  "sample_count": 1010,
+  "maximum_sample_gap_m": 0.008838834896540746,
+  "interpolation_bound_subtracted_m": 0.004419417448270373,
+  "cell_half_diagonal_subtracted_m": 0.03535533905932738,
+  "minimum_center_clearance_lower_bound_m": 0.6356880915605891,
+  "minimum_transport_margin_lower_bound_m": 0.18568809156058913,
+  "reserve_surplus_lower_bound_m": 0.08568809156058912,
+  "worst_sample_xy": [
+    2.35000004991889,
+    0.6000001654028893
+  ],
+  "unknown_and_outside_blocked": true,
+  "input_source": "/workspace/course/reports/world-low-speed-plan.plan-input.json",
+  "input_sha256": "4627a73540d9e72d838a5b427641ea564aff8a293467bdaa7c0be21a5c90e52e"
+}

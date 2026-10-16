@@ -1,0 +1,127 @@
+{
+  "status": "evaluated",
+  "scope": "hypothetical stationary arm planning with real MoveIt/table collisions; no motion",
+  "candidates": [
+    {
+      "name": "staging",
+      "station_xy_yaw": [
+        2.35,
+        0.6,
+        3.141592653589793
+      ],
+      "collision_objects_confirmed": [
+        "course_reach_table_0",
+        "course_reach_table_1",
+        "course_reach_table_2",
+        "course_reach_table_3",
+        "course_reach_table_4",
+        "course_reach_table_5"
+      ],
+      "ik_attempts": [
+        {
+          "error_code": -31
+        },
+        {
+          "error_code": -31
+        }
+      ],
+      "offline_seed_real_fk_position_error_m": 0.25053617052810395,
+      "offline_seed_collision_valid": true,
+      "offline_seed_contacts": [],
+      "result": "no_collision_free_ik_found"
+    },
+    {
+      "name": "reach_outer",
+      "station_xy_yaw": [
+        2.15,
+        0.6,
+        3.141592653589793
+      ],
+      "collision_objects_confirmed": [
+        "course_reach_table_0",
+        "course_reach_table_1",
+        "course_reach_table_2",
+        "course_reach_table_3",
+        "course_reach_table_4",
+        "course_reach_table_5"
+      ],
+      "ik_attempts": [
+        {
+          "error_code": -31
+        },
+        {
+          "error_code": -31
+        }
+      ],
+      "offline_seed_real_fk_position_error_m": 0.08860908567429045,
+      "offline_seed_collision_valid": true,
+      "offline_seed_contacts": [],
+      "result": "no_collision_free_ik_found"
+    },
+    {
+      "name": "reach_close",
+      "station_xy_yaw": [
+        2.1,
+        0.6,
+        3.141592653589793
+      ],
+      "collision_objects_confirmed": [
+        "course_reach_table_0",
+        "course_reach_table_1",
+        "course_reach_table_2",
+        "course_reach_table_3",
+        "course_reach_table_4",
+        "course_reach_table_5"
+      ],
+      "ik_attempts": [
+        {
+          "error_code": -31
+        },
+        {
+          "error_code": -31
+        }
+      ],
+      "offline_seed_real_fk_position_error_m": 0.051869099884143746,
+      "offline_seed_collision_valid": true,
+      "offline_seed_contacts": [],
+      "result": "no_collision_free_ik_found"
+    },
+    {
+      "name": "tight_diagnostic_only",
+      "station_xy_yaw": [
+        2.02,
+        0.6,
+        3.141592653589793
+      ],
+      "collision_objects_confirmed": [
+        "course_reach_table_0",
+        "course_reach_table_1",
+        "course_reach_table_2",
+        "course_reach_table_3",
+        "course_reach_table_4",
+        "course_reach_table_5"
+      ],
+      "ik_attempts": [
+        {
+          "error_code": -31
+        },
+        {
+          "error_code": -31
+        }
+      ],
+      "offline_seed_real_fk_position_error_m": 3.1837811002591245e-08,
+      "offline_seed_collision_valid": false,
+      "offline_seed_contacts": [
+        [
+          "link_2",
+          "course_reach_table_4"
+        ]
+      ],
+      "result": "no_collision_free_ik_found"
+    }
+  ],
+  "errors": [],
+  "collision_model": "all six table USD collision mesh world AABBs",
+  "command_messages": 0,
+  "temporary_objects_removed": true
+}

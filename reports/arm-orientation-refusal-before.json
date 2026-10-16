@@ -1,0 +1,24 @@
+{
+  "status": "failed",
+  "scope": "real plan-only finger offset geometry; no arm motion",
+  "errors": [
+    "Unreachable requested orientation was silently replaced by current orientation"
+  ],
+  "expected_ee_position": [
+    -0.0859995201966464,
+    0.020622240653887,
+    0.7725002162734593
+  ],
+  "commanded_ee_position": [
+    -0.0859995201966464,
+    0.020622240653886986,
+    0.7725002162734593
+  ],
+  "position_error_m": 1.3877787807814457e-17,
+  "orientation_error_rad": 0.0,
+  "command_messages": 0,
+  "action_status": 4,
+  "action_message": "Planned (plan_only)",
+  "action_success": true,
+  "expect_orientation_refusal": true
+}

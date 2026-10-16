@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "scope": "real plan-only finger offset geometry; no arm motion",
+  "errors": [],
+  "expected_ee_position": [
+    -0.0859995201966464,
+    0.020622240653887,
+    0.7725002162734593
+  ],
+  "commanded_ee_position": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "position_error_m": 0.7775459976272668,
+  "orientation_error_rad": 1.5707999999999998,
+  "command_messages": 0,
+  "action_status": 6,
+  "action_message": "No valid IK for requested grasp orientation",
+  "action_success": false,
+  "expect_orientation_refusal": true
+}

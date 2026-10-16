@@ -33,10 +33,12 @@ def seconds(stamp):
 
 
 class NavigationReadiness(Node):
-    def __init__(self, scan_topic):
+    def __init__(self, scan_topic, extra_lifecycle_nodes=()):
         super().__init__('navigation_readiness',
                          parameter_overrides=[Parameter('use_sim_time', value=True)])
         self.scan_topic = scan_topic
+        self.lifecycle_nodes = list(dict.fromkeys(
+            LIFECYCLE_NODES + [name.strip('/') for name in extra_lifecycle_nodes]))
         self.messages = {}
         self.received = {}
         self.counts = {'/clock': 0, '/odom': 0, scan_topic: 0}
@@ -52,7 +54,7 @@ class NavigationReadiness(Node):
         self.checked_at = {}
         self.service_clients = {}
         self.pending = {}
-        for name in LIFECYCLE_NODES:
+        for name in self.lifecycle_nodes:
             self.service_clients[(name, 'state')] = self.create_client(GetState, f'/{name}/get_state')
             self.service_clients[(name, 'sim_time')] = self.create_client(
                 GetParameters, f'/{name}/get_parameters')
@@ -142,7 +144,7 @@ class NavigationReadiness(Node):
                 # Static TF stamps are zero; AMCL stamps may include transform_tolerance.
                 if stamp and not -6 <= seconds(clock.clock) - stamp <= 5:
                     errors.append(f'Stale/future TF: {parent} <- {child}')
-        for name in LIFECYCLE_NODES:
+        for name in self.lifecycle_nodes:
             if (self.states.get(name) != 'active' or
                     now - self.checked_at.get((name, 'state'), 0) > 3):
                 errors.append(f'Lifecycle /{name}: {self.states.get(name, "service unavailable/pending")}')
@@ -176,13 +178,15 @@ def main(args=None):
     parser.add_argument('--timeout', type=float, default=60)
     parser.add_argument('--scan-topic', default='/laser_scan_fuse')
     parser.add_argument('--report', type=Path)
+    parser.add_argument('--extra-lifecycle-node', action='append', default=[],
+                        help='Also require this optional lifecycle node active and using sim time')
     parser.add_argument('--goal-id', type=uuid.UUID,
                         help='Read the result of an EXISTING goal UUID; never sends a goal')
     opts, ros_args = parser.parse_known_args(args)
     if opts.timeout <= 0:
         parser.error('--timeout must be positive')
     rclpy.init(args=ros_args)
-    node = NavigationReadiness(opts.scan_topic)
+    node = NavigationReadiness(opts.scan_topic, opts.extra_lifecycle_node)
     deadline = time.monotonic() + opts.timeout
     errors = node.problems()
     report = None

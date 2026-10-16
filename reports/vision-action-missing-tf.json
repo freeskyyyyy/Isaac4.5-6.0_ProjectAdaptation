@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "scope": "real vision Action diagnostics only; not positive localization",
+  "checks": {
+    "no_target_timeout": {
+      "wall_seconds": 3.0082553179963725,
+      "status": 6,
+      "success": false,
+      "message": "Detection timed out after 3.00s wall time; attempts=0; last diagnostic: Waiting for TF at image stamp 49066666666ns: \"course_missing_tf_frame\" passed to lookupTransform argument target_frame does not exist. ",
+      "feedback_states": [
+        "WAITING_IMAGE"
+      ],
+      "max_attempts": 0
+    },
+    "concurrent_goal": {
+      "accepted": false
+    },
+    "cancel": {
+      "wall_seconds": 0.010107495996635407,
+      "status": 5,
+      "goals_canceling": 1,
+      "success": false,
+      "message": "Detection canceled; last diagnostic: Waiting for TF at image stamp 49100000000ns: \"course_missing_tf_frame\" passed to lookupTransform argument target_frame does not exist. "
+    }
+  },
+  "errors": [],
+  "camera_subscriptions": {
+    "/arm_camera/rgb": {
+      "reliability": "RELIABLE",
+      "depth": 5
+    },
+    "/arm_camera/depth": {
+      "reliability": "RELIABLE",
+      "depth": 5
+    },
+    "/arm_camera/camera_info": {
+      "reliability": "RELIABLE",
+      "depth": 5
+    }
+  }
+}

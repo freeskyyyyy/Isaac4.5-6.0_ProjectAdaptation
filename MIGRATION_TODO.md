@@ -1,12 +1,24 @@
 # DGX Spark 课程迁移待办清单
 
-更新时间：2026-10-16 01:49（Asia/Shanghai）
+更新时间：2026-10-16 10:45（Asia/Shanghai）
 
 目标：只在 DGX Spark 的新课程容器内运行 Isaac Sim 6.0、ROS 2 Jazzy、Nav2、MoveIt2 和 YOLOE，跑通导航、视觉定位、抓取、提升的完整课程。
 
 本文件是唯一持续更新的进度入口，统一记录待办状态、验证证据、问题和更新历史。迁移设计依据另见 [迁移计划](DGX_SPARK_MIGRATION_PLAN.md)。
 
 规则：`[x]` 表示该项已有验证证据；`[ ]` 表示进行中或待验证。配置文件已写好不等于运行验收通过。每完成一项，更新本清单的勾选、时间、证据及相关问题；不再维护另一份重复的进度报告。
+
+## 最新低速 world 验收（2026-10-16）
+
+- 已在目标课程容器构建 C 的最新 world profile，9 项运输控制与 6 项路径检查通过；reset 后 10 个 lifecycle 就绪。实际参数记录见 `reports/world-low-speed-runtime-parameters.log`、`world-low-speed-controller-runtime.yaml`：local 半径 0.64m、空 footprint、每轴 XY 上限 0.08m/s、加速度 0.15m/s²、20Hz、CLOSED_LOOP、有效 `GridBased.smoother.max_iterations=0`。当前镜像基础未重建，本轮使用持久 overlay。
+- 真实新规划到 `(2.35,0.6,π)` 的门禁退出0，整段中心净距下界 **0.635688m**。证据：`world-low-speed-plan.json` 和 `.clearance.json`。
+- 公共运动工具已替换旧 0.48m 取消阈值，按当前速度、反馈仿真时间区间、保守制动预算及向外偏差速度提前停车；运行时每条 `/plan` 均检查整段净距并记录起点连接。取消后继续采集真实制动。预算采用未认证的 0.10m/s² 制动下限、0.40s 反应时间与测量余量，不能当作普适物理保证。五项算法检查通过。
+- **本轮真实目标仍未通过。** 偏差 **0.019537m**、向外速度 **0.045654m/s** 时触发预测跟踪停车，取消并发送有界 20Hz 紧急零 Twist。包含制动的已记录轨迹中心净距下界 **1.437889m**，最大偏差 **0.037636m**；3 条运行重规划均通过净距检查。它们证明本次提前停车保住记录区间的几何门槛，不能计为到达目标。
+- 原生 odom 仿真时间记录：最大合平移速度 **0.063385m/s**、角速度 **0.160035rad/s**；原始逐采样速度导数超过参数标称加速度，尚未通过物理加减速验收。触发到连续低速停稳约 **0.50s 仿真时间**，直线移动 **0.015063m**；此为取消加紧急零命令的制动，不能冒充平滑链单独制动测试。
+- SDK `GetEntityState` 源时间戳始终0，已核对本地官方 `entity_utils.py`。真值记录明确保留 source0 与请求/接收 `/clock` 区间；odom 保留原生 source stamp，Twist 标注仿真接收时间。未用墙钟导出速度/加速度，也不宣称真值为精确源采样时间。
+- 汇总：`reports/world-low-speed-motion-review.json`；全量速度/odom/真值/重规划：`world-low-speed-motion.json`。C 离线工具 `world-low-speed-trace-gate.json` 正确退出1（目标被取消，即使几何通过也不算验收通过）。交接更新至 `reports/world-navigation-integration-feedback.json`。
+- 退出记录：导航服务进程均干净退出；本轮 RViz 在 SIGINT 超时后被 SIGTERM，退出 -11，已保留 `world-low-speed-navigation.log`，纳入步骤14重启/退出问题，不能称全栈干净退出。
+- **现场：** 导航栈已停止、无活动目标。机器人约在 world `(7.997826,1.119579,0.119910rad)`，下次必须按实际位置初始化或再次 reset，不能盲用初始定位。Isaac、机械臂及视觉节点保留；TODO13–15不勾选。下一步由 C 诊断新低速控制的初段跟踪/反馈和实际加减速，A 应用后重新走定位、规划、净距与低速门禁。
 
 ## 已完成
 
@@ -33,26 +45,46 @@
 
 ## 当前结论
 
-步骤 09–12 已在目标课程容器取得验证证据，当前进入步骤13。默认 6.0 副本 SHA-256 为 `a859a876e4c1829ffe12b0258771ef2f6f0a095cf3a3a03ec37ec30d25b47686`；此前验收版保留在 `reports/scene-before-drive-accepted.usda`，原始 USD 哈希不变。仿真和完整公共 ROS 栈保留运行，没有导航目标或抓取状态机在执行。
+步骤 09–12 已在目标课程容器取得验证证据，当前进入步骤13。默认 6.0 副本 SHA-256 为 `a859a876e4c1829ffe12b0258771ef2f6f0a095cf3a3a03ec37ec30d25b47686`；此前验收版保留在 `reports/scene-before-drive-accepted.usda`，原始 USD 哈希不变。当前唯一仿真加载独立候选场景 `scenes/test_scene_bobac_6.0.course.usda`，保留 MoveIt、关节过滤、机械臂 Action 及 B 新版视觉。首次真实暂驻导航因局部控制净距不足自动取消并停稳，导航栈已停止；机器人约位于 (6.117, 2.840)，尚未回到初始位置，未启动抓取状态机。默认已验收场景文件保持不变。
 
 底盘旧增益造成正向线/角命令反向响应；通过真实小脉冲及 SDK 刚体滚动雅可比定位，现按实际轮几何生成 `linearGain≈1.5`、`angularGain≈-0.07412258`。从草稿重建的新副本相较此前验收版仅变更这两项，保存重开后持续全传感器和底盘转动/复位通过。详情：`reports/drive-control-diagnosis.json`、`reports/base-control-saved-scene.json`、`reports/live-sensors-drive-migrated.json`。未修改宿主网络、驱动或官方 SDK。
 
 机械臂两个实际缺陷已修复：`plan_only` 曾成功却发2条命令，现返回前不发布；缺失加速度约束曾导致非零路径的全部命令同一时刻发布，现加载六轴软件速度/加速度限制各1.0（rad/s、rad/s²，非硬件额定值），并拒绝没有有效时序的轨迹。实际 MoveIt Action 非零轨迹持续约1秒仿真时间，到位及回程 FK 误差为0；当前姿态 FK 对 Isaac 同采样 TF 位置差约0.094mm。证据：`reports/arm-plan-only-current-before.json`、`reports/arm-plan-only-current-after.json`、`reports/arm-motion-timing-before.json`、`reports/arm-invalid-timing-after.json`、`reports/arm-motion-timing-after.json`、`reports/arm-model-live.json`。
 
-B 的 QoS 交接已安装，40项容器局部检查通过，实际三路相机订阅 RELIABLE/depth5，公共启动加载新版课程参数与持久缓存。真实 Action 有界超时、并发拒绝及约0.05秒取消通过（`reports/vision-action-common-stack.json`）；没有正向定位验收。图像与 TF 到达顺序偶发17–50ms差异仍待 B 增加原采样时刻的有限等待，A 不改视觉专属文件。
+B 的 QoS 交接已安装，40项容器局部检查通过，实际三路相机订阅 RELIABLE/depth5，公共启动加载新版课程参数与持久缓存。真实 Action 有界超时、并发拒绝及约0.05秒取消通过（`reports/vision-action-common-stack.json`）；没有正向定位验收。B 的原采样时刻有限 TF 重试已交接并由 A 安装，容器52项检查及真实 Action/暂停/重播/缺TF验收通过；本次正常运行未直接量测到17–50ms的具体等待样本，不宣称已实测全部延迟分布。A 未改视觉专属文件。
 
-导航9节点 active、sim time及只读门禁通过，尚未发目标。已导出 `reports/navigation-scene-geometry.json` 请 C 核验地图与真实世界：旧图189×120、0.05m，场景墙体布局和初始位姿需要对齐。另只读盘点未发现已放置的可抓取笔，完整任务需要布置可复位的真实刚体目标；不能把缺少目标时的超时当作识别通过。
+导航9节点 active、sim time及只读门禁通过，尚未发目标。已导出 `reports/navigation-scene-geometry.json` 请 C 核验地图与真实世界：旧图189×120、0.05m，场景墙体布局和初始位姿需要对齐。原场景未放置可抓取笔；现已在独立候选场景布置官方 YCB large marker 并完成两轮落桌/复位验证。尚未验证相机正向定位和物理抓取，不能把缺少目标时的超时当作识别通过。
 
 已知退出问题：一次公共栈关闭中 MoveIt 收到 SIGINT 后未在5秒内退出，launch升级SIGTERM后退出码-11（`reports/course-stack-drive-migrated.log`），其余节点正常退出；之后新栈启动与有时序轨迹验证正常。该退出问题与容器重启复现尚未验收，保留至步骤14。底盘/机械臂/夹爪控制通过不等于物理抓取通过，步骤13–15不勾选。
 
 执行通道：普通沙箱仍在执行前报 bwrap loopback 权限错误；使用有具体范围的沙箱外请求。历史偶发自动审批超时不是 Isaac 崩溃证据。未更改宿主权限策略。本轮源码已安装到容器持久工作区；基础课程镜像ID仍为步骤09记录，最终发布前须按最终源版本重建镜像。
+
+## 已知步骤13新增验证
+
+- **可复位目标：** `tools/prepare_course_target.py` 生成独立 `.course.usda` 候选，在 table2 上布置官方 NVIDIA YCB marker，质量0.02kg、凸包碰撞、摩擦材质；资产及纹理来源/哈希见 `reports/marker-asset-source.json`。真实 SDK 加载后，通过官方服务观测两轮下落均约3.541mm并稳定，停止后回到 authored 初始位置；证据 `reports/course-target-physics.json`。仅证明落桌/复位，不证明纹理外观、识别或物理抓取。
+- **候选通信复验：** 20秒全传感器持续采集及采样时刻 TF 通过，公共 readiness 通过：`reports/live-sensors-course-target.json`、`reports/readiness-course-target.json`。真实 RGB 快照 `reports/course-target-initial-camera.png` 显示初始相机尚未看到目标，需导航到桌边并调整观察姿态。
+- **手指偏移几何：** 当前腕部姿态计算目标偏移曾造成约24.88mm错误；现按请求/候选腕部旋转计算0.166m偏移。前后真实只规划证据 `reports/arm-offset-before.json`、`reports/arm-offset-after.json`；新场景可达方向回归 `reports/arm-offset-course-target.json` 通过，零控制命令。
+- **方向失败处理：** 指定抓取方向无IK解时原来静默采用当前方向并成功，真实只规划复现后改为明确拒绝。`reports/arm-orientation-refusal-before.json` 保留原错误成功证据；`reports/arm-orientation-refusal-after.json` 实测 abort/status6、零命令。修复后 `reports/arm-motion-orientation-after.json` 的小幅真实往返通过并恢复六轴零位。
+- **验收约束：** 夹爪现有 Action 仍以等待时间报告完成，状态机中到位检查也有占位逻辑。后续抓取验收必须直接观察关节、末端与目标实际运动，不能仅依据这两个接口的 success。
+- **协作：** B 已通过专属报告交接 TF 等待修复，A 安装及真实复验通过；C 的地图/世界对齐与桌边目标专项仍进行中。A 未修改其专属文件，C 正式交接后再编译和集成。当前新增证据不勾选步骤13–15。
+
+## 世界导航与桌边规划：当前门禁
+
+- C 的独立世界地图入口已编译并真实启动，10个lifecycle/readiness通过。C 最新配置/地图/路径检查合计19项在目标容器通过。旧地图和默认旧入口保持。
+- 严格三维TF投影：900个真实激光点全部距定位图障碍≤0.10m，p95约0.0347m；AMCL初始定位对仿真真值位置差约0.05mm。雷达为倒置安装（roll≈π），A最初用yaw-only投影误判扫描方向；补查矩阵后纠正检查工具，未改雷达或图。证据 `reports/world-navigation-alignment-plan-3d.json`，早期失败诊断保留并标注局限。
+- 首版真实北绕路径中心净距约0.183m，未达到运输包络要求。C修订后global实际robot_radius=.64、local/global inflation=.85、planner tolerance=.05，运行参数见 `reports/world-profile-runtime-parameters.json`。当前Jazzy的Smac2D未声明 `GridBased.smooth_path`；不能把该YAML项当成已经禁用平滑的证据。
+- 最新**真实重规划**与串接的 `check_path_clearance.py` 均退出0，整段中心净距下界 **0.6351075m**，未知和图外均阻塞，扣0.45m运输包络后余0.1851075m。`tools/world_navigation_check.py` 已传播净距门禁非零失败；保存不可变plan-input以校验哈希。证据 `reports/world-navigation-replanned.json`、`.clearance.json`、`.plan-input.json`。旧路径负向门禁实际退出1，见 `reports/world-old-path-clearance-negative.json`。
+- **首次运动失败，不计通过：** 在以上前提和发送前10节点门禁通过后，目标(2.35,.6,π)被接受；局部控制切角，真实位置到(6.380,2.429)时中心净距降至约0.445m，检查器取消目标并最终发送零Twist。停稳位置约(6.117,2.840)，后续8样本停稳检查通过。证据 `reports/world-navigation-staging-goal.json`、`reports/world-navigation-after-cancel-stop.json`；没有碰撞/接触监测证据，不能宣称全程无碰撞。需要C进一步约束local运输包络和速度/跟踪，不能只改global规划后重复发送。
+- 原物体(1.4,.6)的含桌子MoveIt只规划：加入全部6个桌子USD碰撞AABB并核对已进入真实PlanningScene；四站位有限IK搜索均未找到无碰撞垂直解，2.02站位的C数值解由真实FK确认位置，但link_2与table2桌板碰撞。`reports/table-reach-moveit-collision-diagnosis.json`。未发送近桌目标或机械臂命令，临时碰撞体已清理。
+- 东缘假想目标只规划：x1.6时2.15/2.10有无碰撞末端方案；x1.65、指尖z=.6627376时2.15/2.10的预接近均可规划。进一步接近下降2cm路径fraction=1，但从抓取位提升10cm只有约0.476/0.667，未通过。`reports/table-grasp-cycle-edge-plan-only.json`；物体位置和USD未实际改动。早期请求四元数默认w未清零的报告已标注不可用于垂直结论，以修正后的报告为准。
+- 以上是步骤13的部分验证。真实暂驻导航成功、正向视觉定位、物理抓取/提升及重复性均未完成，13–15不勾选。
 
 ## 三个并行会话的协调
 
 | 会话 | 可修改范围 | 当前集成状态 |
 | --- | --- | --- |
 | A（协调与集成） | 容器、环境、场景/Action Graph、公共启动/readiness、机械臂、最终验收及本 TODO | 步骤 09–12 已通过；驱动及轨迹时序修复完成，推进完整课程 |
-| B（视觉） | `bobac_robotac_src/src/yoloe_grasp/`、`tools/vision_check.py` | QoS 更新已接收，容器构建及40项局部检查通过；真实三路 RELIABLE、超时/取消/互斥通过，采样 TF 等待和正向定位待验 |
+| B（视觉） | `bobac_robotac_src/src/yoloe_grasp/`、`tools/vision_check.py` | QoS 更新已接收，容器构建及40项局部检查通过；真实三路 RELIABLE、超时/取消/互斥通过，TF 等待已集成、52项容器检查与真实暂停/重播/缺TF诊断通过；正向定位待验 |
 | C（导航） | `bobac_robotac_src/src/bobac3_navigation/` | 真实启动、9节点active、只读门禁已由A通过；地图对齐与真实目标待验 |
 
 只有 A 执行共享镜像构建、容器启停、共享编译、Isaac 启动及集成控制栈。B/C 开发期间，A 不修改其负责文件；跨模块需求通过用户转交或专属报告协调。提交只暂存已检查的明确文件，不切换共享分支、不撤销其他会话修改。
@@ -67,7 +99,7 @@ B/C 报告须列出修改文件、话题/Action/TF/QoS/时间接口、依赖、�
 - **启动诊断预检：** 无仿真数据时的 readiness 负向测试按预期退出 1，并列出缺失话题、时钟和 TF，记录见 `reports/readiness-negative.json`。该报告的 `failed` 是预期诊断结果，不表示已经验证真实仿真就绪。实际故障注入验收属于步骤 14。
 - **场景资产解析：** 活跃资产通过真实 Kit 场景组合检查；`OmniPBR.mdl` 和远程默认环境在 Kit 中可解析。裸 USD Python 没有 Kit 远程 resolver，其外部 URL 警告不能代替 Kit 运行结论。停用的 mobot/Kaya 不计入活跃运行依赖；虚线 JPEG 在副本采用纯色替代。
 - **图和控制兼容：** PhysX 雷达已实际持续发布，键盘轮速控制图已停用。6.0 原生 TF 节点针对本课程 chassis root 未展开全部 sibling link，已按真实刚体显式提供目标；相机补充官方 OmniSensorAPI。两项修复已通过真实重开播放、采样时刻 TF 及停止重播后的数据复验。
-- **视觉版本验证：** PyTorch 2.9.0+cu130、torchvision 0.24.0+cu130、NumPy 1.26.4、OpenCV 4.11.0.86、Ultralytics 8.4.26 已在 GB10 通过 GPU/转换/推理检查；CLIP 固定提交 `7ffa84b3bfa40c42ecc1c77147a855e69cb2dd40`，缓存目录 `.runtime/arm64/vision/weights`。真实视觉 Action 已通过无目标超时、并发拒绝和取消诊断；正向定位与采样 TF 延迟处理仍待验。
+- **视觉版本验证：** PyTorch 2.9.0+cu130、torchvision 0.24.0+cu130、NumPy 1.26.4、OpenCV 4.11.0.86、Ultralytics 8.4.26 已在 GB10 通过 GPU/转换/推理检查；CLIP 固定提交 `7ffa84b3bfa40c42ecc1c77147a855e69cb2dd40`，缓存目录 `.runtime/arm64/vision/weights`。真实视觉 Action 已通过无目标超时、并发拒绝和取消诊断；TF 延迟处理已安装并通过异常诊断，正向定位仍待验。
 - **显示和运行隔离：** SDK/桌面/项目真实挂载、X11 授权及 Isaac/RViz 窗口通过。所有课程进程同容器，使用 Compose 私有网络隔离其他 domain 44 参与者；容器内仍统一 Cyclone DDS、ROS_DOMAIN_ID=44。
 - **控制验收边界：** 官方 `/set_simulation_state` 已成功播放和停止；底盘小角度及复位、机械臂有时序轨迹和空夹爪开合已通过；尚未发送导航目标或抓取任务。公共 `grasp/place` 保留 C 的 navigation_readiness 门禁。
 
@@ -79,7 +111,7 @@ B/C 报告须列出修改文件、话题/Action/TF/QoS/时间接口、依赖、�
 - [x] 添加根目录 README、本地资产恢复说明和 578 个本地文件的 SHA-256 清单；校验全部通过。排除 SDK、资产、模型、缓存、凭据和原始运行日志，保留在本机。
 - [x] 暂存文件检查通过：初始 115 个文件约 3.28 MiB，Python AST、JSON、Shell 语法及 Compose 解析通过，未发现匹配的凭据模式。
 - [x] 在 `freeskyyyyy` 下新建 [公开仓库 Isaac4.5-6.0_ProjectAdaptation](https://github.com/freeskyyyyy/Isaac4.5-6.0_ProjectAdaptation)，完成 `main` 分支上传并确认 GitHub 返回 `visibility=PUBLIC`、`isPrivate=false`。本地 `origin` 已关联远端，`main` 已跟踪 `origin/main`。源码、配置、文档、小型场景和精选审计记录已上传；大型资产、模型、SDK、缓存和凭据留在本机。
-- [x] 用户恢复任务后，上传子代理完成环境及 B/C 交付的 39 文件审查、提交与推送；远端 `main` 核验为 `2c72746ecfcf0316b194432e3aa3f95ded69f4e7`。后续步骤11快照已上传为 `976686d973b3584cfe22af483311d8390f93595c`；当前步骤12修改待新快照，不代表完整课程已验收。
+- [x] 用户恢复任务后，上传子代理完成环境及 B/C 交付的 39 文件审查、提交与推送；远端 `main` 核验为 `2c72746ecfcf0316b194432e3aa3f95ded69f4e7`。后续步骤11快照已上传为 `976686d973b3584cfe22af483311d8390f93595c`；步骤12快照已上传为 `ac08d515513e8b8d7097115c018948e99d8ca840`（报告 `reports/github-upload-todo12.md`）。后续步骤13的机械臂及目标场景修改尚未上传，不代表完整课程已验收。
 
 ## 更新记录
 
@@ -102,3 +134,9 @@ B/C 报告须列出修改文件、话题/Action/TF/QoS/时间接口、依赖、�
 - 2026-10-16 01:23：恢复推进步骤12；修复并在容器复验 plan_only 不发命令，机械臂小幅复位及空夹爪开合反馈通过。安装 B 的三路 RELIABLE 更新，40项局部检查及真实超时/互斥/取消通过。导航9节点 active 与只读门禁通过，未发目标。底盘低速试验发现正向线/角命令产生反向响应，已停止导航与控制节点，保留原场景，在独立候选副本推导几何增益；12–15仍不勾选。
 
 - 2026-10-16 01:49：步骤12完成。驱动增益修复从草稿重建、保存重开后通过真实数据/控制；MoveIt时序缺陷有失败、拒绝和有效执行三组证据，14节点sim time统一。默认场景提升为新哈希，保留旧版及原始USD。B的真实QoS/超时/并发/取消通过，正向定位、地图对齐、物理抓取和重复性仍未验收；记录一次MoveIt退出异常。
+
+- 2026-10-16 09:26：步骤13推进中。官方目标候选已在真实容器完成两轮落桌/复位及持续传感器/公共门禁；机械臂偏移及无解方向静默回退修复有真实前后证据，小幅往返复验通过。仅保留独立机械臂栈，等待 B/C 专属交接；完整导航、正向定位与物理抓取仍未完成。
+
+- 2026-10-16 09:32：B TF 等待版安装成功，源码/安装节点SHA256均为 `99b91125f04aad104769d00aa13222d94bc0d3a5e91bfa3452bc25c12be80e27`；目标容器52项检查通过（`reports/vision-tf-wait-tests.log`）。真实 Action 超时3.013s、取消0.049s及互斥通过（`reports/vision-action-tf-wait.json`）。暂停时1.527s超时、0.051s取消，重播时间回退后旧Goal中止、新Goal重新提交图像通过（`reports/vision-lifecycle-tf-replay.json`）。首次生命周期测试在停止后等待旧Goal结束超时，原因是停止期间/clock冻结、重播才发布回退；保留 `reports/vision-lifecycle-tf-wait.json`，未作为通过证据。显式缺失 frame 的真实负向测试通过、零推理提交、取消0.010s（`reports/vision-action-missing-tf.json`），故障注入后恢复正常视觉参数。正向定位、导航和物理抓取仍未验收，13–15不勾选。
+
+- 2026-10-16 10:14：C world入口及最新运输净距版已集成，真实三维激光重合与新北绕规划/整段净距门禁通过（下界0.6351m）；首次真实暂驻目标因局部切角自动取消并停稳，导航未通过，栈已停。含桌子只规划排除原2.02数值解（link_2碰桌板）；东缘假想方案接近可规划但10cm提升未完整。详见新增“世界导航与桌边规划”门禁节；13–15仍未完成。

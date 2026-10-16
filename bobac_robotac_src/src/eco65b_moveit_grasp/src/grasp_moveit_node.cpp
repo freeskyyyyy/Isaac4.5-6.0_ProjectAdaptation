@@ -374,6 +374,15 @@ private:
     target.pose.position.y = p.point.y - t_in_planning.y();
     target.pose.position.z = p.point.z - t_in_planning.z();
 
+    // The requested point is at the finger, so every candidate orientation
+    // needs its own EE translation. Using the current wrist rotation here
+    // moves the finger target whenever the planned orientation changes.
+    const Eigen::Vector3d finger_position(p.point.x, p.point.y, p.point.z);
+    const Eigen::Vector3d ee_to_finger(t_ee_to_finger.x(), t_ee_to_finger.y(), t_ee_to_finger.z());
+    auto position_for_orientation = [&](const Eigen::Quaterniond &q) -> Eigen::Vector3d {
+      return finger_position - q * ee_to_finger;
+    };
+
     // Orientation: For optical-frame end-effector (Z=approach, X=gripper-width, Y=gripper-bottom):
     // - Z_link6 should point down (approach direction): Z = normal (not -normal)
     // - X_link6 should align with pen long-axis (gripper grasps along X)
@@ -454,7 +463,7 @@ private:
           }
 
           Eigen::Isometry3d goal = Eigen::Isometry3d::Identity();
-          goal.translation() = Eigen::Vector3d(target.pose.position.x, target.pose.position.y, target.pose.position.z);
+          goal.translation() = position_for_orientation(q);
           goal.linear() = q.toRotationMatrix();
 
           moveit::core::RobotState ik_state_tmp(robot_model);
@@ -533,6 +542,12 @@ private:
       }
     }
 
+    if (normal_opt && short_axis_opt && !have_orient) {
+      message_out = "No valid IK for requested grasp orientation";
+      error_code_out = -6;
+      return false;
+    }
+
     if (have_orient) {
       target.pose.orientation.x = q_choice.x();
       target.pose.orientation.y = q_choice.y();
@@ -543,15 +558,19 @@ private:
       Eigen::Vector3d z_axis = q_choice.toRotationMatrix().col(2);
       RCLCPP_INFO(get_logger(), "Final Z-axis in base frame: (%.3f, %.3f, %.3f)", z_axis.x(), z_axis.y(), z_axis.z());
 
-      // 偏移计算已移到状态机中，这里不再应用偏移
-      RCLCPP_INFO(get_logger(), "Target position (no offset applied): (%.3f, %.3f, %.3f)",
-                  target.pose.position.x, target.pose.position.y, target.pose.position.z);
     } else {
       target.pose.orientation.x = ee_q.x();
       target.pose.orientation.y = ee_q.y();
       target.pose.orientation.z = ee_q.z();
       target.pose.orientation.w = ee_q.w();
     }
+
+    const auto ee_position = position_for_orientation(q_choice);
+    target.pose.position.x = ee_position.x();
+    target.pose.position.y = ee_position.y();
+    target.pose.position.z = ee_position.z();
+    RCLCPP_INFO(get_logger(), "End-effector target after finger offset: (%.3f, %.3f, %.3f)",
+                target.pose.position.x, target.pose.position.y, target.pose.position.z);
 
     commanded_out = target;
 

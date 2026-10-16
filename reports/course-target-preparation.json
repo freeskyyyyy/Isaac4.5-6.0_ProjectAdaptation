@@ -1,0 +1,36 @@
+{
+  "status": "authored_runtime_pending",
+  "scope": "official marker rigid-body scene candidate; not runtime acceptance",
+  "source": "/workspace/course/scenes/test_scene_bobac_6.0.usda",
+  "source_sha256": "a859a876e4c1829ffe12b0258771ef2f6f0a095cf3a3a03ec37ec30d25b47686",
+  "output": "/workspace/course/scenes/test_scene_bobac_6.0.course.usda",
+  "output_sha256": "9383aec555c3111e13a12e7811f46bae9566ee94a18a3dd4d793022b31c86237",
+  "asset": "/workspace/course/isaacsimassets-dev/assets/props/ycb_marker/040_large_marker.usd",
+  "prim": "/World/CourseMarker",
+  "authored_position_m": [
+    1.4,
+    0.6,
+    0.6127375614254722
+  ],
+  "mass_kg": 0.02,
+  "collision_meshes": [
+    "/World/CourseMarker/_40_large_marker"
+  ],
+  "table_top_z_m": 0.6000000014901161,
+  "marker_bbox_min": [
+    -0.009416799930852648,
+    -0.0604428802331638,
+    -0.009737559935356077
+  ],
+  "marker_bbox_max": [
+    0.009417339948922243,
+    0.06044355734191331,
+    0.00973836996246047
+  ],
+  "pending": [
+    "Kit texture/appearance check",
+    "Drop/settling and reset",
+    "Camera recognition and capture-time TF",
+    "Physical grasp/lift"
+  ]
+}

@@ -21,6 +21,7 @@ yoloe_grasp_node:
     disable_optical_compensation: true  # 停用旧启发式旋转，改用上方显式约定
     sync_tolerance_sec: 0.05
     max_data_age_sec: 1.0
+    tf_wait_timeout_sec: 0.2  # 固定原图 stamp 等待延迟 TF，墙钟上限；不使用 latest
     allow_static_camera_info: false  # CameraInfo 默认须与图像同步
 
     # YOLOE 模型配置

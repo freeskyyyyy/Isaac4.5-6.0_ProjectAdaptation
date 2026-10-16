@@ -1,0 +1,120 @@
+{
+  "scope": "A latest real low-speed integration feedback for C; target NOT reached",
+  "updated": "2026-10-16 Asia/Shanghai",
+  "previous_feedback": {
+    "scope": "A real container integration feedback for C; no successful navigation claim",
+    "evidence": [
+      "world-navigation-replanned.json",
+      "world-navigation-replanned.clearance.json",
+      "world-navigation-staging-goal.json",
+      "world-navigation-after-cancel-stop.json",
+      "world-profile-runtime-parameters.json"
+    ],
+    "global_plan_gate": "passed, whole-polyline lower bound 0.635107546m, checker exit0",
+    "actual_motion": "failed/canceled; actual center clearance 0.44528m near (6.38018,2.42934); robot subsequently stopped near (6.11727,2.84030)",
+    "current_navigation_stack": "stopped by A; no active goal",
+    "requests_for_C": [
+      "Review local-controller footprint/envelope and tracking vs global 0.64m profile; actual motion must retain >=0.55m center lower bound.",
+      "Provide a conservative world transport speed/acceleration and MPPI configuration for A to runtime-verify; do not reduce the verified transport envelope to force success.",
+      "GridBased.smooth_path is not declared by the installed Jazzy plugin (see runtime param dump); verify supported mechanism and correct the parameter/documentation claim.",
+      "Keep all shared runtime/builds and motion tests with A; provide exact source changes, independent checks and handoff in parallel-navigation.md."
+    ],
+    "arm_geometry": "Original x1.4: tight 2.02 solution FK matches but link_2 collides with table2 top. x1.65 hypothetical target: 2.15/2.10 approach succeeds; 10cm Cartesian lift incomplete. No physical object moved."
+  },
+  "evidence": [
+    "world-low-speed-build.log",
+    "world-low-speed-runtime-parameters.log",
+    "world-low-speed-controller-runtime.yaml",
+    "world-low-speed-plan.json",
+    "world-low-speed-plan.clearance.json",
+    "world-low-speed-motion.json",
+    "world-low-speed-motion-review.json",
+    "world-low-speed-trace-gate.json"
+  ],
+  "runtime": "Latest C world built in target container; 10 lifecycle ready. Verified max_iterations0, do_refinementfalse, local radius.64/footprint[], controller .08m/s/.15m/s2/20Hz, smoother CLOSED_LOOP/maxvel(.08,.08,.15)/decel(-.15,-.15,-.3).",
+  "real_plan": "gate exit0; lower bound .63568809156m",
+  "actual_motion": "CANCELED by predictive tracking guard; not a successful goal. All recorded motion+braking center lower bound1.43788921795m, max initial-reference/runtime-path deviation .03763556588m. Three runtime replans all clearance passed.",
+  "predictive_stop": {
+    "wall_seconds": 10.600123404998158,
+    "sim_seconds": 262.45,
+    "source_sim_stamp_seconds": 0.0,
+    "stamp_kind": "simulation receipt time; unstamped SDK service",
+    "query_sim_interval": [
+      262.433333333,
+      262.45
+    ],
+    "receipt_sim_seconds": 262.45,
+    "world_xy": [
+      7.998694896697998,
+      1.1014994382858276
+    ],
+    "world_yaw": 0.060350415152382715,
+    "world_velocity": [
+      -0.013615133240818977,
+      0.04935967177152634,
+      0.14023829996585846
+    ],
+    "phase": "motion",
+    "center_clearance_m": 1.44113679923211,
+    "query_latency_wall_seconds": 0.022453370998846367,
+    "localization_position_error_m": 0.00013179069274231225,
+    "tracking_error_m": 0.01953689345466257,
+    "outward_speed_m_s": 0.045653661596025165,
+    "stopping_reserve_m": 0.06285687059412773,
+    "speed_m_s": 0.05120301798290866,
+    "reason": "Predictive tracking stop: insufficient reserve below 0.05m deviation"
+  },
+  "braking": {
+    "trigger_sim_seconds": 262.45,
+    "cancel_sim_seconds": 262.516666666,
+    "stable_stop_sim_seconds": 262.95,
+    "stable_stop_delay_sim_seconds": 0.5,
+    "straight_line_distance_trigger_to_stable_stop_m": 0.015063342298167573,
+    "travel_polyline_after_trigger_m": 0.02038696746571138,
+    "guard_reserve_m": 0.06285687059412773,
+    "stable_stop_confirmed": true,
+    "stop_mechanism": "NavigateToPose cancel plus bounded 20Hz emergency zero Twist override; not ordinary smoother-only braking"
+  },
+  "native_stamp_metrics": {
+    "samples": 708,
+    "time_basis": "sim_seconds",
+    "duration_sim_seconds": 11.783333333000002,
+    "maximum_absolute_xy_wz": [
+      0.017182829872429986,
+      0.061011404530076065,
+      0.16003505885601044
+    ],
+    "maximum_linear_speed_m_s": 0.06338486511114036,
+    "maximum_absolute_sample_derivative_xy_wz": [
+      1.170450140144091,
+      2.6199549893398606,
+      7.900301879572576
+    ],
+    "sample_dt_sim_min_median_max": [
+      0.016666665999991892,
+      0.016666666999981317,
+      0.01666666700003816
+    ],
+    "derivative_caveat": "Raw discrete derivatives include contact/measurement jitter; commands use simulation receipt time because Twist has no source stamp."
+  },
+  "current_navigation_stack": "stopped by A; no active goal",
+  "current_pose_world_xy_yaw": [
+    7.997826099395752,
+    1.1195788383483887,
+    0.11990993620905502
+  ],
+  "requests_for_C": [
+    "Diagnose initial actual movement away from accepted route: tracking error .01954m/outward speed .04565m/s triggered early protection; after braking deviation .03764m. Keep <=.05m policy and >=.55m clearance; do not relax gates to force goal success.",
+    "Review recorded native sim-stamped odom and command/replan histories for CLOSED_LOOP feedback, control timing and prediction-to-physical tracking. Native odom max XY speed .06338m/s, yaw .16004rad/s; raw per-sample derivatives exceed nominal acceleration. Separate emergency zero override from ordinary smoother behavior; parameter limits are not measured physical bounds.",
+    "Inspect path start quantization/connector and tracking decisions (initial physical near8,1.082; runtime planner first near7.95,1.05). A records exact start connector rather than dropping initial samples. Report root cause and bounded changes inside navigation scope.",
+    "No shared stack/build/motion by C. A will reset or reinitialize using current actual pose and rerun all gates for any next test."
+  ],
+  "timestamp_limit": "rc.59 official GetEntityState returns zero source stamp. GT observations explicitly retain source0 plus request/receipt /clock interval; odom is native sim-stamped. Twist uses simulation receipt stamps. Do not claim exact source-stamped GT/commands.",
+  "preflight_history": [
+    "world-low-speed-preflight-zero-stamp.json: no goal sent; blocked on SDK zero stamp.",
+    "world-low-speed-preflight-tf-lag.json: immediate cancellation due capture TF lag; path connector and over-frequent emergency zero recorder subsequently corrected.",
+    "world-low-speed-tf-timeout-trial.json: bounded capture TF .2s wait timed out, canceled; extended to .5s while retaining fixed timestamp."
+  ],
+  "overall_pass": false,
+  "shutdown_limitation": "Nav service processes cleanly exited; RViz SIGINT timeout -> SIGTERM -> exit -11. Retained in world-low-speed-navigation.log; restart/clean shutdown not accepted."
+}

@@ -64,12 +64,12 @@ def main():
 
     def request(target,only):
         nonlocal active
-        cur=pose(joints[-1]);target_rotation=rotation(target.pose.orientation);current_rotation=rotation(cur.pose.orientation)
+        target_rotation=rotation(target.pose.orientation)
         g=GraspToPoint.Goal();g.plan_only=only;g.ee_link='link_6';g.finger_link='link_6'
         g.target.header.frame_id='base_link_arm'
-        g.target.point.x=target.pose.position.x+current_rotation[0][2]*.166
-        g.target.point.y=target.pose.position.y+current_rotation[1][2]*.166
-        g.target.point.z=target.pose.position.z+current_rotation[2][2]*.166
+        g.target.point.x=target.pose.position.x+target_rotation[0][2]*.166
+        g.target.point.y=target.pose.position.y+target_rotation[1][2]*.166
+        g.target.point.z=target.pose.position.z+target_rotation[2][2]*.166
         g.normal.header.frame_id=g.short_axis.header.frame_id='base_link_arm'
         g.normal.vector.x,g.normal.vector.y,g.normal.vector.z=[r[2] for r in target_rotation]
         g.short_axis.vector.x,g.short_axis.vector.y,g.short_axis.vector.z=[r[1] for r in target_rotation]

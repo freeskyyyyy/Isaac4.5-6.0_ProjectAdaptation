@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "scope": "real vision pause/reset guards only; no localization acceptance",
+  "checks": {
+    "paused_wall_timeout": {
+      "status": 6,
+      "success": false,
+      "message": "Detection timed out after 1.50s wall time; attempts=1; last diagnostic: RGB stamp is zero, stale, or ahead of /clock",
+      "wall_seconds": 1.5269353640032932,
+      "max_attempts": 1
+    },
+    "paused_cancel": {
+      "status": 5,
+      "success": false,
+      "message": "Detection canceled; last diagnostic: RGB stamp is zero, stale, or ahead of /clock",
+      "wall_seconds": 0.051349985995329916,
+      "max_attempts": 0
+    },
+    "reset_aborts_active_goal": {
+      "status": 6,
+      "success": false,
+      "message": "Simulation time moved backwards or clock source changed; discarded pending image/TF result",
+      "wall_seconds": 2.039137692998338,
+      "max_attempts": 4
+    },
+    "new_goal_after_reset": {
+      "status": 6,
+      "success": false,
+      "message": "Detection timed out after 2.00s wall time; attempts=21; last diagnostic: YOLOE found no target at confidence 0.990",
+      "wall_seconds": 2.03376090600068,
+      "max_attempts": 21
+    }
+  },
+  "errors": []
+}

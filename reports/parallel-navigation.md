@@ -1,6 +1,6 @@
 # 会话 C：Nav2 导航迁移
 
-首次检查：2026-10-14；最近复验：2026-10-15（Asia/Shanghai）。**导航配置修复与局部验证完成；真实导航尚未执行验收。** 修改仅限 `bobac_robotac_src/src/bobac3_navigation/` 和本报告。没有启动共享仿真/导航控制栈、发送底盘运动命令、重启容器、重建镜像、写共享 `.runtime`、暂存文件、切换分支或修改项目 TODO。
+首次检查：2026-10-14；最近复验：2026-10-16（Asia/Shanghai）。**A 已通过真实地图/定位对齐和重规划全局净距门禁；真实运动净距失败并取消，A已停止栈且无活动目标。C现已修正局部运输圆包络、速度/跟踪参数及Jazzy平滑配置，待A重新验收。** 修改仅限 `bobac_robotac_src/src/bobac3_navigation/` 和本报告。没有启动共享仿真/导航控制栈、发送底盘运动命令、重启容器、重建镜像、写共享 `.runtime`、暂存文件、切换分支或修改项目 TODO。
 
 ## 基线和实际入口
 
@@ -136,3 +136,213 @@ ros2 run bobac3_navigation navigation_readiness.py --timeout 120 \
 ## 可直接转发给 A
 
 会话 C 已完成导航包限定范围修复：修复 no-spin BT 路径重写不生效、Jazzy behavior 参数、未安装 relay 与 QoS，明确 9 个 lifecycle 节点及 Twist `/cmd_vel` 输出链，补齐依赖/地图路径，新增只读 navigation_readiness（默认启动 gate，超时关闭公共 launch；可查询已有目标结果）。独立宿主构建、全部 5 套参数与两种 relay 选择、5 个配置测试、3 个诊断/relay 测试、10 个 BT 插件注册/XML/端口检查通过；无数据诊断预期退出 1。产物在 `/tmp/bobac-nav-c`，未启动共享导航/仿真、未发送运动命令、未改公共文件或 TODO。preflight 容器已不存在，容器验证和真实导航请 A 安排。请在任务触发前等待 navigation_readiness 成功，并保证原话题、TF 和 Twist 底盘订阅端。验收命令及判据见本报告；报告被 gitignore 排除，需 A 按需显式纳入版本控制。
+
+## 2026-10-16 世界坐标/地图专项
+
+- 用户与 A 的已保存证据确认：旧入口真实 Nav2 启动、9 个 lifecycle active、navigation readiness 已通过；尚未发送导航目标。这不证明旧地图定位正确。证据 `reports/navigation-readiness-live.json`、`navigation-readiness-common-stack.json`。
+- 本会话离线 USD 0.25.11 验证 source/course 两个场景，报告中 13 个碰撞体顶点最大误差 0 m；未启动 Kit。源场景 SHA256 `a859a876e4c1829ffe12b0258771ef2f6f0a095cf3a3a03ec37ec30d25b47686`，course SHA256 `9383aec555c3111e13a12e7811f46bae9566ee94a18a3dd4d793022b31c86237`。远程 FlatGrid 引用在此离线解析中警告，未纳入地图覆盖的附加几何。
+- 旧图 map.yaml 覆盖 [-4.6525,4.7975) × [-2.975,3.025)，spawn (8,1.082) 在图外。围墙跨度约 10.5 × 15.1 m，旧图 9.45 × 6 m，不能通过单位比例的平移/旋转覆盖完整当前世界；未知旧图的局部配准，不臆造刚体对应。
+- 新地图明确选择 map XY = USD world XY（坐标约定，不额外发布 TF）。base_link 初始精确 XY=(7.999990895,1.082003594)，yaw=-0.000035778 rad。A 的 base-control-saved-scene.json 里初始 odom XY 约 (0,0)，因此 map→odom 应约 (8,1.082,0)，不能同时假定 odom=world。
+- 雷达 z=0.229147m，桌腿到 z=.4、桌板 z=.4~.6。新增定位切片图与全碰撞投影规划图；独立 world_scene_navigation.launch.py 用第二个只读地图服务器发布 /world_obstacles，保持旧入口/图与原有跨模块接口。此候选入口共10个 lifecycle 节点（旧9+world_obstacle_map_server），真实启动由A验证。
+- 已新增坐标、投影、路线余量、旧地图哈希和可复现生成测试：先4项预期失败，再新增地图后全部5项通过。正在补桌边候选的机械臂几何依据与最终独立构建/交接。
+
+### 本轮新增/修改文件
+
+仅导航包：`maps/world_scene{,_lidar}.{pgm,yaml}`、`maps/world_scene_geometry.json`、`maps/world_scene_candidates.json`、`maps/world_scene_overview.svg`；`params/bobac3_navigation_world_params.yaml`；`launch/world_scene_navigation.launch.py`；`scripts/generate_world_map.py`、`scripts/analyze_world_candidates.py`；`tests/test_world_scene_map.py`；以及 `CMakeLists.txt`、`README.md`、`WORLD_SCENE_ALIGNMENT.md`。只读 readiness 增加可选 `--extra-lifecycle-node`，测试文件 `tests/test_navigation_diagnostics.py` 同步覆盖第10个地图节点，原9节点默认行为保留。原 `map.png/map.yaml/map_older.png/map_older.yaml` 4个SHA256未变；默认旧参数/入口未修改。其他会话新增的 arm_motion_check/arm_offset_check/场景/公共文件均未修改。
+
+### map/world 结论与桌边目标
+
+- 新 map/world 的平面关系按构造为单位 SE(2)，栅格原点 [-1,-10.5,0]，resolution=.05，230×320，覆盖 [-1,10.5)×[-10.5,5.5)。这不是运行时 AMCL 已对齐的证据，也不发布 world TF。
+- 正确初值采用真实 authored base_link：x=7.999990895390511、y=1.0820035936354835、yaw=-0.00003577751974137747（近似8,1.082,0）。AMCL z=0；map→odom由AMCL按实际odom初值推导，已有A证据显示odom初值约0，因此map→odom约8,1.082,0。
+- 强行将旧AMCL初值配到新spawn得到 world_from_old_map≈(10.137112,4.864935,1.570764)；物体映射到旧图(-4.265215,8.736975)，仍在旧图外。这只是单点锚定，不是配准。没有足够地标证据给旧图一个可信的全局 map↔world 对应。
+- table2完整桌板边界x=.7~1.7、y=-.65~1.85、z=.4~.6；原雷达z=.229，定位图只保留腿，规划图保留整桌，避免AMCL和规划共用错误高度投影。
+- 候选朝向统一yaw=π（世界-X，四元数0,0,1,0）。优先首次导航桌前暂驻(2.35,.6,π)，包络含padding到桌东边名义净距.39m；较近(2.15,.6,π)净距.19m；更近(2.10,.6,π)净距.14m。净距未扣定位/到位/栅格误差，不等于运行安全余量。
+- 不能直线导航穿过Wall_02（x5.45~5.95，y-3.7~2.3）。候选北绕中心线(8,1.082)→(6.6,3)→(4.8,3)→(2.35,.6)，离线逐段201点采样，保守栅格距障碍/未知至少.50m，可容当前姿态约.45m圆包络。未调用Nav2规划或执行。
+- **机械臂约束需单独处理**：base→arm_mount≈(+.1,0,+.294)m、安装yaw≈π。真实URDF零关节FK与A记录匹配。在物体z=.612738、工具偏移.166、垂直向下且Y沿物体长轴的名义抓取假设下，16个有界种子数值IK对2.15/2.10位姿未找到解（最佳位置残差约.0886/.0519m），不能称其抓取就绪，也不能据搜索失败证明不可达。
+- (2.02,.6,π)有数值IK解（位置残差3.2e-8m、旋转误差2e-9rad），但名义净距仅.06m，旧.05m到位容差再叠加定位/栅格/角度误差不足；标为tight_diagnostic_only，不推荐直接发送。成功IK不包括自碰撞/桌面碰撞、可操作度或轨迹检查。
+- A应先用含table2的MoveIt PlanningScene做plan-only；可评估不同抓取姿态、精确近桌方案或把物体移到东缘x≈1.55~1.60（仍需物体完全在桌内）。任何场景调整交A，本会话未修改物体/场景。
+
+### 本轮复现与验收命令
+
+完整依据、来源哈希、候选说明和命令见导航包 `WORLD_SCENE_ALIGNMENT.md`；SVG见 `maps/world_scene_overview.svg`。生成工具均离线、无ROS/Kit连接。
+
+```bash
+# 项目根目录：
+source /opt/ros/jazzy/setup.bash
+export PYTHONDONTWRITEBYTECODE=1
+export ROS_LOG_DIR=/tmp/bobac-nav-c/ros-logs
+colcon --log-base /tmp/bobac-nav-c/log build \
+  --base-paths bobac_robotac_src/src/bobac3_navigation --packages-select bobac3_navigation \
+  --build-base /tmp/bobac-nav-c/build --install-base /tmp/bobac-nav-c/install
+source /tmp/bobac-nav-c/install/setup.bash
+ros2 launch bobac3_navigation world_scene_navigation.launch.py --show-args
+python3 bobac_robotac_src/src/bobac3_navigation/tests/test_navigation_config.py
+python3 bobac_robotac_src/src/bobac3_navigation/tests/test_world_scene_map.py
+# diagnostics测试仍须按前文设置loopback/关闭发现的隔离Cyclone DDS配置。
+```
+
+以下只交A执行，不在本会话运行：
+
+```bash
+export ROS_DOMAIN_ID=44
+export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+# A在确认没有重复导航节点的条件下启动：
+ros2 launch bobac3_navigation world_scene_navigation.launch.py rviz:=true
+# 独立终端、相同overlay：
+ros2 run bobac3_navigation navigation_readiness.py --timeout 90 \
+  --extra-lifecycle-node world_obstacle_map_server --report /tmp/world-navigation-ready.json
+ros2 lifecycle get /world_obstacle_map_server
+ros2 param get /amcl initial_pose.x
+ros2 param get /amcl initial_pose.y
+ros2 param get /amcl initial_pose.yaw
+ros2 topic echo /amcl_pose --once
+ros2 topic echo /odom --once
+```
+
+A发送任何导航目标前的判据：10个lifecycle active，reset实际base_link≈(8,1.082,0)，RViz用map固定帧叠加激光/TF，外墙、竖墙等至少三个方向/地标重合且AMCL不持续漂移；两图原点/分辨率/尺寸一致，costmap整桌保留、未知外部不通行，运输姿态/包络和实际环境核对一致。先用ComputePathToPose仅规划确认北绕路线，再由A决定发送桌前暂驻目标；SUCCEEDED/error_code=0并有实际到位/停止/无碰撞证据后才计目标成功。readiness和离线几何均不能代替地图匹配或导航目标验收。近桌2.02位姿与完整抓取/提升没有验收结论。
+
+### 2026-10-16 最终局部验证结果与最新交接
+
+- 独立构建退出0，1 package finished [0.24s]；世界入口show-args退出0，资源路径来自独立install。
+- 原配置回归5项、新地图/坐标/来源/FK/入口检查8项、诊断/relay检查4项，合计17项通过。额外地图lifecycle缺失测试先失败、实现后通过。
+- 已安装诊断在loopback/关闭发现的DDS环境下运行，第10个地图节点必须active，负向退出1（预期），列出31项具体缺失条件。没有访问共享栈。AST、manifest XML、限定路径diff --check通过。
+- 日志在 `/tmp/bobac-nav-c/world-map-build.log`、`world-launch-args.log`、`world-config-regression.log`、`world-map-tests.log`、`world-diagnostics-tests.log`、`world-readiness-negative.{json,log}`。
+- 其他会话在本轮期间将报告纳入git跟踪（当前git状态显示M reports/parallel-navigation.md），此前“被gitignore排除”的描述仅为历史状态；本轮没有暂存、提交或修改gitignore。
+- A应先在(2.35,.6)暂驻并完成朝西转向，再评估更近站位，不能在近桌处任意旋转；离线北绕的圆包络余量不适用于最终贴桌/展开机械臂阶段。
+
+可直接转发A：C已核验几何报告与当前source/course场景13个碰撞体顶点一致，旧图尺寸/原AMCL初值不能为当前spawn与table2提供可信全局配准。新增独立world_scene_navigation.launch.py及world参数，不改旧入口/旧图；新map XY按构造等于USD world，初始base_link≈(8,1.082,0)，AMCL map→odom按实际odom推导（odom初值约0，map→odom约8,1.082）。定位图按雷达z=.229切片，规划图完整覆盖桌板，新增只读world_obstacle_map_server后共10个lifecycle，gate同步检查10个。建议首次桌前导航候选(2.35,.6,π)，绕竖墙北端经(6.6,3)/(4.8,3)；更近(2.15,.6,π)名义包络净距.19m但垂直抓取IK未找到。物体仍在(1.4,.6)时(2.02,.6,π)虽有名义IK解，净距仅.06m，不建议直接按旧容差导航；请用含桌子的MoveIt plan-only评估姿态/精度，或由A决定移动目标近东边缘。17项局部测试和独立构建通过，未切换真实地图/发布定位/发送运动。详见导航包WORLD_SCENE_ALIGNMENT.md及本报告；真实地图、定位、规划/目标验收仍由A执行。
+
+## 2026-10-16：运输包络规划约束与整段路径净距门禁
+
+### 新证据与失败根因
+
+已读取 `reports/world-navigation-alignment-plan-3d.json`（SHA256 `39a626371f9f333bc7cd3aca92a85b629c20b846f8eacd229be7f0031773257d`）。该报告真实激光900点全部在地图障碍0.10m内、p95约0.03468m；初始定位位置误差0.0000458m、yaw误差0.0000487rad；北绕ComputePathToPose状态4/error_code=0。**这些是A已取得的证据，本轮C没有运行共享栈。**
+
+原报告同时记录最小中心净距0.183010m和0.45m圆包络检查false，顶层仍passed；因此不能将顶层passed作为运输路径验收。原SmacPlanner2D使用圆形近似，global矩形footprint的内切半径/0.22m膨胀范围不能覆盖约0.45m全姿态运输圆包络，导致北端切角路线被接受。当前矩形含padding最远角约hypot(.37,.25)=.4465m；0.45m仅适用已核验运输姿态，不是机械臂运动扫掠包络。
+
+### 本轮修改（全部在导航包内，另有本报告）
+
+- `params/bobac3_navigation_world_params.yaml`：仅独立world profile的global删除多边形footprint，使用 `robot_radius=0.64`、padding=0，覆盖0.45运输圆+0.10预留+0.09离散化缓冲；global/local inflation半径均0.85，global scaling=3。local仍保留真实方向多边形及padding，保留接口、原地图、旧入口、use_sim_time=true、Cyclone/domain44。
+- 同文件：关闭Smac2D内部smooth_path避免切角，规划容差0.25→0.05m；实际BT不调用SmoothPath。局部控制不因此获得0.10m运行余量保证。近桌2.15/2.10/2.02位姿不能继续当成该运输profile的可达目标，禁止为强行近桌缩小包络。
+- 新增 `scripts/check_path_clearance.py`：读取成功规划JSON，离线整段插值≤0.01m，未知和图外阻塞；扣除0.05m网格半对角线及半采样间隔，按1-Lipschitz距离界得到整段保守下界。门禁为中心净距下界≥0.55m，即扣0.45包络后≥0.10余量；失败退出1，不继承输入顶层passed。不连接ROS、不发任何action/速度。
+- 新增 `tests/test_path_clearance.py`：6项，覆盖已保存失败路径、参考北绕、端点自由但中段穿墙、未知/图外、无效输入和配置包络约束。
+- 新增 `maps/world_scene_path_clearance.json`：保存原真实路径与离线参考折线的净距结果、输入/地图SHA256和算法扣除项。
+- `CMakeLists.txt` 安装检查器；`package.xml`声明python3-numpy/scipy/pil/yaml运行依赖。
+- `WORLD_SCENE_ALIGNMENT.md`补充根因、参数范围、净距算法、A命令和验收边界；`README.md`及本报告顶部更新A真实静态对齐已通过、运输净距失败的当前状态。历史记录保留。
+
+### 验证命令与结果
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export PYTHONDONTWRITEBYTECODE=1
+export ROS_LOG_DIR=/tmp/bobac-nav-c/ros-logs
+colcon --log-base /tmp/bobac-nav-c/log build \
+  --base-paths bobac_robotac_src/src/bobac3_navigation --packages-select bobac3_navigation \
+  --build-base /tmp/bobac-nav-c/build --install-base /tmp/bobac-nav-c/install
+source /tmp/bobac-nav-c/install/setup.bash
+python3 bobac_robotac_src/src/bobac3_navigation/tests/test_path_clearance.py
+python3 bobac_robotac_src/src/bobac3_navigation/tests/test_world_scene_map.py
+python3 bobac_robotac_src/src/bobac3_navigation/tests/test_navigation_config.py
+ros2 launch bobac3_navigation world_scene_navigation.launch.py --show-args
+```
+
+- 独立构建最终退出0：1 package finished [0.26s]；新增6项+世界地图8项最终重跑通过，配置5项此前同轮通过，合计19项。配置测试有上游RewrittenYaml既有ResourceWarning，不影响结果。没有重新运行不受影响的ROS诊断测试。
+- 原真实路径CLI预期退出1：856个整段采样，中心净距下界**0.176533m**，扣0.45包络余量**-0.273467m**；最差采样约(6.025,2.467)，接近竖墙北端。
+- 参考折线(8,1.082)→(6.6,3)→(4.8,3)→(2.35,.6) CLI退出0：764个采样，中心净距下界**0.635107m**，扣包络余量**0.185107m**，比0.10m门槛多0.085107m；最差在暂驻终点。这里只证明静态参考折线存在余量，**不是修改后Nav2真实重规划结果**。
+- 安装版 `ros2 run bobac3_navigation check_path_clearance.py --reference-north-detour --map bobac_robotac_src/src/bobac3_navigation/maps/world_scene.yaml --report /tmp/bobac-nav-c/installed-reference-clearance.json` 同结果退出0。无ROS节点被创建。
+- Python AST全量、package XML及限定路径git diff --check通过；旧图哈希、当前场景/机器人来源哈希检查通过。临时结果在 `/tmp/bobac-nav-c/{old-path-clearance,reference-path-clearance,installed-reference-clearance}.json`，参数展开日志`clearance-launch-args.log`。未动A/B已有修改、共享.runtime和公共工具。
+
+### 待A执行及成功判据
+
+A安排应用最新world profile并重新完成10节点就绪，核对global costmap robot_radius=0.64、footprint为空、inflation=0.85、GridBased.smooth_path=false；仅规划到(2.35,.6,π)，再运行离线门禁：
+
+```bash
+# 以下是交接命令，C未运行：
+export ROS_DOMAIN_ID=44 RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+python3 tools/world_navigation_check.py --report /tmp/world-replanned.json
+python3 bobac_robotac_src/src/bobac3_navigation/scripts/check_path_clearance.py \
+  --alignment-report /tmp/world-replanned.json \
+  --map bobac_robotac_src/src/bobac3_navigation/maps/world_scene.yaml \
+  --report /tmp/world-replanned-clearance.json
+```
+
+必须确认运行图与门禁完整规划图一致、运输姿态未变、定位仍匹配；新规划成功且净距门禁退出0/passed=true/中心下界≥0.55m后，才由A决定真实目标执行。A仍需检查终点位置与朝向、动态障碍、控制跟踪偏差、停止、无碰撞和实际到位；静态0.10m策略预留不是实测误差上限。更近桌边/抓取规划仍需独立验收。
+
+需要A配合的具体事项：`tools/world_navigation_check.py`目前仅报告净距false但可能仍返回passed；该工具超出C范围，请A在流程中串接新检查器并传播非零退出，或将净距失败纳入公共工具失败条件。不要仅依赖原JSON顶层status。C未重启/启动栈、请求真实规划、发布定位、发送NavigateToPose或底盘命令。
+
+可直接转发A：已依据你的plan-3d报告修正独立world规划约束，global改为0.64m圆形半径（当前0.45运输包络+0.10预留+0.09离散化缓冲），global/local膨胀0.85m，Smac2D关闭平滑，终点容差0.05m。新增离线check_path_clearance.py门禁，未知/图外阻塞并核验整段折线，中心净距下界必须≥0.55m。你保存的路径复算下界0.176533m失败；经(6.6,3)/(4.8,3)的参考折线下界0.635107m、扣运输包络后余0.185107m，仅离线可行性参考。独立构建与19项测试通过，未启动共享栈或发送目标。请应用最新world参数重规划到(2.35,.6,π)，将新报告交检查器，净距门禁退出0才进入运动验收；原world_navigation_check顶层passed不代表净距通过，需要你串接/修正公共工具。详情与命令见WORLD_SCENE_ALIGNMENT.md最新“北绕路径运输余量修正”一节。
+
+## 2026-10-16：A 真实运动反馈后的局部包络、低速和跟踪约束
+
+### 真实证据与纠正
+
+读取 `reports/world-navigation-integration-feedback.json` 及其所列 `world-navigation-replanned.json`、`.clearance.json`、`world-navigation-staging-goal.json`、`world-navigation-after-cancel-stop.json`、`world-profile-runtime-parameters.json`。A已通过全局路径净距门禁（下界0.635107546m），但真实执行在(6.38018,2.42934)附近中心净距仅0.44528058m而取消，后来停止于(6.11727,2.84030)；当前A已停止导航栈、无活动目标。未取得导航目标成功或全程无碰撞证据。
+
+**明确纠正本报告上一轮错误结论：`GridBased.smooth_path=false` 在A安装的Jazzy Smac2D中未声明、未生效，上一轮不能称已关闭平滑。** 源码始终调用内部smoother，真实支持的跳过机制为 `GridBased.smoother.max_iterations=0`。安装头文件 `SmootherParams::get`声明这个整数，官方Jazzy `smoother.cpp`的zero-iteration分支直接返回，不改路径。本轮已替换参数和修正文档；此前旧交接中要求检查smooth_path的命令已被本节取代。旧常规调参预设保持不变，仅修正独立world profile。
+
+局部控制根因证据：此前local仍是较小矩形+padding，而global为0.64m圆；CostCritic.consider_footprint=true会进行多边形碰撞检查，不能把global圆的预留自动应用到local。旧MPPI每轴1.25m/s、平滑器1.5m/s及4m/s²，且30Hz控制/.05s模型/20Hz平滑器不同频；PathFollow权重20、Goal权重20与较弱PathAlign5使配置偏向追赶前方。不能仅靠全局路径成功推断实际轨迹。没有足够证据将偏差归因于单个权重或确认物理制动响应。
+
+### 本轮确切修改（导航包内）
+
+1. `params/bobac3_navigation_world_params.yaml`：local/global均 `robot_radius=0.64`、无footprint覆盖、padding=0、inflation=.85/scaling=3；不缩小已验证运输包络。
+2. 同文件：MPPI和velocity_smoother每轴XY±0.08m/s、XY加减速±0.15m/s²，角速度±0.15rad/s、角加减速±0.30rad/s²；控制20Hz/模型dt=.05/平滑20Hz，60步3s预测，batch2000，XY std=.04/wz std=.06、visualize=false。合平移速度上界0.113137m/s，合加速度上界0.212132m/s²，不把每轴限幅误称合速度限幅。
+3. 同文件：MPPI open_loop=false；平滑器CLOSED_LOOP、scale_velocities=true、odom_duration=.1s、velocity_timeout=.25s、deadband[.001,.001,.005]；停止阈值平移.015m/s、转动.02rad/s；failure_tolerance=0。实际odom时效性、控制周期与制动响应须A验证。
+4. 同文件：圆形CostCritic `consider_footprint=false`、trajectory_point_step=1、collision_cost=1e6、weight6，识别中心253代价为碰撞；去除冗余ObstaclesCritic及未加载的PathAngle/PreferForward配置。PathAlign weight20/stride1/offset2/threshold.15；PathFollow weight5/offset2/threshold.2；Goal weight5/threshold.3，GoalAngle threshold.2，prune_distance=.8m（超过3s最大平移预测约.339m）。这些是预测评分和候选参数，不是硬跟踪保证，MPPI加权/滤波输出和执行仍需A检验。
+5. 同文件：删除无效smooth_path，设置 `GridBased.smoother.max_iterations=0`、do_refinement=false。保留终点容差.05m及既有话题/TF/Twist/时间/DDS/domain。
+6. 新增 `scripts/analyze_transport_trace.py`，由CMake安装：纯离线读取真实trace/world_xy与获准参考planner.points_xy，计入报告捕获的map_base起点连接，避免栅格首点量化误判；整段实际/参考净距均须≥.55m，最大点到参考折线几何偏差≤.05m，输入运动与参考规划亦须成功才passed。失败退出1。它不创建ROS节点、不发送action/命令，不证明速度/加速度或采样间物理轨迹。
+7. 新增 `tests/test_world_transport_control.py`（9项）核对局部/全局包络、圆形评分、速度/加速度/反馈一致性、理想停车距离、跟踪配置、有效平滑参数和跟踪几何；修改 `tests/test_path_clearance.py` 改为核验真实有效平滑机制。
+8. 新增 `tests/transport_plugin_check.cpp` 和 `tests/run_transport_plugin_check.py`：编译调用宿主已安装Jazzy真实库，无rclcpp::init/节点/DDS；验证max_iterations=0保留30个路径pose、圆形CostCritic将253/254/255判碰撞、0.64m离散圆的内切半径0.627703m及网格保守下界0.556992m，Omni正负方向每步加速度受限。算法界不包含物理跟踪误差。
+9. 新增 `maps/world_transport_trace_review.json` 保存A旧真实失败轨迹的离线复核、地图和输入SHA256。`WORLD_SCENE_ALIGNMENT.md`与`README.md`更新最新结论、参数表、官方源码依据、A验收要求；本报告持续更新。
+
+### 独立验证结果
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export PYTHONDONTWRITEBYTECODE=1
+export ROS_LOG_DIR=/tmp/bobac-nav-c/ros-logs
+colcon --log-base /tmp/bobac-nav-c/log build \
+  --base-paths bobac_robotac_src/src/bobac3_navigation --packages-select bobac3_navigation \
+  --build-base /tmp/bobac-nav-c/build --install-base /tmp/bobac-nav-c/install
+source /tmp/bobac-nav-c/install/setup.bash
+python3 bobac_robotac_src/src/bobac3_navigation/tests/test_world_transport_control.py
+python3 bobac_robotac_src/src/bobac3_navigation/tests/test_path_clearance.py
+python3 bobac_robotac_src/src/bobac3_navigation/tests/test_world_scene_map.py
+python3 bobac_robotac_src/src/bobac3_navigation/tests/test_navigation_config.py
+python3 bobac_robotac_src/src/bobac3_navigation/tests/run_transport_plugin_check.py
+ros2 launch bobac3_navigation world_scene_navigation.launch.py --show-args
+```
+
+- 最终独立构建退出0，1 package finished [0.51s]。Python回归9+6+8+5=**28项通过**，新增配置5项先红后绿；真实库C++算法检查独立通过。编译适配安装版头文件布局和calculateMinAndMaxDistances返回pair后通过；只有GCC ABI说明note，不是运行错误。既有上游RewrittenYaml ResourceWarning仍存在。
+- 旧真实轨迹44个样本，相对已获准参考折线最大偏差**0.345402m**；整段中心净距下界**0.440299m**，因此负向检查退出1。真实轨迹本身已失败，该数据不能变成成功验收。单条参考路线不代表后续所有实时重规划路径，A需提供实际重规划历史。
+- 源码和已安装版 `ros2 run bobac3_navigation analyze_transport_trace.py` 对相同输入均预期退出1；无ROS初始化。输出 `/tmp/bobac-nav-c/transport-trace-review.json`、`installed-transport-trace-review.json`；包内副本保存来源哈希。
+- 全部Python AST、manifest XML、限定路径diff --check通过；launch仅show-args，不执行节点。日志 `/tmp/bobac-nav-c/transport-test_world_transport_control.py.log`、`transport-test_path_clearance.py.log`、`transport-test_world_scene_map.py.log`、`transport-test_navigation_config.py.log`、`transport-run_transport_plugin_check.py.log`、`transport-launch-args.log`。
+- 未重新测试与本轮无关的ROS诊断/relay节点；没有启动共享栈、调用真实规划/导航action、发布定位/速度、改共享构建或.runtime、改场景/公共工具、暂存提交或覆盖A/B工作。
+
+### 要求A配合的运行验收
+
+- A当前机器人已停在(6.11727,2.84030)附近，不能重启后盲用(8,1.082)初值。请由A按自己的流程reset到核验初值，或根据当前真实位姿初始化定位并重做规划。
+- 在A调度的真实overlay构建/应用最新world参数，确认10个lifecycle就绪；记录运行local/global radius=.64、footprint=[]、inflation=.85/scaling3，MPPI与平滑器实际速度/加速度、CLOSED_LOOP和正确平滑参数的声明和值。CLOSED_LOOP必须有新鲜、sim stamp一致的odom；控制20Hz、60步/batch2000/每步代价评分应无持续计算超时。不得因参数不生效临时缩小运输包络。
+- 重新仅规划到(2.35,.6,π)，通过实际整段净距门禁才安排低速实跑。录制带仿真时间戳的clock、odom、cmd_vel_nav、cmd_vel、实际plan重规划序列、真实位姿及运输姿态；用仿真时间核验每轴和合速度/加减速，不能用墙钟差替代。
+- 理想最大对角速度刹停约.03017m，加.25s命令超时移动后约.05845m，尚未计入反馈延迟/执行惯性/定位误差；只是配置预算，A必须测定。全程中心净距下界≥.55m、跟踪试验偏差≤.05m；获准路线下界.635107m可为.05m跟踪+.03m定位/测量预算保留约.005m，但这些真实误差上界尚未证明。
+- A原运动监控取消阈值.48m过晚，请在其公共工具范围内改为基于实测速度、制动距离、采样/反馈延迟的提前停车条件；低于.55m才取消不能保证全程达标。本会话不修改其工具。每次重规划后的实际路径要进入验收证据；离线单参考轨迹工具不能代替在线全程保护。
+- 示例仅交A运行（输入须为新真实证据）：
+
+```bash
+export ROS_DOMAIN_ID=44 RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+ros2 param get /planner_server GridBased.smoother.max_iterations  # 0，须已声明
+ros2 param get /planner_server GridBased.smoother.do_refinement   # false
+ros2 param get /local_costmap/local_costmap robot_radius           # .64
+ros2 param get /local_costmap/local_costmap footprint              # []
+ros2 param get /controller_server FollowPath.CostCritic.consider_footprint  # false
+ros2 param get /controller_server FollowPath.ax_max                # .15
+ros2 param get /velocity_smoother feedback                         # CLOSED_LOOP
+python3 bobac_robotac_src/src/bobac3_navigation/scripts/analyze_transport_trace.py \
+  --motion-report /tmp/new-transport-goal.json \
+  --reference-report /tmp/new-transport-plan.json \
+  --map bobac_robotac_src/src/bobac3_navigation/maps/world_scene.yaml \
+  --report /tmp/new-transport-trace-review.json
+```
+
+只有SUCCEEDED/error_code0、真实xy/yaw到位/停止、运输姿态不变、全程余量与速度跟踪均通过才能计导航目标成功。低速/仿真实时率可能需要A延长观察timeout，不能以提高速度/减小包络替代。原x1.4物体的2.02名义IK经A证实link_2撞桌；x1.65是假设目标、物体未移动。近桌抓取不在这份运输配置的通过范围。
+
+可直接转发A：C已统一world local/global为0.64m圆、padding0、inflation.85/scaling3，CostCritic改圆形中心代价并每预测步检查，避免原小矩形绕过运输预留。MPPI和平滑器每轴XY±.08m/s、加减速±.15m/s²，角速度±.15rad/s、角加减速±.3rad/s²，控制/模型/平滑统一20Hz；CLOSED_LOOP用真实odom；强化贴路径、减少远目标牵引。此前smooth_path=false确实无效，已改为Jazzy支持的GridBased.smoother.max_iterations=0并用安装库确认保留路径。独立构建、28项回归和真实库纯算法检查通过，未运行共享栈/发目标。新增analyze_transport_trace.py复核你旧轨迹最大偏离参考.345402m、中心净距下界.440299m，负向退出1。请按实际当前位姿/reset重做定位，验证真实新参数后重规划/低速执行，采集sim stamp速度/制动/重规划历史，维持中心下界≥.55m、试验跟踪偏差≤.05m；原.48m取消阈值须在你的工具里改成足够提前停车。预测评分不是物理保证，近桌目标不许缩包络强行通过。详见WORLD_SCENE_ALIGNMENT.md末节及本报告。

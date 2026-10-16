@@ -1,0 +1,16 @@
+{
+  "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/Props/YCB/Axis_Aligned/040_large_marker.usd",
+  "local_path": "isaacsimassets-dev/assets/props/ycb_marker/040_large_marker.usd",
+  "bytes": 464425,
+  "sha256": "73189a60294bda11af23ddfb00a43dda0e4b40ff661300034e8092480bc25634",
+  "documentation": "https://docs.isaacsim.omniverse.nvidia.com/6.0.0/replicator_tutorials/tutorial_replicator_isaac_snippets.html",
+  "scope": "official visual USD and texture cached locally; rigid-body setup and live course placement pending",
+  "dependencies": [
+    {
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/Props/YCB/Axis_Aligned/Materials/Textures/040_large_marker_COLOR.png",
+      "local_path": "isaacsimassets-dev/assets/props/ycb_marker/Materials/Textures/040_large_marker_COLOR.png",
+      "bytes": 4687059,
+      "sha256": "36bd303d1c71003df8118ff9095178b943cdf2b102cbfe5e70ee676a454dfc8a"
+    }
+  ]
+}

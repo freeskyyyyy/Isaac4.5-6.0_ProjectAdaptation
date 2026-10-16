@@ -16,6 +16,9 @@ install(DIRECTORY
 install(PROGRAMS
   scripts/laser_qos_relay.py
   scripts/navigation_readiness.py
+  scripts/analyze_transport_trace.py
+  scripts/check_path_clearance.py
+  scripts/generate_world_map.py
   DESTINATION lib/${PROJECT_NAME})
 
 ament_package()

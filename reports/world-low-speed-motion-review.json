@@ -1,0 +1,149 @@
+{
+  "status": "failed_goal_canceled_by_predictive_tracking_guard",
+  "motion_sha256": "086d0e2f8a6496441ae43c8aaba4216e056263fc155b54ccbb7de2aec9b290cf",
+  "goal_uuid": "56879e43e5014ea5af2768cadfe232ae",
+  "errors": [
+    "Predictive tracking stop: insufficient reserve below 0.05m deviation"
+  ],
+  "clearance": {
+    "passed": true,
+    "scope": "offline static whole-polyline check only; no navigation execution",
+    "map_yaml": "world_scene.yaml",
+    "map_image_sha256": "c689da004ae5a073fd27f78ce2df1d458c6c371fbb03acbd1f8ece9411a72982",
+    "map_yaml_sha256": "88ea6b2405b7befe14678c4773d14d3d6f64aeaca40d7e344acbf9f8741898a1",
+    "transport_radius_m": 0.45,
+    "required_transport_reserve_m": 0.1,
+    "required_center_clearance_m": 0.55,
+    "sample_count": 778,
+    "maximum_sample_gap_m": 0.003597506940594541,
+    "interpolation_bound_subtracted_m": 0.0017987534702972705,
+    "cell_half_diagonal_subtracted_m": 0.03535533905932738,
+    "minimum_center_clearance_lower_bound_m": 1.4378892179451561,
+    "minimum_transport_margin_lower_bound_m": 0.9878892179451562,
+    "reserve_surplus_lower_bound_m": 0.8878892179451562,
+    "worst_sample_xy": [
+      7.999973297119141,
+      1.0819995403289795
+    ],
+    "unknown_and_outside_blocked": true
+  },
+  "maximum_tracking_error_m": 0.03763556588295948,
+  "geometry_and_tracking_limits_retained": true,
+  "replan_count": 3,
+  "all_runtime_paths_clear": true,
+  "odom_native_stamp_metrics": {
+    "samples": 708,
+    "time_basis": "sim_seconds",
+    "duration_sim_seconds": 11.783333333000002,
+    "maximum_absolute_xy_wz": [
+      0.017182829872429986,
+      0.061011404530076065,
+      0.16003505885601044
+    ],
+    "maximum_linear_speed_m_s": 0.06338486511114036,
+    "maximum_absolute_sample_derivative_xy_wz": [
+      1.170450140144091,
+      2.6199549893398606,
+      7.900301879572576
+    ],
+    "sample_dt_sim_min_median_max": [
+      0.016666665999991892,
+      0.016666666999981317,
+      0.01666666700003816
+    ],
+    "derivative_caveat": "Raw discrete derivatives include contact/measurement jitter; commands use simulation receipt time because Twist has no source stamp."
+  },
+  "command_metrics": {
+    "/cmd_vel": {
+      "samples": 208,
+      "time_basis": "receipt_sim_seconds",
+      "duration_sim_seconds": 6.633333333999985,
+      "maximum_absolute_xy_wz": [
+        0.013505753129720688,
+        0.04871322959661484,
+        0.1308174431324005
+      ],
+      "maximum_linear_speed_m_s": 0.05055080716797183,
+      "maximum_absolute_sample_derivative_xy_wz": [
+        0.5522670729899394,
+        2.559246876928076,
+        7.406096577571581
+      ],
+      "sample_dt_sim_min_median_max": [
+        0.016666665999991892,
+        0.03333333300003005,
+        0.05000000099994395
+      ],
+      "derivative_caveat": "Raw discrete derivatives include contact/measurement jitter; commands use simulation receipt time because Twist has no source stamp."
+    },
+    "/cmd_vel_nav": {
+      "samples": 52,
+      "time_basis": "receipt_sim_seconds",
+      "duration_sim_seconds": 1.5833333330000414,
+      "maximum_absolute_xy_wz": [
+        0.014382067136466503,
+        0.04964788258075714,
+        0.13188140094280243
+      ],
+      "maximum_linear_speed_m_s": 0.05168903268460804,
+      "maximum_absolute_sample_derivative_xy_wz": [
+        0.8629240109275342,
+        2.97887289526115,
+        7.912883898292351
+      ],
+      "sample_dt_sim_min_median_max": [
+        0.016666665999991892,
+        0.03333333300003005,
+        0.03333333400001948
+      ],
+      "derivative_caveat": "Raw discrete derivatives include contact/measurement jitter; commands use simulation receipt time because Twist has no source stamp."
+    }
+  },
+  "trigger": {
+    "wall_seconds": 10.600123404998158,
+    "sim_seconds": 262.45,
+    "source_sim_stamp_seconds": 0.0,
+    "stamp_kind": "simulation receipt time; unstamped SDK service",
+    "query_sim_interval": [
+      262.433333333,
+      262.45
+    ],
+    "receipt_sim_seconds": 262.45,
+    "world_xy": [
+      7.998694896697998,
+      1.1014994382858276
+    ],
+    "world_yaw": 0.060350415152382715,
+    "world_velocity": [
+      -0.013615133240818977,
+      0.04935967177152634,
+      0.14023829996585846
+    ],
+    "phase": "motion",
+    "center_clearance_m": 1.44113679923211,
+    "query_latency_wall_seconds": 0.022453370998846367,
+    "localization_position_error_m": 0.00013179069274231225,
+    "tracking_error_m": 0.01953689345466257,
+    "outward_speed_m_s": 0.045653661596025165,
+    "stopping_reserve_m": 0.06285687059412773,
+    "speed_m_s": 0.05120301798290866,
+    "reason": "Predictive tracking stop: insufficient reserve below 0.05m deviation"
+  },
+  "braking": {
+    "trigger_sim_seconds": 262.45,
+    "cancel_sim_seconds": 262.516666666,
+    "stable_stop_sim_seconds": 262.95,
+    "stable_stop_delay_sim_seconds": 0.5,
+    "straight_line_distance_trigger_to_stable_stop_m": 0.015063342298167573,
+    "travel_polyline_after_trigger_m": 0.02038696746571138,
+    "guard_reserve_m": 0.06285687059412773,
+    "stable_stop_confirmed": true,
+    "stop_mechanism": "NavigateToPose cancel plus bounded 20Hz emergency zero Twist override; not ordinary smoother-only braking"
+  },
+  "limits": [
+    "Navigation did not reach goal; no physical navigation pass.",
+    "Ground-truth SDK source stamp is zero. Truth observations are bracketed by query/receipt /clock; odom uses native source simulation stamps.",
+    "Recorded geometry covers sampled trajectory with straight-line interpolation, not an independent continuous collision sensor.",
+    "Assumed 0.10m/s2 braking floor is a protective budget, not certified from this one trial."
+  ]
+}

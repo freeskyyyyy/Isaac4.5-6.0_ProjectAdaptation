@@ -1,5 +1,7 @@
 # bobac3_navigation（ROS 2 Jazzy）
 
+当前 USD 世界地图与桌边站位候选见 [WORLD_SCENE_ALIGNMENT.md](WORLD_SCENE_ALIGNMENT.md)：独立世界坐标入口、正确 reset 初值、定位/规划两种地图及抓取可达性限制。原默认入口和旧地图保留；A 已验证新地图定位与全局路径净距；真实运动净距失败并取消，最新局部圆包络、低速运输配置和轨迹偏差门禁待 A 验收。
+
 Bobac 全向底盘的 AMCL、SmacPlanner2D、MPPI、Nav2 行为树和速度平滑配置。迁移后的实际入口为 `bobac3_navigation.launch.py`，公共课程入口包含此 launch。构建/离线检查通过不等于 Isaac Sim 6.0 导航运行验收通过，当前验证证据与待办见项目 `reports/parallel-navigation.md`。
 
 ## 接口与启动

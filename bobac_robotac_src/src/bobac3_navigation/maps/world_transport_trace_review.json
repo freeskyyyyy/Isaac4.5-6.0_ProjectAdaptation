@@ -1,0 +1,56 @@
+{
+  "passed": false,
+  "scope": "offline saved trajectory geometry/tracking only; speed/acceleration not certified",
+  "motion_status": "failed",
+  "tracking_limit_m": 0.05,
+  "maximum_tracking_error_m": 0.34540200432198226,
+  "worst_tracking_sample_index": 43,
+  "sample_count": 44,
+  "actual_trajectory_clearance": {
+    "passed": false,
+    "scope": "offline static whole-polyline check only; no navigation execution",
+    "map_yaml": "world_scene.yaml",
+    "map_image_sha256": "c689da004ae5a073fd27f78ce2df1d458c6c371fbb03acbd1f8ece9411a72982",
+    "map_yaml_sha256": "88ea6b2405b7befe14678c4773d14d3d6f64aeaca40d7e344acbf9f8741898a1",
+    "transport_radius_m": 0.45,
+    "required_transport_reserve_m": 0.1,
+    "required_center_clearance_m": 0.55,
+    "sample_count": 287,
+    "maximum_sample_gap_m": 0.009963649987816032,
+    "interpolation_bound_subtracted_m": 0.004981824993908016,
+    "cell_half_diagonal_subtracted_m": 0.03535533905932738,
+    "minimum_center_clearance_lower_bound_m": 0.4402987545781145,
+    "minimum_transport_margin_lower_bound_m": -0.009701245421885496,
+    "reserve_surplus_lower_bound_m": -0.1097012454218855,
+    "worst_sample_xy": [
+      6.380182266235352,
+      2.4293372631073
+    ],
+    "unknown_and_outside_blocked": true
+  },
+  "reference_clearance": {
+    "passed": true,
+    "scope": "offline static whole-polyline check only; no navigation execution",
+    "map_yaml": "world_scene.yaml",
+    "map_image_sha256": "c689da004ae5a073fd27f78ce2df1d458c6c371fbb03acbd1f8ece9411a72982",
+    "map_yaml_sha256": "88ea6b2405b7befe14678c4773d14d3d6f64aeaca40d7e344acbf9f8741898a1",
+    "transport_radius_m": 0.45,
+    "required_transport_reserve_m": 0.1,
+    "required_center_clearance_m": 0.55,
+    "sample_count": 968,
+    "maximum_sample_gap_m": 0.009999926009552951,
+    "interpolation_bound_subtracted_m": 0.004999963004776476,
+    "cell_half_diagonal_subtracted_m": 0.03535533905932738,
+    "minimum_center_clearance_lower_bound_m": 0.635107546004083,
+    "minimum_transport_margin_lower_bound_m": 0.18510754600408302,
+    "reserve_surplus_lower_bound_m": 0.08510754600408302,
+    "worst_sample_xy": [
+      2.35000004991889,
+      0.6000001654028893
+    ],
+    "unknown_and_outside_blocked": true
+  },
+  "motion_sha256": "d3ac62e8d0db867d35f3c72e38d7892f6cb8684bca8640234d1542269ed59f40",
+  "reference_sha256": "8d765c97b7269032370ce3af211ebc27dfe4bea02feb84d06b6ab99ee7b97f93",
+  "limits": "Polyline interpolation is not proof of unobserved physical motion. Capture actual replan history and sim-stamped velocity/acceleration for runtime acceptance."
+}

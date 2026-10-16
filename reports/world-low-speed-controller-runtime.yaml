@@ -1,0 +1,127 @@
+/controller_server:
+  ros__parameters:
+    /bond_disable_heartbeat_timeout: true
+    FollowPath:
+      ConstraintCritic:
+        cost_power: 1
+        cost_weight: 3.0
+        enabled: true
+      CostCritic:
+        collision_cost: 1000000.0
+        consider_footprint: false
+        cost_power: 1
+        cost_weight: 6.0
+        critical_cost: 300.0
+        enabled: true
+        inflation_layer_name: ''
+        near_collision_cost: 253
+        near_goal_distance: 0.15
+        trajectory_point_step: 1
+      GoalAngleCritic:
+        cost_power: 1
+        cost_weight: 10.0
+        enabled: true
+        symmetric_yaw_tolerance: false
+        threshold_to_consider: 0.2
+      GoalCritic:
+        cost_power: 1
+        cost_weight: 5.0
+        enabled: true
+        threshold_to_consider: 0.3
+      PathAlignCritic:
+        cost_power: 1
+        cost_weight: 20.0
+        enabled: true
+        max_path_occupancy_ratio: 0.1
+        offset_from_furthest: 2
+        threshold_to_consider: 0.15
+        trajectory_point_step: 1
+        use_path_orientations: false
+      PathFollowCritic:
+        cost_power: 1
+        cost_weight: 5.0
+        enabled: true
+        offset_from_furthest: 2
+        threshold_to_consider: 0.2
+      TrajectoryVisualizer:
+        time_step: 1
+        trajectory_step: 1
+      ax_max: 0.15
+      ax_min: -0.15
+      ay_max: 0.15
+      ay_min: -0.15
+      az_max: 0.3
+      batch_size: 2000
+      critics:
+      - ConstraintCritic
+      - CostCritic
+      - GoalCritic
+      - GoalAngleCritic
+      - PathAlignCritic
+      - PathFollowCritic
+      enforce_path_inversion: false
+      gamma: 0.04
+      iteration_count: 1
+      max_robot_pose_search_dist: 12.5
+      model_dt: 0.05
+      motion_model: Omni
+      open_loop: false
+      plugin: nav2_mppi_controller::MPPIController
+      prune_distance: 0.8
+      regenerate_noises: false
+      retry_attempt_limit: 1
+      temperature: 0.28
+      time_steps: 60
+      transform_tolerance: 0.1
+      visualize: false
+      vx_max: 0.08
+      vx_min: -0.08
+      vx_std: 0.04
+      vy_max: 0.08
+      vy_std: 0.04
+      wz_max: 0.15
+      wz_std: 0.06
+    action_server_result_timeout: 10.0
+    autostart_node: false
+    bond_heartbeat_period: 0.1
+    controller_frequency: 20.0
+    controller_plugins:
+    - FollowPath
+    controller_server:
+      verbose: false
+    costmap_update_timeout: 0.3
+    enable_stamped_cmd_vel: false
+    failure_tolerance: 0.0
+    goal_checker_plugins:
+    - stopped_goal_checker
+    min_theta_velocity_threshold: 0.001
+    min_x_velocity_threshold: 0.001
+    min_y_velocity_threshold: 0.001
+    odom_topic: odom
+    progress_checker:
+      movement_time_allowance: 15.0
+      plugin: nav2_controller::SimpleProgressChecker
+      required_movement_radius: 0.08
+    progress_checker_plugins:
+    - progress_checker
+    publish_zero_velocity: true
+    qos_overrides:
+      /clock:
+        subscription:
+          depth: 1
+          durability: volatile
+          history: keep_last
+          reliability: best_effort
+    speed_limit_topic: speed_limit
+    start_type_description_service: true
+    stopped_goal_checker:
+      plugin: nav2_controller::StoppedGoalChecker
+      rot_stopped_velocity: 0.02
+      stateful: true
+      symmetric_yaw_tolerance: false
+      trans_stopped_velocity: 0.015
+      xy_goal_tolerance: 0.05
+      yaw_goal_tolerance: 0.04
+    use_realtime_priority: false
+    use_sim_time: true
+

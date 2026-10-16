@@ -1,0 +1,71 @@
+{
+  "/global_costmap/global_costmap": {
+    "robot_radius": {
+      "declared": true,
+      "type": 3,
+      "bool": false,
+      "double": 0.64,
+      "string": ""
+    },
+    "footprint": {
+      "declared": true,
+      "type": 4,
+      "bool": false,
+      "double": 0.0,
+      "string": "[]"
+    },
+    "inflation_layer.inflation_radius": {
+      "declared": true,
+      "type": 3,
+      "bool": false,
+      "double": 0.85,
+      "string": ""
+    },
+    "footprint_padding": {
+      "declared": true,
+      "type": 3,
+      "bool": false,
+      "double": 0.0,
+      "string": ""
+    }
+  },
+  "/local_costmap/local_costmap": {
+    "inflation_layer.inflation_radius": {
+      "declared": true,
+      "type": 3,
+      "bool": false,
+      "double": 0.85,
+      "string": ""
+    }
+  },
+  "/planner_server": {
+    "GridBased.smooth_path": {
+      "declared": false
+    },
+    "GridBased.tolerance": {
+      "declared": true,
+      "type": 3,
+      "bool": false,
+      "double": 0.05,
+      "string": ""
+    }
+  },
+  "/map_server": {
+    "yaml_filename": {
+      "declared": true,
+      "type": 4,
+      "bool": false,
+      "double": 0.0,
+      "string": "/workspace/bobac_ws/install/share/bobac3_navigation/maps/world_scene_lidar.yaml"
+    }
+  },
+  "/world_obstacle_map_server": {
+    "yaml_filename": {
+      "declared": true,
+      "type": 4,
+      "bool": false,
+      "double": 0.0,
+      "string": "/workspace/bobac_ws/install/share/bobac3_navigation/maps/world_scene.yaml"
+    }
+  }
+}

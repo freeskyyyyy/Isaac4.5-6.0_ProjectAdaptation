@@ -1,0 +1,243 @@
+{
+  "scope": "Static candidate geometry and nominal URDF IK only; collision/runtime pending",
+  "world_from_map_xy_yaw": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "legacy_spawn_anchor_only_NOT_registration": {
+    "world_from_legacy_map_xy_yaw": [
+      10.137112344911476,
+      4.864934984765569,
+      1.5707642224802585
+    ],
+    "object_in_legacy_map_xy": [
+      -4.2652154815713645,
+      8.736975417594222
+    ],
+    "note": "Single-pose anchoring is not map registration; object lies outside old map bounds"
+  },
+  "initial_map_pose": {
+    "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/base_link",
+    "world_translation": [
+      7.999990895390511,
+      1.0820035936354835,
+      0.021147131355138883
+    ],
+    "world_yaw": -3.577751974137747e-05
+  },
+  "transit_via_xy": [
+    [
+      8.0,
+      1.082
+    ],
+    [
+      6.6,
+      3.0
+    ],
+    [
+      4.8,
+      3.0
+    ],
+    [
+      2.35,
+      0.6
+    ]
+  ],
+  "candidates": [
+    {
+      "name": "staging",
+      "map_pose_xy_yaw": [
+        2.35,
+        0.6,
+        3.141592653589793
+      ],
+      "navigation_candidate": true,
+      "grasp_execution_accepted": false,
+      "quaternion_xyzw": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "arm_mount_world_m": [
+        2.249999954381868,
+        0.6000000046839645,
+        0.3151474537375176
+      ],
+      "finger_target_world_m": [
+        1.4,
+        0.6,
+        0.6127375614254722
+      ],
+      "finger_horizontal_reach_m": 0.8499999543818682,
+      "table_edge_clearance_with_candidate_footprint_m": 0.3899999999999999,
+      "wrist_target_in_arm_base_m": [
+        -0.8499999538380225,
+        3.040620617691751e-05,
+        0.46359010768795456
+      ],
+      "offline_ik": {
+        "joints_rad": [
+          -0.09335181961450985,
+          -1.04359611341543,
+          -9.168723638888264e-06,
+          -0.49664778131724996,
+          1.5724143157318018,
+          4.619097605900665
+        ],
+        "position_error_m": 0.25053617052810434,
+        "orientation_error_rad": 0.03058626403813676,
+        "kinematic_solution_found": false
+      }
+    },
+    {
+      "name": "reach_outer",
+      "map_pose_xy_yaw": [
+        2.15,
+        0.6,
+        3.141592653589793
+      ],
+      "navigation_candidate": true,
+      "grasp_execution_accepted": false,
+      "quaternion_xyzw": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "arm_mount_world_m": [
+        2.049999954381868,
+        0.6000000046839645,
+        0.3151474537375176
+      ],
+      "finger_target_world_m": [
+        1.4,
+        0.6,
+        0.6127375614254722
+      ],
+      "finger_horizontal_reach_m": 0.649999954381868,
+      "table_edge_clearance_with_candidate_footprint_m": 0.18999999999999995,
+      "wrist_target_in_arm_base_m": [
+        -0.6499999539660255,
+        2.3250702230195694e-05,
+        0.46359010768795456
+      ],
+      "offline_ik": {
+        "joints_rad": [
+          -0.10142674841998772,
+          -0.8701568066100905,
+          -4.4049748355362045e-08,
+          -0.6890401013250737,
+          1.5713413872920823,
+          -1.6721841558719701
+        ],
+        "position_error_m": 0.08860908567429064,
+        "orientation_error_rad": 0.011612344507005516,
+        "kinematic_solution_found": false
+      }
+    },
+    {
+      "name": "reach_close",
+      "map_pose_xy_yaw": [
+        2.1,
+        0.6,
+        3.141592653589793
+      ],
+      "navigation_candidate": true,
+      "grasp_execution_accepted": false,
+      "quaternion_xyzw": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "arm_mount_world_m": [
+        1.999999954381868,
+        0.6000000046839645,
+        0.3151474537375176
+      ],
+      "finger_target_world_m": [
+        1.4,
+        0.6,
+        0.6127375614254722
+      ],
+      "finger_horizontal_reach_m": 0.5999999543818682,
+      "table_edge_clearance_with_candidate_footprint_m": 0.14000000000000012,
+      "wrist_target_in_arm_base_m": [
+        -0.5999999539980264,
+        2.146182624351525e-05,
+        0.46359010768795456
+      ],
+      "offline_ik": {
+        "joints_rad": [
+          -0.10498367931752738,
+          -0.811448224057636,
+          -5.508857232722725e-07,
+          -0.7524579481740294,
+          1.5711076874589842,
+          -1.67574316753831
+        ],
+        "position_error_m": 0.05186909988414398,
+        "orientation_error_rad": 0.006896801279269494,
+        "kinematic_solution_found": false
+      }
+    },
+    {
+      "name": "tight_diagnostic_only",
+      "map_pose_xy_yaw": [
+        2.02,
+        0.6,
+        3.141592653589793
+      ],
+      "navigation_candidate": false,
+      "grasp_execution_accepted": false,
+      "quaternion_xyzw": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "arm_mount_world_m": [
+        1.919999954381868,
+        0.6000000046839645,
+        0.3151474537375176
+      ],
+      "finger_target_world_m": [
+        1.4,
+        0.6,
+        0.6127375614254722
+      ],
+      "finger_horizontal_reach_m": 0.5199999543818681,
+      "table_edge_clearance_with_candidate_footprint_m": 0.06000000000000005,
+      "wrist_target_in_arm_base_m": [
+        -0.5199999540492276,
+        1.8599624664826524e-05,
+        0.46359010768795456
+      ],
+      "offline_ik": {
+        "joints_rad": [
+          -0.11350414806442646,
+          -0.6072175966800519,
+          -0.19360821404089398,
+          -0.769970514103812,
+          1.5707926536852679,
+          -1.6842646973526387
+        ],
+        "position_error_m": 3.1837811149726996e-08,
+        "orientation_error_rad": 1.985324350134575e-09,
+        "kinematic_solution_found": true
+      }
+    }
+  ],
+  "limitations": [
+    "No collision or self-collision checking",
+    "No real MoveIt planning",
+    "Nominal planar arm mounting rotation",
+    "Finger z and tool offset are assumptions",
+    "No camera visibility or grasp/lift evidence",
+    "Unsuccessful numerical search is not proof of unreachability"
+  ],
+  "urdf_sha256": "1d310e0218a3c51cbe52af2a2d6eceb3c2787231d0cdf488e6bd5b0c245e099b",
+  "geometry_sha256": "8625ddc5b7aefa3a9a79e306e7b51735108c7058d8853ad3b4721cd36dd5116a"
+}

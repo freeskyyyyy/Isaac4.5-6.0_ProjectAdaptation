@@ -18,6 +18,8 @@ from eco65b_grasp_interfaces.action import DetectObject
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--report', type=Path, required=True)
+    parser.add_argument('--expect-missing-tf-frame',
+                        help='Negative test: require this deliberately absent frame in timeout diagnostics')
     args = parser.parse_args()
     rclpy.init()
     node = rclpy.create_node('vision_action_observer', parameter_overrides=[
@@ -71,13 +73,19 @@ def main():
         active = None
         if result.status != 6 or result.result.success or elapsed > 6:
             raise RuntimeError('Expected bounded no-target ABORTED result')
-        if not any(f['attempts'] > 0 for f in feedback):
+        if args.expect_missing_tf_frame:
+            if args.expect_missing_tf_frame not in result.result.message:
+                report['errors'].append('Missing TF frame was not identified in timeout diagnostics')
+            if any(f['attempts'] > 0 for f in feedback):
+                report['errors'].append('Missing TF should prevent inference submission')
+        elif not any(f['attempts'] > 0 for f in feedback):
             report['errors'].append('Timeout goal did not submit any image inference')
         feedback.clear()
         active = send(20.0)
         if not active.accepted:
             raise RuntimeError('Cancellation diagnostic goal rejected')
-        spin_until(lambda: any(f['attempts'] > 0 for f in feedback), 8)
+        spin_until(lambda: bool(feedback) if args.expect_missing_tf_frame
+                   else any(f['attempts'] > 0 for f in feedback), 8)
         second = send(2.0)
         report['checks']['concurrent_goal'] = {'accepted': second.accepted}
         if second.accepted:

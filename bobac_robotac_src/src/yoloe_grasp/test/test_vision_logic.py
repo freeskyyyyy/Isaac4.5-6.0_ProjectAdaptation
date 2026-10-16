@@ -278,6 +278,8 @@ def action_node(monkeypatch, snapshot=None):
     node.conf = .01
     node.sync_tolerance_sec = .05
     node.max_data_age_sec = 1.
+    node.tf_wait_timeout_sec = .2
+    node._clock_epoch = 0
     node.allow_static_camera_info = False
     node._frames = SimpleNamespace(snapshot=lambda *args: (snapshot, 'RGB/depth unavailable'))
     tf = TransformStamped()
@@ -414,3 +416,219 @@ def test_camera_qos_selection_preserves_queue_and_other_subscribers(reliability,
 def test_camera_qos_rejects_unsupported_reliability(reliability):
     with pytest.raises(ValueError, match='reliable.*best_effort'):
         node_module.camera_subscription_qos(reliability)
+
+
+class VirtualWallClock:
+    """Deterministic wall time; never initializes ROS or sleeps on a real sensor."""
+    def __init__(self, monkeypatch):
+        self.seconds = 0.
+        monkeypatch.setattr(node_module.time, 'monotonic', lambda: self.seconds)
+        monkeypatch.setattr(node_module.time, 'sleep', self.advance)
+    def advance(self, seconds):
+        self.seconds += seconds
+
+
+class ImmediateInference:
+    def submit(self, function, *args):
+        from concurrent.futures import Future
+        future = Future()
+        try:
+            future.set_result(function(*args))
+        except Exception as exc:
+            future.set_exception(exc)
+        return future
+
+
+def stamped_transform(seconds):
+    transform = TransformStamped()
+    transform.header.frame_id = 'base_link_arm'
+    transform.child_frame_id = 'arm_Camera'
+    transform.header.stamp = camera_triplet(seconds)[0].header.stamp
+    transform.transform.rotation.w = 1.
+    return transform
+
+
+def tf_wait_node(monkeypatch):
+    clock = VirtualWallClock(monkeypatch)
+    node = action_node(monkeypatch)
+    node.tf_wait_timeout_sec = .2
+    node._worker = ImmediateInference()
+    node._frames = SimpleNamespace(snapshot=lambda *args: (camera_triplet(10. + clock.seconds), ''))
+    inferred = []
+    def detected(snapshot, *args):
+        inferred.append(snapshot)
+        point = PointStamped()
+        point.header = copy.deepcopy(snapshot[0].header)
+        return dict(position=point, label='pen', confidence=.8,
+                    normal=node_module.Vector3Stamped(), long_axis=node_module.Vector3Stamped())
+    node._detect_once = detected
+    # Advance sim time with images; tests can override this to freeze or rewind it.
+    node.get_clock = lambda: SimpleNamespace(now=lambda: SimpleNamespace(nanoseconds=int((10. + clock.seconds)*1e9)))
+    return node, clock, inferred
+
+
+@pytest.mark.parametrize('delay', [.017, .05])
+def test_delayed_tf_keeps_original_stamp_while_new_images_arrive(monkeypatch, delay):
+    from tf2_ros import Buffer
+    node, clock, inferred = tf_wait_node(monkeypatch)
+    buffer = Buffer()  # Real CPU TF interpolation, without Node/TransformListener/DDS.
+    buffer.set_transform(stamped_transform(9.9), 'test')
+    queries = []
+    def lookup(target, source, stamp):
+        queries.append(stamp.nanoseconds)
+        if clock.seconds >= delay:
+            buffer.set_transform(stamped_transform(10. + clock.seconds - delay), 'test')
+        return buffer.lookup_transform(target, source, stamp)
+    node.tf_buffer = SimpleNamespace(lookup_transform=lookup)
+    goal = FakeGoal(timeout=.4)
+    result = node.execute_callback(goal)
+    assert goal.status == 'succeeded' and result.success
+    assert len(inferred) == 1
+    assert inferred[0][0].header.stamp.sec == 10 and inferred[0][0].header.stamp.nanosec == 0
+    assert len(queries) > 1 and set(queries) == {10_000_000_000}
+    assert delay <= clock.seconds < .2
+
+
+def test_tf_permanently_missing_has_bounded_wait_and_wall_timeout(monkeypatch):
+    node, clock, inferred = tf_wait_node(monkeypatch)
+    node.tf_wait_timeout_sec = .03
+    node.get_clock = lambda: SimpleNamespace(now=lambda: SimpleNamespace(nanoseconds=10_000_000_000))
+    node._frames = SimpleNamespace(snapshot=lambda *args: (camera_triplet(), ''))
+    queries = []
+    def missing(*args):
+        queries.append(args[2].nanoseconds)
+        raise node_module.TransformException('camera TF never arrived')
+    node.tf_buffer = SimpleNamespace(lookup_transform=missing)
+    goal = FakeGoal(timeout=.12)
+    result = node.execute_callback(goal)
+    assert goal.status == 'aborted' and not result.success and not inferred
+    assert 'TF wait expired' in result.message and 'camera TF never arrived' in result.message
+    assert 1 < len(queries) <= 4 and set(queries) == {10_000_000_000}
+    assert .12 <= clock.seconds < .18
+
+
+def test_action_deadline_shorter_than_tf_wait_is_respected(monkeypatch):
+    node, clock, inferred = tf_wait_node(monkeypatch)
+    def missing(*args):
+        raise node_module.TransformException('TF delayed')
+    node.tf_buffer = SimpleNamespace(lookup_transform=missing)
+    goal = FakeGoal(timeout=.035)
+    result = node.execute_callback(goal)
+    assert goal.status == 'aborted' and not inferred
+    assert 'timed out' in result.message
+    assert .035 <= clock.seconds < .06
+
+
+def test_cancel_during_tf_wait_is_prompt(monkeypatch):
+    node, clock, inferred = tf_wait_node(monkeypatch)
+    goal = FakeGoal(timeout=1.)
+    def missing(*args):
+        if clock.seconds >= .02:
+            goal.is_cancel_requested = True
+        raise node_module.TransformException('TF delayed')
+    node.tf_buffer = SimpleNamespace(lookup_transform=missing)
+    result = node.execute_callback(goal)
+    assert goal.status == 'canceled' and not result.success and not inferred
+    assert .02 <= clock.seconds <= .04
+    assert not node._goal_reserved and node._inference_future is None
+
+
+@pytest.mark.parametrize('rewind', [.001, 10.])
+def test_simulation_rewind_aborts_pending_tf_sample(monkeypatch, rewind):
+    node, clock, inferred = tf_wait_node(monkeypatch)
+    node.get_clock = lambda: SimpleNamespace(now=lambda: SimpleNamespace(
+        nanoseconds=int((10. - (rewind if clock.seconds >= .02 else 0))*1e9)))
+    def missing(*args):
+        raise node_module.TransformException('TF delayed')
+    node.tf_buffer = SimpleNamespace(lookup_transform=missing)
+    goal = FakeGoal(timeout=.3)
+    result = node.execute_callback(goal)
+    assert goal.status == 'aborted' and not result.success and not inferred
+    assert 'Simulation time moved backwards' in result.message
+    assert clock.seconds < .05 and not node._goal_reserved
+
+
+def test_tf_wait_discards_wall_stale_sample(monkeypatch):
+    node, clock, inferred = tf_wait_node(monkeypatch)
+    node.max_data_age_sec = .025
+    node._frames = SimpleNamespace(snapshot=lambda *args: (camera_triplet(), ''))
+    def missing(*args):
+        raise node_module.TransformException('TF delayed')
+    node.tf_buffer = SimpleNamespace(lookup_transform=missing)
+    goal = FakeGoal(timeout=.12)
+    result = node.execute_callback(goal)
+    assert goal.status == 'aborted' and not inferred
+    assert 'stale while waiting for TF' in result.message
+
+
+def test_rewind_then_recovery_between_tf_polls_is_detected(monkeypatch):
+    from rclpy.clock import ROSClock
+    node, clock, inferred = tf_wait_node(monkeypatch)
+    ros_clock = ROSClock()
+    ros_clock._set_ros_time_is_active(True)
+    ros_clock.set_ros_time_override(node_module.Time(seconds=10.))
+    node.get_clock = lambda: ros_clock
+    handle = ros_clock.create_jump_callback(
+        node_module.JumpThreshold(min_forward=None, min_backward=node_module.Duration(nanoseconds=-1), on_clock_change=True),
+        post_callback=node._on_clock_jump,
+    )
+    def missing(*args):
+        if clock.seconds >= .02:
+            ros_clock.set_ros_time_override(node_module.Time(seconds=9.999))
+            ros_clock.set_ros_time_override(node_module.Time(seconds=10.))
+        raise node_module.TransformException('TF delayed')
+    node.tf_buffer = SimpleNamespace(lookup_transform=missing)
+    try:
+        goal = FakeGoal(timeout=.3)
+        result = node.execute_callback(goal)
+        assert ros_clock.now().nanoseconds == 10_000_000_000
+        assert node._clock_epoch == 1
+        assert goal.status == 'aborted' and not inferred
+        assert 'Simulation time moved backwards' in result.message
+        assert clock.seconds <= .04
+    finally:
+        handle.unregister()
+
+
+def test_tf_budget_expiry_allows_next_fresh_sample(monkeypatch):
+    node, clock, inferred = tf_wait_node(monkeypatch)
+    node.tf_wait_timeout_sec = .03
+    def lookup(target, source, stamp):
+        if stamp.nanoseconds == 10_000_000_000:
+            raise node_module.TransformException('first image TF permanently absent')
+        assert stamp.nanoseconds > 10_000_000_000
+        return stamped_transform(stamp.nanoseconds / 1e9)
+    node.tf_buffer = SimpleNamespace(lookup_transform=lookup)
+    goal = FakeGoal(timeout=.3)
+    result = node.execute_callback(goal)
+    assert result.success and goal.status == 'succeeded'
+    assert len(inferred) == 1
+    assert node_module.stamp_ns(inferred[0][0]) > 10_000_000_000
+
+
+def test_simulation_rewind_aborts_inflight_inference(monkeypatch):
+    from concurrent.futures import Future
+    node, clock, inferred = tf_wait_node(monkeypatch)
+    future = Future()
+    node._worker = SimpleNamespace(submit=lambda *args: future)
+    node.get_clock = lambda: SimpleNamespace(now=lambda: SimpleNamespace(
+        nanoseconds=9_999_000_000 if clock.seconds >= .02 else 10_000_000_000))
+    goal = FakeGoal(timeout=.3)
+    result = node.execute_callback(goal)
+    assert goal.status == 'aborted' and not result.success and not inferred
+    assert 'Simulation time moved backwards' in result.message
+    assert node.goal_callback(goal.request) == node_module.GoalResponse.REJECT
+    future.set_result(None)
+    assert node.goal_callback(goal.request) == node_module.GoalResponse.ACCEPT
+
+
+def test_zero_image_stamp_never_requests_latest_tf(monkeypatch):
+    node, clock, inferred = tf_wait_node(monkeypatch)
+    node._frames = SimpleNamespace(snapshot=lambda *args: (camera_triplet(0.), ''))
+    def lookup(*args):
+        pytest.fail('Zero image stamp must not be interpreted as latest TF')
+    node.tf_buffer = SimpleNamespace(lookup_transform=lookup)
+    goal = FakeGoal(timeout=.1)
+    result = node.execute_callback(goal)
+    assert goal.status == 'aborted' and not inferred
+    assert 'nonzero original image stamp' in result.message

@@ -164,3 +164,54 @@ source /tmp/bobac-vision-qos.qNrMYm/install/setup.bash
 测试过程：实现前新增4项检查均因 `camera_subscription_qos` 尚未存在而失败（`pytest-red.log`）；首次实现后 `test_camera_qos_selection_preserves_queue_and_other_subscribers` 的 reliable/best_effort 两个用例因 QoS 内部 Duration 的 C 句柄不支持 deepcopy 失败。读取本地 Jazzy QoS/Duration 源码确认原因后改为浅复制策略对象（只覆盖 reliability，不修改只读时长），最终40项全部通过。未运行 torch、GPU、ROS节点、真实相机订阅或 DDS 端点测试，局部检查不能代替集成验收。
 
 可直接转发给 A：B 已为 RGB、深度、CameraInfo 增加独立的 rgb_qos_reliability、depth_qos_reliability、camera_info_qos_reliability 启动参数，支持 reliable/best_effort；本课程 pen_grasp_params.yaml 三项均为 reliable，订阅深度保持5。相机队列、配对、话题和 Action 定义未改。最终私有两包构建通过，视觉局部检查40项通过；没有启动共享栈。请 A 重编译/重启视觉节点时加载更新后的课程参数文件，核对启动日志三项均为 reliable，并负责公共门禁及真实 DDS/图像配对/Action 集成复验。先前图像流证据已读取，但不能认定此版节点已完成运行验收。
+
+## 2026-10-16：固定采样时间戳的有界 TF 重试
+
+### 现场与原因
+
+A 本轮反馈：新版三路订阅均为 RELIABLE，公共通信门禁及 Action 超时、取消、互斥检查通过。读取 `reports/vision-action-live.json` 时，该诊断文件自身仍记录 status=failed，scope 为真实视觉 Action 诊断、非正向定位；最后一次查询请求2159.366667s，而最新TF为2159.316667s，相差50ms。没有把该文件解释为定位验收通过。
+
+原节点在一次精确时间戳 TF 查询失败后，下一轮重新选最新图像。新图像持续领先TF时，重试目标也不断前移，不能稳定等待原图时间戳的TF到达。节点没有使用 latest；本次保持这个约束。
+
+开始时其他会话已有 MoveIt源码、tools/arm_motion_check.py、场景和其他工具改动，本轮未修改、撤销或暂存它们。未启动共享容器、相机、仿真或课程控制栈。
+
+### 修改清单及行为
+
+- `bobac_robotac_src/src/yoloe_grasp/yoloe_grasp/yoloe_grasp_node.py`：固定一组原始RGB/深度/CameraInfo快照及其内参、原始RGB时间戳、来源frame和接收时间；在Action循环中每10ms执行一次**零阻塞等待的精确stamp查询**，不重新追逐最新图像。新增 `tf_wait_timeout_sec`，默认0.2s，要求有限正数。单组重试期限取该预算与Action墙钟期限的较小值；超出单组预算后丢弃该组，允许尝试新快照，相同失败快照不反复重启预算。
+- 等待期间每轮先检查取消和Action墙钟期限；TF调用不传阻塞timeout，也不建立永久TF等待future。继续检查ROS时间年龄和墙钟接收年龄，过期样本不送入推理。超时诊断保留原图stamp、frame链和最后TF错误。0时间戳显式拒绝，绝不作为latest请求使用。
+- 注册ROSClock跳变回调记录时钟代次，另在轮询中比较仿真时间。任意负向跳变（阈值1ns）或时钟源变化会中止当前Action并丢弃待用样本/结果，包括两次轮询之间回退又恢复的情形；推理进行中也检查回退。取消优先；现有残余推理互斥仍生效。未来新Goal须重新取样，旧待TF对象不跨Goal保留。
+- `bobac_robotac_src/src/yoloe_grasp/config/pen_grasp_params.yaml`：显式加入 `tf_wait_timeout_sec: 0.2`。
+- `bobac_robotac_src/src/yoloe_grasp/test/test_vision_logic.py`：新增12项回归，覆盖17/50ms延迟、永久缺失、Action期限短于TF预算、等待中取消、1ms回退/回到0、等待样本过期、回退后迅速恢复、超预算后换新样本、推理中回退及0stamp禁止latest。
+- `reports/parallel-vision.md`：本节记录与交接。
+
+未改CameraFrames消息队列/配对算法、模型/推理逻辑、三个话题、Action定义或三路RELIABLE配置；use_sim_time=true、Cyclone DDS、ROS_DOMAIN_ID=44保持。未改公共启动、门禁、容器构建文件、场景、导航或TODO。
+
+### 独立验证
+
+专属目录：`/tmp/bobac-vision-tf.OxTsrn`。完整命令：
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export PYTHONDONTWRITEBYTECODE=1 ROS_DOMAIN_ID=44 RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+colcon --log-base /tmp/bobac-vision-tf.OxTsrn/log build \
+  --base-paths bobac_robotac_src/src/eco65b_grasp_interfaces bobac_robotac_src/src/yoloe_grasp \
+  --build-base /tmp/bobac-vision-tf.OxTsrn/build \
+  --install-base /tmp/bobac-vision-tf.OxTsrn/install \
+  --symlink-install --executor sequential
+source /tmp/bobac-vision-tf.OxTsrn/install/setup.bash
+/usr/bin/python3 -m pytest -q -p no:cacheprovider \
+  bobac_robotac_src/src/yoloe_grasp/test \
+  --basetemp /tmp/bobac-vision-tf.OxTsrn/pytest
+```
+
+- **最终构建exit0**：`2 packages finished [9.38s]`；日志 `build.log`。
+- **完整视觉局部检查exit0**：`52 passed in 1.18s`；日志 `pytest.log`。使用该轮独立overlay；未使用共享.runtime。延迟到达测试使用真实CPU TF Buffer查询/插值与可控时间/图像输入，证明等待期间查询stamp不随新图像前移；没有Node、TransformListener、rclpy.init、DDS或GPU。回退后恢复测试使用真实ROSClock及C层时间跳变回调，其余Action goal/推理为局部测试替身。
+- 虚拟时间测试中：TF等待期间取消在设取消标志后的下一10ms轮询返回（总虚拟时间20–40ms范围）；Action期限35ms、TF预算200ms时在60ms前返回；永久缺失测试的单组30ms预算耗尽后停止对同组重试，冻结仿真时钟下Action仍按120ms墙钟期限结束。这是局部逻辑检查，不能视为真实DDS调度延迟上界。
+- AST和YAML检查通过；课程TF预算0.2s、三路reliable、use_sim_time及话题保持。`git diff --check -- bobac_robotac_src/src/yoloe_grasp`通过；对camera_data.py及Action源定义的`git diff --exit-code`返回0。源码唯一TF查询仍为保留样本的非零原始stamp，没有latest分支。
+- 测试先行记录：首轮针对原代码新增8项测试，7项失败、1项既有Action短期限测试通过，日志 `pytest-red.log`。失败为两个延迟参数用例、永久缺失、TF等待取消、两个回退参数用例和等待样本过期；均复现缺少固定样本重试/等待守护的实际问题。后续真实ROSClock补测 `test_rewind_then_recovery_between_tf_polls_is_detected` 发现Jazzy的JumpThreshold还要求显式 `min_forward=None`，已修正生产与测试构造参数；最终52项通过。
+
+### A 安排的待验与交接
+
+**本轮未做共享容器编译、真实相机或目标定位验收。** 请A重编译并启动视觉节点，加载课程 `tf_wait_timeout_sec=0.2`；验证真实17–50ms TF延迟能够等到原stamp，不产生latest查询或持续追逐新帧。再复验永久缺TF、暂停时墙钟超时、等待中取消和并发互斥、仿真重置后当前Goal中止与新Goal重新取样，并保留feedback/result及实际响应耗时。200ms是本轮默认墙钟预算，实际调度若超过此值，A可通过该参数调整，但仍受Action期限和数据最大年龄约束。
+
+可直接转发给A：B已加入固定原始图像stamp的有界非阻塞TF重试，课程默认tf_wait_timeout_sec=0.2，每10ms重试；取消和Action墙钟期限持续检查，旧图过期或单组超预算即丢弃，禁止latest（0stamp也拒绝）。新增时钟回退代次检测，回退后恢复和推理中回退均中止当前Goal。相机队列/配对、话题、Action定义及三路RELIABLE保持。修改为视觉节点、课程参数、视觉测试及专属报告；本轮私有两包构建9.38s成功，52项局部回归通过。没有启动共享栈，目标容器编译、真实TF延迟与相机/物体定位仍请A安排；局部CPU测试不是运行验收。

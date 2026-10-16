@@ -1,0 +1,45 @@
+....................................................                     [100%]
+52 passed in 1.20s
+test_bad_trace_rejected (__main__.TransportTraceTest.test_bad_trace_rejected) ... ok
+test_distance_to_segment_interior_and_endpoint (__main__.TransportTraceTest.test_distance_to_segment_interior_and_endpoint) ... ok
+test_duplicate_reference_vertices (__main__.TransportTraceTest.test_duplicate_reference_vertices) ... ok
+test_reference_retains_measured_start_connector (__main__.TransportTraceTest.test_reference_retains_measured_start_connector) ... ok
+test_circular_cost_checks_every_prediction_step (__main__.WorldTransportControlTest.test_circular_cost_checks_every_prediction_step) ... ok
+test_local_and_global_envelopes_match (__main__.WorldTransportControlTest.test_local_and_global_envelopes_match) ... ok
+test_supported_jazzy_smac_smoothing_bypass (__main__.WorldTransportControlTest.test_supported_jazzy_smac_smoothing_bypass) ... ok
+test_tracking_over_chasing_distant_goal (__main__.WorldTransportControlTest.test_tracking_over_chasing_distant_goal) ... ok
+test_velocity_and_acceleration_are_consistent (__main__.WorldTransportControlTest.test_velocity_and_acceleration_are_consistent) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.068s
+
+OK
+test_global_planning_constraint_contains_transport_circle (__main__.PathClearanceTest.test_global_planning_constraint_contains_transport_circle) ... ok
+test_invalid_input_is_rejected (__main__.PathClearanceTest.test_invalid_input_is_rejected) ... ok
+test_reference_north_detour_has_reserve (__main__.PathClearanceTest.test_reference_north_detour_has_reserve) ... ok
+test_saved_successful_plan_fails_transport_clearance (__main__.PathClearanceTest.test_saved_successful_plan_fails_transport_clearance) ... ok
+test_segment_interior_is_checked (__main__.PathClearanceTest.test_segment_interior_is_checked) ... ok
+test_unknown_and_outside_are_blocked (__main__.PathClearanceTest.test_unknown_and_outside_are_blocked) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.049s
+
+OK
+test_explicit_world_profile_uses_distinct_localization_and_planning_maps (__main__.WorldSceneMapTest.test_explicit_world_profile_uses_distinct_localization_and_planning_maps) ... ok
+test_generator_is_reproducible (__main__.WorldSceneMapTest.test_generator_is_reproducible) ... ok
+test_geometry_evidence_matches_current_scene_and_asset_files (__main__.WorldSceneMapTest.test_geometry_evidence_matches_current_scene_and_asset_files) ... ok
+test_north_detour_has_transit_clearance (__main__.WorldSceneMapTest.test_north_detour_has_transit_clearance) ... ok
+test_offline_arm_model_matches_recorded_zero_joint_fk (__main__.WorldSceneMapTest.test_offline_arm_model_matches_recorded_zero_joint_fk) ... ok
+test_old_maps_preserved (__main__.WorldSceneMapTest.test_old_maps_preserved) ... ok
+test_world_coordinates_and_scan_height_projection (__main__.WorldSceneMapTest.test_world_coordinates_and_scan_height_projection) ... ok
+test_world_launch_wires_two_maps_and_checks_tenth_lifecycle_node (__main__.WorldSceneMapTest.test_world_launch_wires_two_maps_and_checks_tenth_lifecycle_node) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.294s
+
+OK
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.000s
+
+OK
