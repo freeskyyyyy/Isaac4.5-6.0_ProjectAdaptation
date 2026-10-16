@@ -1,0 +1,26 @@
+{
+  "scope": "all explicit controller profile values match passed loaded node; runtime defaults are recorded separately",
+  "profile_sha256": "739b7f8f10fd7ee271de858fab756320d7145e9b863e5ab2cff3adbbc6a3870a",
+  "loaded_controller_sha256": "28e91f09d5fa6ad999eb7afb7d0fc3c61eae39925b6f2289c2b43b8bd5bc0607",
+  "mismatches": {
+    "FollowPath": {},
+    "stopped_goal_checker": {},
+    "progress_checker": {}
+  },
+  "runtime_defaults": {
+    "FollowPath": {
+      "cancel_deceleration": 3.2,
+      "curvature_lookahead_dist": 0.6,
+      "interpolate_curvature_after_goal": false,
+      "lookahead_time": 1.5,
+      "max_robot_pose_search_dist": 12.4875,
+      "use_cancel_deceleration": false,
+      "use_fixed_curvature_lookahead": false
+    },
+    "stopped_goal_checker": {
+      "symmetric_yaw_tolerance": false
+    },
+    "progress_checker": {}
+  },
+  "passed": true
+}

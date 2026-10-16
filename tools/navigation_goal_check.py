@@ -26,7 +26,7 @@ from sensor_msgs.msg import JointState
 from geometry_msgs.msg import Twist
 from nav2_msgs.action import NavigateToPose
 from nav_msgs.msg import Odometry, Path as NavPath
-from navigation_guard import guard_reason, stopping_reserve, tracking_error
+from navigation_guard import guard_reason, stopping_reserve, tracking_error, command_reason, capture_tf_wait_allowed, tracking_observation, odometry_feedback_reason
 from simulation_interfaces.srv import GetEntityState
 from tf2_ros import Buffer, TransformListener
 
@@ -71,14 +71,21 @@ def main():
     joints, commands, feedback = [], [], []
     last_joint_wall = [time.monotonic()]
     last_odom_wall = [0.]
+    last_odom_source = [0.]
+    last_odom_sim_receipt = [0.]
     current_path = [reference]
+    current_plan_index = [-1]
     plan_failure = []
+    command_failure = []
     collecting_braking = [False]
     def stamp(value):
         return value.sec + value.nanosec*1e-9
     def sim_now():
         return n.get_clock().now().nanoseconds*1e-9
     def receive_command(message, topic):
+        reason = command_reason([message.linear.x, message.linear.y, message.angular.z])
+        if reason:
+            command_failure.append(topic + ': ' + reason)
         if topic == '/cmd_vel':
             commands.append(message)
         report['velocity_history'].append({'topic': topic, 'receipt_sim_seconds': sim_now(),
@@ -87,6 +94,8 @@ def main():
             'xy_wz': [message.linear.x, message.linear.y, message.angular.z]})
     def receive_odom(message):
         last_odom_wall[0] = time.monotonic()
+        last_odom_source[0] = stamp(message.header.stamp)
+        last_odom_sim_receipt[0] = sim_now()
         t = message.twist.twist
         report['odom_history'].append({'sim_seconds': stamp(message.header.stamp),
             'receipt_sim_seconds': sim_now(), 'wall_seconds': time.monotonic()-start,
@@ -100,14 +109,17 @@ def main():
             if message.header.frame_id != 'map' or not item['clearance']['passed']:
                 plan_failure.append('New runtime plan failed frame/whole-path clearance gate')
             else:
-                # Grid planner first point is a quantized cell, not the exact
-                # robot start. Preserve the observed start connector explicitly.
+                # Validate the physical start connector separately. Tracking
+                # uses the published path, without adding ground-truth points.
                 connector = report['trace'][-1]['world_xy'] if report['trace'] else reference[0]
                 item['observed_start_connector_xy'] = connector
                 item['connected_clearance'] = module.check([connector]+points, map_path)
                 if not item['connected_clearance']['passed']:
                     plan_failure.append('Runtime plan start connector failed clearance')
-                current_path[0] = [connector]+points
+                else:
+                    current_path[0] = points
+                    current_plan_index[0] = len(report['replanning_history'])
+                    item['accepted_for_tracking'] = True
         except Exception as exc:
             item['error'] = str(exc); plan_failure.append('Invalid runtime plan: '+str(exc))
         report['replanning_history'].append(item)
@@ -127,6 +139,10 @@ def main():
         'accepted_plan': str(a.plan_report), 'plan_sha256': hashlib.sha256(a.plan_report.read_bytes()).hexdigest(),
         'velocity_history': [], 'odom_history': [], 'replanning_history': [],
         'guard_policy': {'clearance_limit_m': .55, 'tracking_limit_m': .05,
+            'tracking_reference': 'latest published path accepted by frame and whole-path/physical-start clearance gates',
+            'growth_reference': 'both consecutive physical positions measured against the same accepted path',
+            'odom_source_max_age_seconds': .15, 'odom_wall_watchdog_seconds': 1.5,
+            'odom_source_lead_max_seconds': .05,
             'assumed_braking_floor_m_s2': .10, 'reaction_seconds': .40,
             'clearance_uncertainty_m': .025, 'physical_braking_validated': False}}
     active = None
@@ -170,19 +186,28 @@ def main():
                       'world_velocity': [twist.linear.x, twist.linear.y, twist.angular.z],
                       'phase': 'braking' if collecting_braking[0] else ('motion' if active is not None else 'warmup'),
                       'center_clearance_m': clear, 'query_latency_wall_seconds': now-last_query}
+            # TF waiting can process later plans; freeze the path version that
+            # was active at this observation's simulation receipt time.
+            path_at_capture = current_path[0]
+            plan_at_capture = current_plan_index[0]
             capture = Time(seconds=sample_time)
-            tf_end = time.monotonic()+.5
-            while enforce and active is not None and not tf.can_transform('map', 'base_link', capture) and time.monotonic() < tf_end:
+            tf_start = time.monotonic()
+            while (enforce and active is not None and not tf.can_transform('map', 'base_link', capture)
+                   and capture_tf_wait_allowed(sample_time, sim_now(), time.monotonic()-tf_start)):
                 rclpy.spin_once(n, timeout_sec=.005)
+            if (enforce and active is not None
+                    and not capture_tf_wait_allowed(sample_time, sim_now(), time.monotonic()-tf_start)):
+                raise RuntimeError('Capture-time TF exceeded simulation freshness or wall watchdog')
             if tf.can_transform('map', 'base_link', capture):
                 t = tf.lookup_transform('map', 'base_link', capture).transform
                 sample['localization_position_error_m'] = math.dist(xy, [t.translation.x, t.translation.y])
-            deviation = max(tracking_error(xy, reference), tracking_error(xy, current_path[0]))
             previous = report['trace'][-1] if report['trace'] else sample
             dt = sample_time-previous['sim_seconds']
-            outward = max(0., (deviation-previous.get('tracking_error_m', deviation))/dt) if dt > 0 else 0.
+            measurement = tracking_observation(xy, previous['world_xy'], dt, path_at_capture, reference)
+            deviation = measurement['tracking_error_m']
+            outward = measurement['outward_speed_m_s']
             age = max(0., sim_now()-query_sim_time)
-            sample.update(tracking_error_m=deviation, outward_speed_m_s=outward,
+            sample.update(measurement, accepted_plan_index=plan_at_capture,
                           stopping_reserve_m=stopping_reserve(speed, age), speed_m_s=speed)
             report['trace'].append(sample)
             if active is not None and enforce:
@@ -207,9 +232,20 @@ def main():
             query_sim_time = sim_now()
         if active is not None and enforce and plan_failure:
             raise RuntimeError(plan_failure[0])
-        if active is not None and enforce and now-last_odom_wall[0] > .5:
-            raise RuntimeError('Closed-loop odometry became stale')
-        if joints and any(abs(v) > .03 for v in joints[-1].position):
+        if enforce and command_failure:
+            raise RuntimeError(command_failure[0])
+        if active is not None and enforce:
+            timing = {'source_sim_seconds': last_odom_source[0],
+                      'receipt_sim_seconds': last_odom_sim_receipt[0],
+                      'current_sim_seconds': sim_now(),
+                      'elapsed_wall_seconds': time.monotonic()-last_odom_wall[0]}
+            reason = odometry_feedback_reason(timing['source_sim_seconds'],
+                timing['receipt_sim_seconds'], timing['current_sim_seconds'],
+                timing['elapsed_wall_seconds'])
+            if reason:
+                report['odometry_watchdog_failure'] = timing
+                raise RuntimeError(reason)
+        if joints and (len(joints[-1].position) != 6 or any(not math.isfinite(v) or abs(v) > .03 for v in joints[-1].position)):
             raise RuntimeError('Arm left verified transport posture; canceling')
         if joints and now-last_joint_wall[0] > 1.5:
             raise RuntimeError('Arm posture feedback became stale; canceling')
@@ -302,6 +338,7 @@ def main():
         if report['trace']:
             report['actual_trajectory_clearance'] = module.check([x['world_xy'] for x in report['trace']], map_path)
             report['maximum_tracking_error_m'] = max(x['tracking_error_m'] for x in report['trace'])
+            report['maximum_initial_path_error_m'] = max(x['initial_path_error_m'] for x in report['trace'])
             if not report['actual_trajectory_clearance']['passed'] or report['maximum_tracking_error_m'] > .05:
                 report['status'] = 'failed'
             braking = [s for s in report['trace'] if s['phase'] == 'braking']

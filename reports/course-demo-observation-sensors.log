@@ -1,0 +1,3 @@
+usage: live_sensor_check.py [-h] [--duration DURATION] --report REPORT
+                            [--image-reliability {best_effort,reliable}]
+live_sensor_check.py: error: Use at least 10 wall seconds to check sustained output

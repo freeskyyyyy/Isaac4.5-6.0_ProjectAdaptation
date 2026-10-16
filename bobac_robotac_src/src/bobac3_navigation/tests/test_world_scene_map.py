@@ -3,6 +3,7 @@ import hashlib
 import importlib.util
 import json
 import math
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -83,7 +84,7 @@ class WorldSceneMapTest(unittest.TestCase):
         for path, key in [(evidence['source'], 'source_sha256'),
                           (evidence['course_scene'], 'course_scene_sha256'),
                           (evidence['robot_asset'], 'robot_asset_sha256')]:
-            source = PACKAGE.parents[2] / path
+            source = Path(os.environ.get('COURSE_PROJECT_ROOT', PACKAGE.parents[2])) / path
             self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), evidence[key],
                              'Source changed: regenerate/verify map evidence before accepting alignment')
 

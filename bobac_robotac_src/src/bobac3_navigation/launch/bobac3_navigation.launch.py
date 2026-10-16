@@ -31,6 +31,7 @@ NAVIGATION_NODES = [
 def generate_launch_description():
     share = get_package_share_directory('bobac3_navigation')
     sim_time = LaunchConfiguration('use_sim_time')
+    sim_smoother = LaunchConfiguration('use_sim_time_smoother')
     scan_relay = LaunchConfiguration('use_scan_relay')
     scan_topic = PythonExpression([
         "'/laser_scan_fuse_best_effort' if '", scan_relay,
@@ -66,8 +67,12 @@ def generate_launch_description():
         server('nav2_behaviors', 'behavior_server', [('cmd_vel', 'cmd_vel_nav')]),
         server('nav2_bt_navigator', 'bt_navigator'),
         server('nav2_waypoint_follower', 'waypoint_follower'),
-        server('nav2_velocity_smoother', 'velocity_smoother',
-               [('cmd_vel', 'cmd_vel_nav'), ('cmd_vel_smoothed', 'cmd_vel')]),
+        Node(package=PythonExpression(["'bobac3_navigation' if '", sim_smoother,
+                                       "'.lower() == 'true' else 'nav2_velocity_smoother'"]),
+             executable=PythonExpression(["'sim_time_velocity_smoother' if '", sim_smoother,
+                                          "'.lower() == 'true' else 'velocity_smoother'"]),
+             name='velocity_smoother', output='screen', parameters=common,
+             remappings=tf_remaps + [('cmd_vel', 'cmd_vel_nav'), ('cmd_vel_smoothed', 'cmd_vel')]),
     ]
     managers = [Node(
         package='nav2_lifecycle_manager', executable='lifecycle_manager',
@@ -103,6 +108,8 @@ def generate_launch_description():
         DeclareLaunchArgument('use_sim_time', default_value='true', choices=['true', 'True'],
                               description='Course navigation requires the simulator clock'),
         DeclareLaunchArgument('autostart', default_value='true'),
+        DeclareLaunchArgument('use_sim_time_smoother', default_value='false', choices=['true', 'false'],
+                              description='World opt-in simulation-clock CLOSED_LOOP adapter'),
         DeclareLaunchArgument('use_scan_relay', default_value='false',
                               description='Relay the raw scan to the existing best_effort topic'),
         DeclareLaunchArgument('check_readiness', default_value='true',

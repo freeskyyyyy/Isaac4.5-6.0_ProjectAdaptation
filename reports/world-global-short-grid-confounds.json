@@ -1,0 +1,117 @@
+{
+  "straight": {
+    "scope": "actual NavigateToPose diagnostic; confounded by grid path, not a pure controller comparison",
+    "goal_xy_yaw": [
+      8.299013900756837,
+      1.0819810628890991,
+      0.00042726240804144864
+    ],
+    "planner_start": [
+      7.998994981514896,
+      1.0819920617977625
+    ],
+    "first_points": [
+      [
+        7.998994981514896,
+        1.0819920617977625
+      ],
+      [
+        7.990829173489979,
+        1.0766600801828707
+      ],
+      [
+        7.982663365465061,
+        1.071328098567979
+      ],
+      [
+        7.974497557440144,
+        1.0659961169530872
+      ],
+      [
+        7.966331749415227,
+        1.0606641353381954
+      ],
+      [
+        7.95816594139031,
+        1.0553321537233036
+      ],
+      [
+        7.950000133365393,
+        1.0500001721084118
+      ],
+      [
+        7.958333466822903,
+        1.0500001721084118
+      ]
+    ],
+    "minimum_forward_projection_m": -0.04899367527096806,
+    "endpoint_goal_error_m": 0.0585245788606088,
+    "motion_status": "failed",
+    "errors": [
+      "NavigateToPose did not succeed"
+    ],
+    "maximum_tracking_m": 0.0044870562851428986,
+    "operator_cancel_after_progress_failure": true,
+    "braking_summary": null
+  },
+  "rpp-straight": {
+    "scope": "actual NavigateToPose diagnostic; confounded by grid path, not a pure controller comparison",
+    "goal_xy_yaw": [
+      8.271588611602784,
+      1.0446699857711792,
+      0.23163272323815068
+    ],
+    "planner_start": [
+      7.971594015638363,
+      1.0446753900443801
+    ],
+    "first_points": [
+      [
+        7.971594015638363,
+        1.0446753900443801
+      ],
+      [
+        7.967275239183769,
+        1.035740346308175
+      ],
+      [
+        7.962956462729175,
+        1.0268053025719697
+      ],
+      [
+        7.958637686274581,
+        1.0178702588357642
+      ],
+      [
+        7.954318909819987,
+        1.008935215099559
+      ],
+      [
+        7.950000133365393,
+        1.0000001713633537
+      ],
+      [
+        7.958333466822903,
+        1.0000001713633537
+      ],
+      [
+        7.966666800280412,
+        1.0000001713633537
+      ]
+    ],
+    "minimum_forward_projection_m": -0.021593077464679162,
+    "endpoint_goal_error_m": 0.049613047868679365,
+    "motion_status": "failed",
+    "errors": [
+      "Predictive tracking stop: insufficient reserve below 0.05m deviation"
+    ],
+    "maximum_tracking_m": 0.024778944608927926,
+    "operator_cancel_after_progress_failure": false,
+    "braking_summary": {
+      "observed_stopped": true,
+      "stop_sim_seconds": 628.1,
+      "distance_from_trigger_m": 0.0029207350263493995,
+      "final_speed_m_s": 0.0005631811414353382
+    }
+  }
+}

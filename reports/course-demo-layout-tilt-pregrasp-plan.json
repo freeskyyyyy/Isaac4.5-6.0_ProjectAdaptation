@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "scope": "hypothetical teaching marker +0.25m X, 30deg grasp, original 5cm pregrasp plus 3cm finger offset along tool axis; plan-only",
+  "errors": [],
+  "finger_target_arm_xyz": [
+    -0.44418912082151835,
+    -0.0430094160352698,
+    0.36745781620537643
+  ],
+  "action_status": 4,
+  "success": true,
+  "code": 0,
+  "message": "Planned (plan_only)"
+}

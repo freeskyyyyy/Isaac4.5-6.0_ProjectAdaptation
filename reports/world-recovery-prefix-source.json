@@ -1,0 +1,10 @@
+{
+  "scope": "runtime experiment source identities, not an acceptance claim",
+  "sha256": {
+    "bobac_robotac_src/src/bobac3_navigation/include/bobac3_navigation/connected_path.hpp": "95db571e2e7b7e1d5205727a11b2537cf8803d457c10fa89bfc9674082512393",
+    "bobac_robotac_src/src/bobac3_navigation/src/connected_smac_planner.cpp": "07533159328466c70b327df6a4f1d808a56589c9679258235251b8c4fd3e3ef6",
+    "tools/navigation_guard.py": "b1b08a50381f99e9943645206f5f1b7ae13a6d81b66cd88c1854bc391f46821a",
+    "tools/navigation_goal_check.py": "c7359ba84bec9a0987de7169cf6ce537c7ea613278ab8e5f30b6153feaf7c245",
+    "reports/world-recovery-prefix-motion-probe.py": "d9db7e8e9ceb411ea6a16a8e64d5b40358055a170155d5049973bb07f3ae6720"
+  }
+}

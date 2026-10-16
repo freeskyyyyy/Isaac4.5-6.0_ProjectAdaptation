@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchContext
 from launch.actions import DeclareLaunchArgument
-from launch.utilities import perform_substitutions
+from launch.utilities import perform_substitutions, normalize_to_list_of_substitutions
 from launch_ros.actions import Node
 import yaml
 
@@ -29,7 +29,8 @@ class NavigationConfigTest(unittest.TestCase):
         return description, context
 
     def test_all_presets_and_relay_selection(self):
-        for preset in SHARE.glob('params/bobac3_navigation_params*.yaml'):
+        for preset in [*SHARE.glob('params/bobac3_navigation_params*.yaml'),
+                       SHARE/'params/bobac3_navigation_world_params.yaml']:
             for relay in ['false', 'true']:
                 with self.subTest(preset=preset.name, relay=relay):
                     description, context = self.launch({'params_file': str(preset), 'use_scan_relay': relay})
@@ -78,11 +79,13 @@ class NavigationConfigTest(unittest.TestCase):
     def test_required_plugins_exist_in_installed_registry(self):
         registry = set()
         for package in ['nav2_amcl', 'nav2_controller', 'nav2_mppi_controller', 'nav2_smac_planner',
-                        'nav2_costmap_2d', 'nav2_smoother', 'nav2_behaviors', 'nav2_waypoint_follower']:
+                        'nav2_costmap_2d', 'nav2_smoother', 'nav2_behaviors', 'nav2_waypoint_follower',
+                        'bobac3_navigation']:
             for xml in Path(get_package_share_directory(package)).glob('*.xml'):
                 for plugin in ET.parse(xml).iter('class'):
                     registry.add(plugin.attrib.get('name', plugin.attrib['type']))
-        for preset in SHARE.glob('params/bobac3_navigation_params*.yaml'):
+        for preset in [*SHARE.glob('params/bobac3_navigation_params*.yaml'),
+                       SHARE/'params/bobac3_navigation_world_params.yaml']:
             def plugins(mapping):
                 for key, value in mapping.items():
                     if key in ['plugin', 'robot_model_type']:
@@ -99,16 +102,32 @@ class NavigationConfigTest(unittest.TestCase):
         for program in ['laser_qos_relay.py', 'navigation_readiness.py']:
             self.assertTrue((prefix / 'lib/bobac3_navigation' / program).is_file())
 
+    def test_world_clock_smoother_selection_and_interfaces(self):
+        for enabled, package, program in [('false', 'nav2_velocity_smoother', 'velocity_smoother'),
+                                           ('true', 'bobac3_navigation', 'sim_time_velocity_smoother')]:
+            description, context = self.launch({'use_sim_time_smoother': enabled})
+            node = next(n for n in description.entities if isinstance(n, Node)
+                        and not isinstance(n.node_executable, str))
+            value = lambda x: perform_substitutions(context, normalize_to_list_of_substitutions(x))
+            self.assertEqual(value(node.node_executable), program)
+            self.assertEqual(value(node.node_package), package)
+            node._perform_substitutions(context)
+            self.assertIn(('cmd_vel', 'cmd_vel_nav'), node.expanded_remapping_rules)
+            self.assertIn(('cmd_vel_smoothed', 'cmd_vel'), node.expanded_remapping_rules)
+        world = (SHARE/'launch/world_scene_navigation.launch.py').read_text()
+        self.assertIn("'use_sim_time_smoother': 'true'", world)
+        self.assertTrue((SHARE.parents[1]/'lib/bobac3_navigation/sim_time_velocity_smoother').is_file())
+
     def test_course_node_list_and_command_chain(self):
         description, context = self.launch()
         nodes = [action for action in description.entities if isinstance(action, Node)]
-        executables = [node.node_executable for node in nodes]
+        executables = [perform_substitutions(context, normalize_to_list_of_substitutions(node.node_executable)) for node in nodes]
         for executable in launch_module.LOCALIZATION_NODES + launch_module.NAVIGATION_NODES:
             self.assertIn(executable, executables)
         for extra in ['collision_monitor', 'route_server', 'opennav_docking']:
             self.assertNotIn(extra, executables)
         for node in nodes:
-            executable = node.node_executable
+            executable = perform_substitutions(context, normalize_to_list_of_substitutions(node.node_executable))
             if executable in ['controller_server', 'behavior_server', 'velocity_smoother']:
                 node._perform_substitutions(context)
                 self.assertIn(('cmd_vel', 'cmd_vel_nav'), node.expanded_remapping_rules)

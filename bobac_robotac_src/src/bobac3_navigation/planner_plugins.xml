@@ -1,0 +1,5 @@
+<library path="connected_smac_planner">
+  <class type="bobac3_navigation::ConnectedSmacPlanner2D" base_class_type="nav2_core::GlobalPlanner">
+    <description>Smac2D with exact start connector and geometry-preserving 1cm sampling.</description>
+  </class>
+</library>

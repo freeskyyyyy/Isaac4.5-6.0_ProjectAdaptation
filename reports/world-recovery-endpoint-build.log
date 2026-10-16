@@ -1,0 +1,4 @@
+[0.124s] ERROR:colcon:colcon build: Duplicate package names not supported:
+- bobac3_navigation:
+  - bobac_robotac_src/src/bobac3_navigation
+  - reports/original_source/bobac3_navigation

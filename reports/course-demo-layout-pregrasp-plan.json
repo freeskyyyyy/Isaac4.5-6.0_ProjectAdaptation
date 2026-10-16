@@ -1,0 +1,14 @@
+{
+  "status": "failed",
+  "scope": "hypothetical teaching marker +0.25m world X; plan-only only; object not moved and no execution",
+  "errors": [],
+  "finger_target_arm_xyz": [
+    -0.4841891208215183,
+    -0.0430094160352698,
+    0.37817578390262135
+  ],
+  "action_status": 6,
+  "success": false,
+  "code": -6,
+  "message": "No valid IK for requested grasp orientation"
+}

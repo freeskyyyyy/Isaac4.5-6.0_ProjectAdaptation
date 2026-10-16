@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "scope": "real original camera and DetectObject Action; no substituted ground-truth target",
+  "feedback": [
+    {
+      "state": "WAITING_IMAGE",
+      "attempts": 0
+    },
+    {
+      "state": "DETECTING",
+      "attempts": 1
+    },
+    {
+      "state": "FOUND",
+      "attempts": 1
+    }
+  ],
+  "errors": [],
+  "action_status": 4,
+  "result": {
+    "success": true,
+    "message": "Detection succeeded",
+    "detected_class": "pen",
+    "object_position": {
+      "header": {
+        "stamp": {
+          "sec": 3505,
+          "nanosec": 533333333
+        },
+        "frame_id": "base_link_arm"
+      },
+      "point": {
+        "x": -0.7341891208215183,
+        "y": -0.0430094160352698,
+        "z": 0.29817578390262134
+      }
+    },
+    "normal": {
+      "header": {
+        "stamp": {
+          "sec": 3505,
+          "nanosec": 533333333
+        },
+        "frame_id": "base_link_arm"
+      },
+      "vector": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": -1.0
+      }
+    },
+    "long_axis": {
+      "header": {
+        "stamp": {
+          "sec": 3505,
+          "nanosec": 533333333
+        },
+        "frame_id": "base_link_arm"
+      },
+      "vector": {
+        "x": -0.008109555269485326,
+        "y": -0.9999671170160203,
+        "z": 0.0
+      }
+    },
+    "confidence": 0.0741371214389801
+  }
+}

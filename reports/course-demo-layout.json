@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "scope": "teaching layout setup only; no grasp or attachment",
+  "errors": [],
+  "before": [
+    1.3999089002609253,
+    0.599921703338623,
+    0.6091959476470947
+  ],
+  "after": [
+    1.6500144004821777,
+    0.5999213457107544,
+    0.609194815158844
+  ]
+}

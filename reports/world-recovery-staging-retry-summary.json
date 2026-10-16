@@ -1,0 +1,50 @@
+{
+  "status": "failed",
+  "reason": "A canceled low-progress diagnostic after real RPP observation; no successful goal arrival",
+  "action_status": 5,
+  "errors": [
+    "NavigateToPose did not succeed"
+  ],
+  "wall_seconds": 206.31639284698758,
+  "sim_seconds": 130.08333333300016,
+  "displacement_m": 0.24823063373022183,
+  "max_localization_error_m": 0.011917157495491137,
+  "maximum_tracking_error_m": 0.012327669602944515,
+  "maximum_initial_path_error_m": 0.15600692327964266,
+  "trajectory_clearance_lower_bound_m": 1.228036056608978,
+  "replans": 189,
+  "all_replans_accepted": true,
+  "live_rotating_fraction": 0.95,
+  "live_translation_fraction": 0.05,
+  "final_observation": {
+    "wall_seconds": 206.345238762995,
+    "sim_seconds": 1860.3166666660002,
+    "source_sim_stamp_seconds": 0.0,
+    "stamp_kind": "simulation receipt time; unstamped SDK service",
+    "query_sim_interval": [
+      1860.3000000000002,
+      1860.3166666660002
+    ],
+    "receipt_sim_seconds": 1860.3166666660002,
+    "world_xy": [
+      7.963556289672852,
+      2.0158169269561768
+    ],
+    "world_yaw": 3.089554223106497,
+    "world_velocity": [
+      -0.0008042188128456473,
+      -1.3843503438693006e-05,
+      -0.07849875837564468
+    ],
+    "phase": "motion",
+    "center_clearance_m": 1.476116267792098,
+    "query_latency_wall_seconds": 0.01623032298812177,
+    "localization_position_error_m": 0.011897699815334633,
+    "tracking_error_m": 0.011740595109691743,
+    "initial_path_error_m": 0.15600692327964266,
+    "outward_speed_m_s": 0.0,
+    "accepted_plan_index": 188,
+    "stopping_reserve_m": 0.025338375610632864,
+    "speed_m_s": 0.0008043379523075605
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "passed": true,
+  "scope": "offline loaded-scene file static collision vertices and asset provenance; runtime alignment/posture separate",
+  "scene": "/workspace/course/scenes/test_scene_bobac_6.0.radius-candidate.usda",
+  "sha256": {
+    "scenes/test_scene_bobac_6.0.radius-candidate.usda": "8cae3c282e9446309b18d864fd6b9f6bf1d9efa3d3e82813ad287eed31847003",
+    "scenes/test_scene_bobac_6.0.usda": "a859a876e4c1829ffe12b0258771ef2f6f0a095cf3a3a03ec37ec30d25b47686",
+    "isaacsimassets-dev/assets/robot/bobac.usd": "5595b8f8fa568352bc83404ae5298cff013029ad99eefa5045eb398f9eee91f3"
+  },
+  "collisions": [
+    {
+      "path": "/World/table1/Cube_02",
+      "max_vertex_error_m": 0.0
+    },
+    {
+      "path": "/World/table1/Cube_01",
+      "max_vertex_error_m": 0.0
+    },
+    {
+      "path": "/World/table1/Cube_0",
+      "max_vertex_error_m": 0.0
+    },
+    {
+      "path": "/World/table2/Cube_02",
+      "max_vertex_error_m": 0.0
+    },
+    {
+      "path": "/World/table2/Cube_01",
+      "max_vertex_error_m": 0.0
+    },
+    {
+      "path": "/World/table2/Cube_0",
+      "max_vertex_error_m": 0.0
+    },
+    {
+      "path": "/World/Group/Wall_0",
+      "max_vertex_error_m": 0.0
+    },
+    {
+      "path": "/World/Group/Wall_01",
+      "max_vertex_error_m": 0.0
+    },
+    {
+      "path": "/World/Group/Wall_02",
+      "max_vertex_error_m": 0.0
+    },
+    {
+      "path": "/World/Group/Wall_03",
+      "max_vertex_error_m": 0.0
+    },
+    {
+      "path": "/World/Group/Wall_04",
+      "max_vertex_error_m": 0.0
+    },
+    {
+      "path": "/World/Group/Wall_05",
+      "max_vertex_error_m": 0.0
+    },
+    {
+      "path": "/World/Group/Wall_06",
+      "max_vertex_error_m": 0.0
+    }
+  ],
+  "errors": [],
+  "dirty_course_scene_preserved": true
+}

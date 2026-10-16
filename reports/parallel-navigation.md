@@ -1,6 +1,6 @@
 # 会话 C：Nav2 导航迁移
 
-首次检查：2026-10-14；最近复验：2026-10-16（Asia/Shanghai）。**A 已通过真实地图/定位对齐和重规划全局净距门禁；真实运动净距失败并取消，A已停止栈且无活动目标。C现已修正局部运输圆包络、速度/跟踪参数及Jazzy平滑配置，待A重新验收。** 修改仅限 `bobac_robotac_src/src/bobac3_navigation/` 和本报告。没有启动共享仿真/导航控制栈、发送底盘运动命令、重启容器、重建镜像、写共享 `.runtime`、暂存文件、切换分支或修改项目 TODO。
+首次检查：2026-10-14；最近复验：2026-10-16（Asia/Shanghai）。**A 最新低速目标因预测跟踪保护取消，记录区间保住0.55m净距/0.05m偏差门槛，但未到达。C已修正控制路径起点、初段评分与仿真时钟CLOSED_LOOP平滑；独立构建及新增离线检查通过，现有场景来源哈希门禁失败保留，需A复核并实测。** 修改仅限 `bobac_robotac_src/src/bobac3_navigation/` 和本报告。没有启动共享仿真/导航控制栈、发送底盘运动命令、重启容器、重建镜像、写共享 `.runtime`、暂存文件、切换分支或修改项目 TODO。
 
 ## 基线和实际入口
 
@@ -346,3 +346,67 @@ python3 bobac_robotac_src/src/bobac3_navigation/scripts/analyze_transport_trace.
 只有SUCCEEDED/error_code0、真实xy/yaw到位/停止、运输姿态不变、全程余量与速度跟踪均通过才能计导航目标成功。低速/仿真实时率可能需要A延长观察timeout，不能以提高速度/减小包络替代。原x1.4物体的2.02名义IK经A证实link_2撞桌；x1.65是假设目标、物体未移动。近桌抓取不在这份运输配置的通过范围。
 
 可直接转发A：C已统一world local/global为0.64m圆、padding0、inflation.85/scaling3，CostCritic改圆形中心代价并每预测步检查，避免原小矩形绕过运输预留。MPPI和平滑器每轴XY±.08m/s、加减速±.15m/s²，角速度±.15rad/s、角加减速±.3rad/s²，控制/模型/平滑统一20Hz；CLOSED_LOOP用真实odom；强化贴路径、减少远目标牵引。此前smooth_path=false确实无效，已改为Jazzy支持的GridBased.smoother.max_iterations=0并用安装库确认保留路径。独立构建、28项回归和真实库纯算法检查通过，未运行共享栈/发目标。新增analyze_transport_trace.py复核你旧轨迹最大偏离参考.345402m、中心净距下界.440299m，负向退出1。请按实际当前位姿/reset重做定位，验证真实新参数后重规划/低速执行，采集sim stamp速度/制动/重规划历史，维持中心下界≥.55m、试验跟踪偏差≤.05m；原.48m取消阈值须在你的工具里改成足够提前停车。预测评分不是物理保证，近桌目标不许缩包络强行通过。详见WORLD_SCENE_ALIGNMENT.md末节及本报告。
+
+## 2026-10-16：最新低速初段反馈（C，离线修复完成；真实验收待A）
+
+本节接续 `world-navigation-integration-feedback.json` 的新一轮反馈，覆盖前节“待低速运行”状态。A 的最新真实目标被预测跟踪保护取消，不能计作导航成功；记录包含制动后中心净距下界 1.437889m、最大偏差 0.037636m，原门槛仍为中心下界≥0.55m、偏差≤0.05m。当前机器人约 `(7.997826,1.119579,0.119910)`；下次由 A reset 或按实际位姿重定位。
+
+已确认的机制与证据：
+
+- 首次运行 `/plan` 首点 `(7.9500001,1.0500002)` 与实测起点之间 **0.0593316m**。A 为门禁加入的 `observed_start_connector_xy` 仅在报告中，原 Smac 返回给 MPPI 的路径没有该段，控制与验收参考并不相同。
+- Jazzy `PathAlignCritic::score()` 在 `furthest_reached_path_point < offset_from_furthest` 时直接跳过；原 5cm 格点（斜边约7.1cm）、offset2 与低速短预测范围使初段路径对齐存在空档。Omni 的路径朝向评分关闭，途中 GoalAngle 不激活，也没有 Twirling 评分，初段转动缺少专门惩罚。它们是已确认的控制缺口；尚不能声称单凭离线证据解释了全部物理响应。
+- 两级命令普通段周期中位数约 **0.033333s 仿真 / 0.050s 墙钟**；原生 odom 约0.016667s 仿真。上游 Jazzy smoother 使用 wall timer、每次增量按 `accel/frequency` 计算，`use_sim_time=true` 不会将该计时器改为仿真计时。MPPI 的固定 `model_dt=.05` 也不是实测执行周期。
+- 分离预测停车前的数据后，普通 `/cmd_vel` 差分峰值约 `[.08240,.09981,.37372]`，`/cmd_vel_nav` 约 `[.07545,.15687,.28774]`；普通 native odom 约 `[.20715,.33806,1.23379]`。紧急覆盖段放大了全段导数，但不能把普通段也判为满足物理加速度限制。Twist 仍是接收时间，非精确源时间。
+- 新离线工具及结果：`scripts/analyze_control_feedback.py`、`maps/world_startup_control_review.json`；保留输入 SHA、时间基准、非正间隔计数、全段/普通段分离和 .05/.1s 原生 odom 窗口均值。不改变任何验收判据。
+
+正在实现的有界修正：仅 opt-in world profile 使用 `bobac3_navigation::ConnectedSmacPlanner2D` 包装上游 Smac2D，补准确请求起点，保留全部旧顶点，按≤1cm共线细分，不平滑/切角；连接不得超过一个地图格对角线，拒绝非法帧、非有限值及代价图中阻塞/未知采样。仍必须走 A 独立整段净距检查。PathAlign offset改1、PathFollow改10以保留约0.1m前瞻；加入途中 TwirlingCritic（目标位置容差内由上游跳过）。CLOSED_LOOP 保留，smoother odom窗口 .1→.05s、deadband三轴归零，保留初段微小纠偏。速度/加速度参数、双代价图0.64m运输圆、0.55/0.05门槛、话题/TF/domain44/Cyclone/仿真时间保持。
+
+已完成红灯：新增 world 控制回归因缺少 ConnectedSmac 插件失败；连接段纯几何回归因缺少实现失败；反馈分段诊断2项因工具缺少失败。后续构建和完整离线验证结果在本节下方补记。没有启动共享栈、导航或发送命令，也没有修改场景和公共工具。
+
+### 本轮最终变更与验证
+
+本轮实际修改/新增文件（均位于导航包，另有本报告）：
+
+- `CMakeLists.txt`、`package.xml`、`planner_plugins.xml`：编译/安装全局planner插件、仿真时钟平滑器，增加编译依赖与离线CTest入口。
+- `src/connected_smac_planner.cpp`、`include/bobac3_navigation/connected_path.hpp`：补真实起点连接、保留旧顶点和共线细分，采样检查代价与取消请求；未变更原始地图。
+- `src/sim_time_velocity_smoother.cpp`、`include/bobac3_navigation/feedback_step.hpp`：继承上游生命周期及闭环算法，替换为ROS仿真时钟timer，增量按实际仿真dt并以上限周期封顶；最新odom时间戳年龄超过.15s、超前超过.05s、时间戳零或时钟非前进时，已有命令输出零并清除缓存。无指令时不主动发布。故障零命令不属于普通限加速度制动证明。
+- `launch/bobac3_navigation.launch.py` 新增默认false的 `use_sim_time_smoother` 选择；`launch/world_scene_navigation.launch.py` 固定传true。节点仍叫 `velocity_smoother`，话题remap与10节点lifecycle名单不变。**仅传world参数给旧入口不等于启用了新平滑器**；A须使用world入口或显式选择该参数。
+- `params/bobac3_navigation_world_params.yaml`：ConnectedSmac插件、PathAlign offset1/PathFollow offset10、Twirling weight10、闭环窗口.05s/反馈年龄.15s/deadband0。原0.64m圆、速度/加速度上限、0.55/0.05验收门槛不变。
+- `scripts/analyze_control_feedback.py`、`maps/world_startup_control_review.json`：不初始化ROS的历史反馈诊断，区分普通/停车后段及时间基准，含原始数据SHA。
+- `tests/connected_path_check.cpp`、`feedback_step_check.cpp`、`planner_plugin_load_check.cpp`、`test_control_feedback.py`；扩展 `tests/transport_plugin_check.cpp`、`test_navigation_config.py`、`test_world_transport_control.py`：纯几何、时序故障判定、真实Jazzy插件加载/评分、配置与诊断回归。C++检查在Release下也不因NDEBUG失效。
+- `README.md`、`WORLD_SCENE_ALIGNMENT.md`：最新状态、行为边界、来源失败、A验收命令。未修改公共工具、course_bringup或任何场景；共享工作区出现的其他改动属于其他会话，未覆盖或撤销。
+
+独立验证命令（C已执行，不启动ROS节点/栈）：
+
+```bash
+source /opt/ros/jazzy/setup.bash
+export PYTHONDONTWRITEBYTECODE=1
+export ROS_LOG_DIR=/tmp/bobac-nav-c/ros-logs
+colcon --log-base /tmp/bobac-nav-c/log build \
+  --base-paths bobac_robotac_src/src/bobac3_navigation --packages-select bobac3_navigation \
+  --build-base /tmp/bobac-nav-c/build --install-base /tmp/bobac-nav-c/install \
+  --cmake-args -DBUILD_TESTING=ON
+source /tmp/bobac-nav-c/install/setup.bash
+ctest --test-dir /tmp/bobac-nav-c/build/bobac3_navigation --output-on-failure
+python3 bobac_robotac_src/src/bobac3_navigation/tests/run_transport_plugin_check.py
+ros2 launch bobac3_navigation world_scene_navigation.launch.py --show-args
+ros2 run bobac3_navigation analyze_control_feedback.py \
+  --motion-report reports/world-low-speed-motion.json \
+  --report /tmp/bobac-nav-c/installed-startup-review.json
+```
+
+结果：
+
+- 最终独立构建退出0，1包完成，1.69s；安装有 `libconnected_smac_planner.so` 与 `sim_time_velocity_smoother`。
+- CTest **7组通过、1组失败**。Python共32项，31项通过，唯一失败为原有 `test_geometry_evidence_matches_current_scene_and_asset_files`；其余新旧离线用例通过，三个C++检查通过。扩展world实际RewrittenYaml/插件registry检查后单独重跑config组，6项通过。完整日志 `/tmp/bobac-nav-c/startup-final-ctest.log`，构建日志 `startup-final-build.log`。
+- 失败原因不是测试放宽：当前 `scenes/test_scene_bobac_6.0.course.usda` SHA256=`43ae57fc3405a83769731fa8d4ce4eb01aede5524b76099b2f148a09a0cde88a`，几何记录是`9383aec555c3111e13a12e7811f46bae9566ee94a18a3dd4d793022b31c86237`。**未改写哈希或跳过用例**；A需确认加载场景并复核碰撞顶点与运输姿态。哈希不同本身既不能证明几何相同，也不能证明几何不同。
+- 真实安装库算法检查通过：复现旧offset2在furthest1时零评分；新offset1启用，细分路径评分偏好沿线预测，Twirling惩罚途中转动；原Smac零迭代、圆cost253/254/255拦截、Omni正负加速度预测检查仍通过。日志 `startup-real-algorithms.log`；它们不是物理执行测试。
+- 安装诊断输出与源结果 `cmp` 一致；`--show-args` 退出0；AST/XML和scoped `git diff --check` 通过。
+- 保存的旧取消目标仍被 `analyze_transport_trace.py` 判失败并退出1；几何下界和.05m门槛没有变更，未把取消目标误算成功。输出 `startup-old-trace-gate.json`。
+- 上游 RewrittenYaml 仍有既有unclosed-file ResourceWarning、独立算法编译有GCC pair ABI提示，未作为失败。未重跑需创建ROS节点的 `test_navigation_diagnostics.py`；未运行共享导航、目标、底盘命令、暂停/reset或真实规划。未声称整个测试集全绿或真实导航通过。
+
+### A 下一轮验收与可转发交接
+
+> C 已提交到共享文件的修正（未git暂存/提交）：world用ConnectedSmac补准确起点与≤1cm共线采样；PathAlign offset1、PathFollow offset10及途中Twirling；world launch自动选择同名lifecycle的仿真时钟CLOSED_LOOP适配器，odom窗口.05s、年龄门禁.15s、deadband0。速度/加速度标称上限、0.64m运输圆与中心净距≥.55m/偏差≤.05m门槛保持。独立构建、插件加载与新增离线检查通过；完整CTest只有场景来源哈希用例失败，当前course SHA43ae57…与旧几何证据9383ae…不同，必须先确认加载场景和碰撞顶点/包络，不能直接替换哈希。请A在自己的overlay构建，用当前真实位姿重定位或reset后启动world入口，确认10节点active、新planner类型和日志`Simulation-clock CLOSED_LOOP smoother`。激活时参数不可动态修改，需停用后重配。核实真实 `/plan` 首点及连接，不仅在JSON补字段；每条重规划先过整段净距门禁，再按现有预测保护试验。输出应约20Hz仿真，普通sim-stamped odom/两级Twist与紧急覆盖分开，核验初段沿参考、无途中自转漂移、反馈年龄、仿真dt、物理速度/加减速/制动、最终action SUCCEEDED/error0及到位停稳。控制器仍用上游调度，实际性能和物理响应未由C证明。保留SDK源stamp0和请求/接收时钟区间，不放宽保护或删除初段样本；失败即保留失败。A的公共运动工具/场景变更仍由A负责。
+
+详细A命令和成功判据见导航包 `WORLD_SCENE_ALIGNMENT.md` 最后一节。新平滑器的时钟回退/反馈过期停车逻辑只做了纯函数验证和编译；真正ROS定时器、生命周期转换、暂停/恢复、普通闭环制动与目标执行均待A验证。没有真实修改后仿真证据，导航运行验收保持未通过。

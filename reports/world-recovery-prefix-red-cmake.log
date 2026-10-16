@@ -1,0 +1,5 @@
+[ 50%] Building CXX object CMakeFiles/connected_path_check.dir/tests/connected_path_check.cpp.o
+[100%] Linking CXX executable connected_path_check
+[100%] Built target connected_path_check
+terminate called after throwing an instance of 'std::runtime_error'
+  what():  navigation offline regression failed

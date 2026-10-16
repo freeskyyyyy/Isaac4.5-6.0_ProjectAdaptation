@@ -1,6 +1,7 @@
 """Offline regressions: a plan success is not a clearance acceptance."""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import unittest
 import yaml
@@ -13,7 +14,8 @@ spec.loader.exec_module(module)
 
 class PathClearanceTest(unittest.TestCase):
     def test_saved_successful_plan_fails_transport_clearance(self):
-        data = json.loads((PACKAGE.parents[2]/'reports/world-navigation-alignment-plan-3d.json').read_text())
+        root = Path(os.environ.get('COURSE_PROJECT_ROOT', PACKAGE.parents[2]))
+        data = json.loads((root/'reports/world-navigation-alignment-plan-3d.json').read_text())
         result = module.check(data['planner']['points_xy'], PACKAGE/'maps/world_scene.yaml')
         self.assertFalse(result['passed'])
         self.assertLess(result['minimum_center_clearance_lower_bound_m'], .19)

@@ -1,0 +1,14 @@
+{
+  "status": "failed",
+  "scope": "real YOLOE point into original 0.03m finger+0.05m pregrasp offset; plan-only",
+  "errors": [],
+  "finger_target_arm_xyz": [
+    -0.7341891208215183,
+    -0.0430094160352698,
+    0.37817578390262135
+  ],
+  "action_status": 6,
+  "success": false,
+  "code": -6,
+  "message": "No valid IK for requested grasp orientation"
+}

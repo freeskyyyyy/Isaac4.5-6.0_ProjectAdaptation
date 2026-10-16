@@ -1,0 +1,37 @@
+FFFF
+======================================================================
+FAIL: test_mutual_exclusion_and_cancel_remain_responsive (__main__.GripperFeedbackTest.test_mutual_exclusion_and_cancel_remain_responsive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 130, in test_mutual_exclusion_and_cancel_remain_responsive
+    self.assertFalse(other.accepted)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_no_feedback_aborts_without_sending_motion (__main__.GripperFeedbackTest.test_no_feedback_aborts_without_sending_motion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 99, in test_no_feedback_aborts_without_sending_motion
+    self.assertFalse(result.result.success, 'Missing joint feedback must not become REACHED')
+AssertionError: True is not false : Missing joint feedback must not become REACHED
+
+======================================================================
+FAIL: test_stalled_joint_is_not_a_successful_close (__main__.GripperFeedbackTest.test_stalled_joint_is_not_a_successful_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 108, in test_stalled_joint_is_not_a_successful_close
+    self.assertFalse(result.result.success, 'Elapsed sleep cannot establish gripping')
+AssertionError: True is not false : Elapsed sleep cannot establish gripping
+
+======================================================================
+FAIL: test_success_and_feedback_use_measured_position (__main__.GripperFeedbackTest.test_success_and_feedback_use_measured_position)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 122, in test_success_and_feedback_use_measured_position
+    self.assertLess(self.feedback[0].current_position, 2., 'Initial feedback must be measured')
+AssertionError: 50.0 not less than 2.0 : Initial feedback must be measured
+
+----------------------------------------------------------------------
+Ran 4 tests in 7.824s
+
+FAILED (failures=4)

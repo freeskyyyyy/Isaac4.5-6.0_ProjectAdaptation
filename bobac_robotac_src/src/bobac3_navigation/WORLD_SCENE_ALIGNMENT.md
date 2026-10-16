@@ -204,3 +204,49 @@ python3 bobac_robotac_src/src/bobac3_navigation/scripts/analyze_transport_trace.
 ```
 
 机械臂最新A反馈亦否定旧“名义IK可作为抓取就绪”推断：原物体x1.4时2.02解的link_2与桌板碰撞；x1.65仅是假设目标，未实际移动物体。此运输配置不处理近桌抓取，不缩小运输圆来尝试这些站位。
+
+## 最新低速反馈后的初段与闭环修正（2026-10-16）
+
+A 最新目标被预测跟踪保护取消；记录区间中心下界1.437889m、最大偏差0.037636m，目标未到达。门槛仍是中心下界≥0.55m、偏差≤0.05m。`maps/world_startup_control_review.json` 是保存记录的离线分析，不是本次修改后的运动证据。
+
+world profile 现在使用 `bobac3_navigation::ConnectedSmacPlanner2D`：继承原 Jazzy Smac2D 搜索及参数，加入真实请求起点与首格点之间的短连接，按≤0.01m共线细分每段，保留全部原顶点和终点，不切角或平滑。原记录连接长0.059332m，过去只被记录工具计入验收，控制器并未收到它。连接超过地图一格对角线、帧不一致、非有限值、阻塞/未知采样均拒绝。这个采样检查不替代 A 的整段净距门禁。A 必须在真正 `/plan` 中确认首点接近当次规划 start，不能只在 JSON 加字段。
+
+Jazzy PathAlign 在最远预测点索引低于 offset 时跳过。细分后 offset=1，PathFollow offset=10（约0.1m前瞻）；加入 TwirlingCritic weight10，抑制全向运输途中无必要转动，最终位置容差内上游跳过该评分，允许 GoalAngle 对准π。半径、速度和加速度上限保持；评分仍是软约束，不是严格跟踪证明。准确起点连接使参考与控制一致，但重规划不得通过重置参考而掩盖旧路线偏离。
+
+world launch 自动选择包内 `sim_time_velocity_smoother`，节点名仍为 `velocity_smoother`，CLOSED_LOOP、原话题及10个 lifecycle 节点不变；旧入口默认仍用上游可执行文件。适配器继承上游计算，将 wall timer 替换为 ROS 仿真时钟 timer；每次限制使用 `min(实际仿真dt,配置周期)`，不会因迟到回调放大增量。原试验20Hz墙钟对应约30Hz仿真，不能直接按 `.05s` 声称每仿真秒加速度达标。控制器仍是上游调度；适配后输出应约20Hz仿真，MPPI计算频率与物理响应仍由 A 记录核验。
+
+闭环 odom 窗口改为.05s，max_odom_age=.15s；三轴 deadband=0，避免丢弃初段微小X纠偏。只有新的有效指令才进入计算；已有指令遇过期/零时间戳/超前超过.05s的odom，或非前进时钟时，输出零并丢弃缓存指令。该故障停车单独标为保护事件，不能冒充普通限加速度制动。暂停时ROS timer随仿真暂停；A仍须按公共安全流程在暂停/reset前停稳，并实测恢复行为。激活期间拒绝参数修改，以防上游动态频率回调重新创建wall timer；更改参数须停用并重新配置。
+
+离线证据边界：当前 `course.usda` SHA256 为 `43ae57fc3405a83769731fa8d4ce4eb01aede5524b76099b2f148a09a0cde88a`，与旧地图记录 `9383aec5…` 不同。`test_geometry_evidence_matches_current_scene_and_asset_files` 保留失败，未替换哈希。A须确认当前加载场景，重新核对碰撞顶点、robot运输包络和map/world对应，再更新来源证据；不能据此假定碰撞几何一定变了或一定没变。
+
+由 A 执行真实验收（C 未运行以下启动/目标步骤）：
+
+```bash
+# 在A自己的目标overlay构建；不要用C的/tmp安装代替目标环境构建
+colcon build --packages-select bobac3_navigation
+# reset或按当前真实位置重新定位后，用已有公共流程启动world入口
+ros2 launch bobac3_navigation world_scene_navigation.launch.py rviz:=false
+ros2 param get /planner_server GridBased.plugin
+ros2 param get /velocity_smoother feedback
+ros2 param get /velocity_smoother odom_duration
+ros2 param get /velocity_smoother max_odom_age
+ros2 param get /controller_server FollowPath.PathAlignCritic.offset_from_furthest
+ros2 param get /controller_server FollowPath.PathFollowCritic.offset_from_furthest
+ros2 param get /controller_server FollowPath.TwirlingCritic.cost_weight
+```
+
+A还须从进程命令/启动日志确认实际为 `sim_time_velocity_smoother`，日志含 `Simulation-clock CLOSED_LOOP smoother`。先验证10节点active、定位、地图来源、首点连接与每条重规划净距；保留预测保护，不放宽0.55/0.05门槛。记录原生sim-stamped odom、接收仿真时间的两级Twist、所有 `/plan` 与SDK查询时间区间。普通控制与故障/紧急零覆盖分开；测每次仿真dt、反馈年龄、物理速度及加减速，验证途中无持续自转、初段不向外加速、最终位置/朝向/停稳及 action SUCCEEDED/error0。低速起点连接可能先短暂朝西南走到格点，需按准确参考判读，不能删初始样本。
+
+```bash
+# 已保存证据的离线复查，不发ROS请求或命令
+ros2 run bobac3_navigation analyze_control_feedback.py \
+  --motion-report /tmp/new-motion.json --report /tmp/new-control-review.json
+ros2 run bobac3_navigation analyze_transport_trace.py \
+  --motion-report /tmp/new-motion.json --reference-report /tmp/new-plan.json \
+  --map "$(ros2 pkg prefix --share bobac3_navigation)/maps/world_scene.yaml" \
+  --report /tmp/new-transport-gate.json
+```
+
+第二个工具的静态参考不能替代按时序核对所有真实重规划。真实成功仍须目标成功、几何/跟踪/物理控制全部门禁通过；目前没有修改后运行验收证据。
+
+兼容性依据：[Jazzy PathAlign 实现](https://github.com/ros-navigation/navigation2/blob/jazzy/nav2_mppi_controller/src/critics/path_align_critic.cpp)、[Twirling 实现](https://github.com/ros-navigation/navigation2/blob/jazzy/nav2_mppi_controller/src/critics/twirling_critic.cpp)、[上游速度平滑计时与反馈](https://github.com/ros-navigation/navigation2/blob/jazzy/nav2_velocity_smoother/src/velocity_smoother.cpp)。

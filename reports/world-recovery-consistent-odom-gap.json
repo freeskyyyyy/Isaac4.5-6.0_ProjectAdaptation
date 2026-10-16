@@ -1,0 +1,183 @@
+{
+  "errors": [
+    "Closed-loop odometry became stale"
+  ],
+  "largest_odom_gaps": [
+    {
+      "wall_seconds": 0.5336346399999456,
+      "before": {
+        "sim_seconds": 2308.416666666,
+        "receipt_sim_seconds": 2308.4166666660003,
+        "wall_seconds": 103.78130318799231,
+        "xy_wz": [
+          -0.0005080860681332618,
+          0.0007265606532867434,
+          0.07958751916885376
+        ]
+      },
+      "after": {
+        "sim_seconds": 2308.433333333,
+        "receipt_sim_seconds": 2308.4166666660003,
+        "wall_seconds": 104.31493782799225,
+        "xy_wz": [
+          -0.00015228359320504546,
+          0.0002575262730320352,
+          0.07768654078245163
+        ]
+      }
+    },
+    {
+      "wall_seconds": 0.09422108100261539,
+      "before": {
+        "sim_seconds": 2255.0,
+        "receipt_sim_seconds": 2254.9833333330002,
+        "wall_seconds": 19.51052828899992,
+        "xy_wz": [
+          0.0001554899168642912,
+          0.0002595118235947772,
+          -0.0801667645573616
+        ]
+      },
+      "after": {
+        "sim_seconds": 2255.016666666,
+        "receipt_sim_seconds": 2255.016666666,
+        "wall_seconds": 19.604749370002537,
+        "xy_wz": [
+          -0.0002695463153479279,
+          -4.367063848044588e-05,
+          -0.0772920474410057
+        ]
+      }
+    },
+    {
+      "wall_seconds": 0.09210401499876752,
+      "before": {
+        "sim_seconds": 2253.8,
+        "receipt_sim_seconds": 2253.783333333,
+        "wall_seconds": 17.547201524997945,
+        "xy_wz": [
+          0.000534624287015476,
+          0.0002611657099142525,
+          -0.07965093106031418
+        ]
+      },
+      "after": {
+        "sim_seconds": 2253.816666666,
+        "receipt_sim_seconds": 2253.8,
+        "wall_seconds": 17.639305539996712,
+        "xy_wz": [
+          -0.0003940662023648116,
+          0.00017718524619638685,
+          -0.07822972536087036
+        ]
+      }
+    },
+    {
+      "wall_seconds": 0.09198854300484527,
+      "before": {
+        "sim_seconds": 2256.866666666,
+        "receipt_sim_seconds": 2256.866666666,
+        "wall_seconds": 22.61132865199761,
+        "xy_wz": [
+          0.014014388044724031,
+          0.0006816482501352576,
+          -0.08223816007375717
+        ]
+      },
+      "after": {
+        "sim_seconds": 2256.883333333,
+        "receipt_sim_seconds": 2256.8833333330003,
+        "wall_seconds": 22.703317195002455,
+        "xy_wz": [
+          0.013480682487434812,
+          0.0005910260001452755,
+          -0.07763735949993134
+        ]
+      }
+    },
+    {
+      "wall_seconds": 0.09157374400820117,
+      "before": {
+        "sim_seconds": 2276.816666666,
+        "receipt_sim_seconds": 2276.816666666,
+        "wall_seconds": 54.22027952199278,
+        "xy_wz": [
+          0.008007602202830552,
+          -0.0011130532776895193,
+          -0.06991907954216003
+        ]
+      },
+      "after": {
+        "sim_seconds": 2276.833333333,
+        "receipt_sim_seconds": 2276.833333333,
+        "wall_seconds": 54.31185326600098,
+        "xy_wz": [
+          0.007973828122917314,
+          -0.0017801878222351273,
+          -0.07971012592315674
+        ]
+      }
+    }
+  ],
+  "last_motion": {
+    "wall_seconds": 103.79199978399265,
+    "sim_seconds": 2308.4166666660003,
+    "source_sim_stamp_seconds": 0.0,
+    "stamp_kind": "simulation receipt time; unstamped SDK service",
+    "query_sim_interval": [
+      2308.4166666660003,
+      2308.4166666660003
+    ],
+    "receipt_sim_seconds": 2308.4166666660003,
+    "world_xy": [
+      7.11611795425415,
+      2.2642557621002197
+    ],
+    "world_yaw": 2.822986208676521,
+    "world_velocity": [
+      0.0002549256896600127,
+      -0.0008491494809277356,
+      0.07958751916885376
+    ],
+    "phase": "motion",
+    "center_clearance_m": 1.1558110723184607,
+    "query_latency_wall_seconds": 0.01135395499295555,
+    "localization_position_error_m": 0.017317244825717996,
+    "tracking_error_m": 0.011038769333713361,
+    "initial_path_error_m": 0.11994411723108794,
+    "outward_speed_m_s": 0.0,
+    "accepted_plan_index": 5,
+    "stopping_reserve_m": 0.025358566236835522,
+    "speed_m_s": 0.0008865900677361979
+  },
+  "first_braking": {
+    "wall_seconds": 104.3317303770018,
+    "sim_seconds": 2308.433333333,
+    "source_sim_stamp_seconds": 0.0,
+    "stamp_kind": "simulation receipt time; unstamped SDK service",
+    "query_sim_interval": [
+      2308.4166666660003,
+      2308.433333333
+    ],
+    "receipt_sim_seconds": 2308.433333333,
+    "world_xy": [
+      7.116121768951416,
+      2.264251947402954
+    ],
+    "world_yaw": 2.824283624654117,
+    "world_velocity": [
+      6.433019007090479e-05,
+      -0.0002921842969954014,
+      0.07768654078245163
+    ],
+    "phase": "braking",
+    "center_clearance_m": 1.155814921274844,
+    "query_latency_wall_seconds": 0.5075654290121747,
+    "tracking_error_m": 0.011041598112257798,
+    "initial_path_error_m": 0.11994411723108794,
+    "outward_speed_m_s": 0.0001697267092741982,
+    "accepted_plan_index": 5,
+    "stopping_reserve_m": 0.02512510683368593,
+    "speed_m_s": 0.0002991822801658809
+  }
+}

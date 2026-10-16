@@ -1,0 +1,210 @@
+Start testing: Oct 16 12:00 UTC
+----------------------------------------------------------
+1/8 Testing: test_navigation_config
+1/8 Test: test_navigation_config
+Command: "/usr/bin/python3" "/workspace/bobac_ws/src/bobac3_navigation/tests/test_navigation_config.py"
+Directory: /workspace/bobac_ws/build/bobac3_navigation
+"test_navigation_config" start time: Oct 16 12:00 UTC
+Output:
+----------------------------------------------------------
+test_all_presets_and_relay_selection (__main__.NavigationConfigTest.test_all_presets_and_relay_selection) ... /opt/ros/jazzy/lib/python3.12/site-packages/nav2_common/launch/rewritten_yaml.py:95: ResourceWarning: unclosed file <_io.TextIOWrapper name='/workspace/bobac_ws/install/share/bobac3_navigation/params/bobac3_navigation_params copy.yaml' mode='r' encoding='UTF-8'>
+  data = yaml.safe_load(open(yaml_filename, 'r'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/ros/jazzy/lib/python3.12/site-packages/nav2_common/launch/rewritten_yaml.py:95: ResourceWarning: unclosed file <_io.TextIOWrapper name='/workspace/bobac_ws/install/share/bobac3_navigation/params/bobac3_navigation_params_fast_bester.yaml' mode='r' encoding='UTF-8'>
+  data = yaml.safe_load(open(yaml_filename, 'r'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/ros/jazzy/lib/python3.12/site-packages/nav2_common/launch/rewritten_yaml.py:95: ResourceWarning: unclosed file <_io.TextIOWrapper name='/workspace/bobac_ws/install/share/bobac3_navigation/params/bobac3_navigation_params.yaml' mode='r' encoding='UTF-8'>
+  data = yaml.safe_load(open(yaml_filename, 'r'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/ros/jazzy/lib/python3.12/site-packages/nav2_common/launch/rewritten_yaml.py:95: ResourceWarning: unclosed file <_io.TextIOWrapper name='/workspace/bobac_ws/install/share/bobac3_navigation/params/bobac3_navigation_params_slow_better.yaml' mode='r' encoding='UTF-8'>
+  data = yaml.safe_load(open(yaml_filename, 'r'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/ros/jazzy/lib/python3.12/site-packages/nav2_common/launch/rewritten_yaml.py:95: ResourceWarning: unclosed file <_io.TextIOWrapper name='/workspace/bobac_ws/install/share/bobac3_navigation/params/bobac3_navigation_params_faster_best.yaml' mode='r' encoding='UTF-8'>
+  data = yaml.safe_load(open(yaml_filename, 'r'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/ros/jazzy/lib/python3.12/site-packages/nav2_common/launch/rewritten_yaml.py:95: ResourceWarning: unclosed file <_io.TextIOWrapper name='/workspace/bobac_ws/install/share/bobac3_navigation/params/bobac3_navigation_world_params.yaml' mode='r' encoding='UTF-8'>
+  data = yaml.safe_load(open(yaml_filename, 'r'))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_course_node_list_and_command_chain (__main__.NavigationConfigTest.test_course_node_list_and_command_chain) ... ok
+test_custom_map_is_injected (__main__.NavigationConfigTest.test_custom_map_is_injected) ... ok
+test_installed_maps_and_programs (__main__.NavigationConfigTest.test_installed_maps_and_programs) ... ok
+test_required_plugins_exist_in_installed_registry (__main__.NavigationConfigTest.test_required_plugins_exist_in_installed_registry) ... ok
+test_world_clock_smoother_selection_and_interfaces (__main__.NavigationConfigTest.test_world_clock_smoother_selection_and_interfaces) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.964s
+
+OK
+<end of output>
+Test time =   1.17 sec
+----------------------------------------------------------
+Test Passed.
+"test_navigation_config" end time: Oct 16 12:00 UTC
+"test_navigation_config" time elapsed: 00:00:01
+----------------------------------------------------------
+
+2/8 Testing: test_path_clearance
+2/8 Test: test_path_clearance
+Command: "/usr/bin/python3" "/workspace/bobac_ws/src/bobac3_navigation/tests/test_path_clearance.py"
+Directory: /workspace/bobac_ws/build/bobac3_navigation
+"test_path_clearance" start time: Oct 16 12:00 UTC
+Output:
+----------------------------------------------------------
+test_global_planning_constraint_contains_transport_circle (__main__.PathClearanceTest.test_global_planning_constraint_contains_transport_circle) ... ok
+test_invalid_input_is_rejected (__main__.PathClearanceTest.test_invalid_input_is_rejected) ... ok
+test_reference_north_detour_has_reserve (__main__.PathClearanceTest.test_reference_north_detour_has_reserve) ... ok
+test_saved_successful_plan_fails_transport_clearance (__main__.PathClearanceTest.test_saved_successful_plan_fails_transport_clearance) ... ok
+test_segment_interior_is_checked (__main__.PathClearanceTest.test_segment_interior_is_checked) ... ok
+test_unknown_and_outside_are_blocked (__main__.PathClearanceTest.test_unknown_and_outside_are_blocked) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.051s
+
+OK
+<end of output>
+Test time =   0.20 sec
+----------------------------------------------------------
+Test Passed.
+"test_path_clearance" end time: Oct 16 12:00 UTC
+"test_path_clearance" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/8 Testing: test_world_scene_map
+3/8 Test: test_world_scene_map
+Command: "/usr/bin/python3" "/workspace/bobac_ws/src/bobac3_navigation/tests/test_world_scene_map.py"
+Directory: /workspace/bobac_ws/build/bobac3_navigation
+"test_world_scene_map" start time: Oct 16 12:00 UTC
+Output:
+----------------------------------------------------------
+test_explicit_world_profile_uses_distinct_localization_and_planning_maps (__main__.WorldSceneMapTest.test_explicit_world_profile_uses_distinct_localization_and_planning_maps) ... ok
+test_generator_is_reproducible (__main__.WorldSceneMapTest.test_generator_is_reproducible) ... ok
+test_geometry_evidence_matches_current_scene_and_asset_files (__main__.WorldSceneMapTest.test_geometry_evidence_matches_current_scene_and_asset_files) ... FAIL
+test_north_detour_has_transit_clearance (__main__.WorldSceneMapTest.test_north_detour_has_transit_clearance) ... ok
+test_offline_arm_model_matches_recorded_zero_joint_fk (__main__.WorldSceneMapTest.test_offline_arm_model_matches_recorded_zero_joint_fk) ... ok
+test_old_maps_preserved (__main__.WorldSceneMapTest.test_old_maps_preserved) ... ok
+test_world_coordinates_and_scan_height_projection (__main__.WorldSceneMapTest.test_world_coordinates_and_scan_height_projection) ... ok
+test_world_launch_wires_two_maps_and_checks_tenth_lifecycle_node (__main__.WorldSceneMapTest.test_world_launch_wires_two_maps_and_checks_tenth_lifecycle_node) ... ok
+
+======================================================================
+FAIL: test_geometry_evidence_matches_current_scene_and_asset_files (__main__.WorldSceneMapTest.test_geometry_evidence_matches_current_scene_and_asset_files)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/bobac3_navigation/tests/test_world_scene_map.py", line 88, in test_geometry_evidence_matches_current_scene_and_asset_files
+    self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), evidence[key],
+AssertionError: '43ae57fc3405a83769731fa8d4ce4eb01aede5524b76099b2f148a09a0cde88a' != '9383aec555c3111e13a12e7811f46bae9566ee94a18a3dd4d793022b31c86237'
+- 43ae57fc3405a83769731fa8d4ce4eb01aede5524b76099b2f148a09a0cde88a
++ 9383aec555c3111e13a12e7811f46bae9566ee94a18a3dd4d793022b31c86237
+ : Source changed: regenerate/verify map evidence before accepting alignment
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.259s
+
+FAILED (failures=1)
+<end of output>
+Test time =   0.44 sec
+----------------------------------------------------------
+Test Failed.
+"test_world_scene_map" end time: Oct 16 12:00 UTC
+"test_world_scene_map" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/8 Testing: test_world_transport_control
+4/8 Test: test_world_transport_control
+Command: "/usr/bin/python3" "/workspace/bobac_ws/src/bobac3_navigation/tests/test_world_transport_control.py"
+Directory: /workspace/bobac_ws/build/bobac3_navigation
+"test_world_transport_control" start time: Oct 16 12:00 UTC
+Output:
+----------------------------------------------------------
+test_bad_trace_rejected (__main__.TransportTraceTest.test_bad_trace_rejected) ... ok
+test_distance_to_segment_interior_and_endpoint (__main__.TransportTraceTest.test_distance_to_segment_interior_and_endpoint) ... ok
+test_duplicate_reference_vertices (__main__.TransportTraceTest.test_duplicate_reference_vertices) ... ok
+test_reference_retains_measured_start_connector (__main__.TransportTraceTest.test_reference_retains_measured_start_connector) ... ok
+test_circular_cost_checks_every_prediction_step (__main__.WorldTransportControlTest.test_circular_cost_checks_every_prediction_step) ... ok
+test_local_and_global_envelopes_match (__main__.WorldTransportControlTest.test_local_and_global_envelopes_match) ... ok
+test_startup_alignment_and_feedback (__main__.WorldTransportControlTest.test_startup_alignment_and_feedback) ... ok
+test_supported_jazzy_smac_smoothing_bypass (__main__.WorldTransportControlTest.test_supported_jazzy_smac_smoothing_bypass) ... ok
+test_tracking_over_chasing_distant_goal (__main__.WorldTransportControlTest.test_tracking_over_chasing_distant_goal) ... ok
+test_velocity_and_acceleration_are_consistent (__main__.WorldTransportControlTest.test_velocity_and_acceleration_are_consistent) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.070s
+
+OK
+<end of output>
+Test time =   0.20 sec
+----------------------------------------------------------
+Test Passed.
+"test_world_transport_control" end time: Oct 16 12:00 UTC
+"test_world_transport_control" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/8 Testing: test_control_feedback
+5/8 Test: test_control_feedback
+Command: "/usr/bin/python3" "/workspace/bobac_ws/src/bobac3_navigation/tests/test_control_feedback.py"
+Directory: /workspace/bobac_ws/build/bobac3_navigation
+"test_control_feedback" start time: Oct 16 12:00 UTC
+Output:
+----------------------------------------------------------
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.038s
+
+OK
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"test_control_feedback" end time: Oct 16 12:00 UTC
+"test_control_feedback" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/8 Testing: feedback_step_check
+6/8 Test: feedback_step_check
+Command: "/workspace/bobac_ws/build/bobac3_navigation/feedback_step_check"
+Directory: /workspace/bobac_ws/build/bobac3_navigation
+"feedback_step_check" start time: Oct 16 12:00 UTC
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"feedback_step_check" end time: Oct 16 12:00 UTC
+"feedback_step_check" time elapsed: 00:00:00
+----------------------------------------------------------
+
+7/8 Testing: connected_path_check
+7/8 Test: connected_path_check
+Command: "/workspace/bobac_ws/build/bobac3_navigation/connected_path_check"
+Directory: /workspace/bobac_ws/build/bobac3_navigation
+"connected_path_check" start time: Oct 16 12:00 UTC
+Output:
+----------------------------------------------------------
+PASS: exact start, all raw vertices and geometry preserved, <=1cm spacing; invalid connector rejected
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"connected_path_check" end time: Oct 16 12:00 UTC
+"connected_path_check" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/8 Testing: planner_plugin_load_check
+8/8 Test: planner_plugin_load_check
+Command: "/workspace/bobac_ws/build/bobac3_navigation/planner_plugin_load_check"
+Directory: /workspace/bobac_ws/build/bobac3_navigation
+"planner_plugin_load_check" start time: Oct 16 12:00 UTC
+Output:
+----------------------------------------------------------
+[INFO] [1792152002.336862929] [SmacPlanner2D]: Destroying plugin  of type SmacPlanner2D
+PASS: installed ConnectedSmacPlanner2D resolves and loads without ROS nodes
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"planner_plugin_load_check" end time: Oct 16 12:00 UTC
+"planner_plugin_load_check" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 16 12:00 UTC

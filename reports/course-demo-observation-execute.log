@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "scope": "original observation joints via MoveIt with six table collision boxes",
+  "execute": true,
+  "errors": [],
+  "observation_joints_rad": [
+    0.0,
+    0.58,
+    -1.67,
+    -0.5,
+    1.51,
+    0.0
+  ],
+  "table_collision_ids": [
+    "course_demo_table_0",
+    "course_demo_table_1",
+    "course_demo_table_2",
+    "course_demo_table_3",
+    "course_demo_table_4",
+    "course_demo_table_5"
+  ],
+  "base_world_xyz": [
+    2.1884970664978027,
+    0.601135790348053,
+    0.02046141028404236
+  ],
+  "requested_finger_arm_xyz": [
+    -0.2615789655199732,
+    -0.04396275085563936,
+    0.24386381250243555
+  ],
+  "actions": [
+    {
+      "plan_only": true,
+      "status": 4,
+      "success": true,
+      "code": 0,
+      "message": "Planned (plan_only)",
+      "commands": 0
+    },
+    {
+      "plan_only": false,
+      "status": 4,
+      "success": true,
+      "code": 0,
+      "message": "Succeeded",
+      "commands": 95
+    }
+  ],
+  "final_joints_rad": [
+    0.0001,
+    0.5801,
+    -1.6699,
+    -0.4992,
+    1.5087,
+    -0.0007
+  ]
+}

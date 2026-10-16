@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "scope": "explicit controller values match loaded single-corner-passed profile; AMCL initialization is runtime-specific",
+  "profile_sha256": "f1e05120af3de75bf329be28278cce704792d28d962f1eaa2641f88ec09e34ea",
+  "controller_dump_sha256": "26b3f7e438ea5d9b18b2d0a46dc62a3a1aaf67f9be44f0461fc60232cac45476",
+  "mismatches": {
+    "FollowPath": {},
+    "stopped_goal_checker": {},
+    "progress_checker": {}
+  }
+}

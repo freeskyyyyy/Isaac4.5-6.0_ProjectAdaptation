@@ -57,13 +57,24 @@ class WorldTransportControlTest(unittest.TestCase):
         self.assertGreaterEqual(m['PathAlignCritic']['cost_weight'], 20.)
         self.assertEqual(m['PathAlignCritic']['trajectory_point_step'], 1)
         self.assertLessEqual(m['PathAlignCritic']['offset_from_furthest'], 2)
-        self.assertLessEqual(m['PathFollowCritic']['offset_from_furthest'], 2)
+        self.assertLessEqual(m['PathFollowCritic']['offset_from_furthest'], 12)
         self.assertLessEqual(m['GoalCritic']['threshold_to_consider'], .3)
         self.assertLessEqual(m['GoalCritic']['cost_weight'], m['PathAlignCritic']['cost_weight'])
         self.assertGreater(m['prune_distance'], math.hypot(m['vx_max'], m['vy_max'])*m['time_steps']*m['model_dt'])
         stopped = self.server['stopped_goal_checker']
         self.assertLessEqual(stopped['trans_stopped_velocity'], .02)
         self.assertLessEqual(stopped['rot_stopped_velocity'], .02)
+
+    def test_startup_alignment_and_feedback(self):
+        planner = self.params['planner_server']['ros__parameters']['GridBased']
+        self.assertEqual(planner['plugin'], 'bobac3_navigation::ConnectedSmacPlanner2D')
+        self.assertEqual(self.mppi['PathAlignCritic']['offset_from_furthest'], 1)
+        # Lookahead is a point count: dense path must still provide >=0.1m progress.
+        self.assertGreaterEqual(self.mppi['PathFollowCritic']['offset_from_furthest'], 10)
+        self.assertIn('TwirlingCritic', self.mppi['critics'])
+        self.assertGreaterEqual(self.mppi['TwirlingCritic']['cost_weight'], 10.)
+        self.assertLessEqual(self.smoother['odom_duration'], .05)
+        self.assertEqual(self.smoother['deadband_velocity'], [0., 0., 0.])
 
     def test_supported_jazzy_smac_smoothing_bypass(self):
         planner = self.params['planner_server']['ros__parameters']['GridBased']

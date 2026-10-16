@@ -1,0 +1,119 @@
+FFFFFFFFFFFFF
+======================================================================
+FAIL: test_clock_rewind_aborts_inflight_request (__main__.GripperFeedbackTest.test_clock_rewind_aborts_inflight_request)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 169, in test_clock_rewind_aborts_inflight_request
+    result = self.wait(handle.get_result_async(), timeout=.8)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 94, in wait
+    self.assertTrue(future.done(), 'Action did not respond before wall deadline')
+AssertionError: False is not true : Action did not respond before wall deadline
+
+======================================================================
+FAIL: test_invalid_goal_is_rejected_before_command (__main__.GripperFeedbackTest.test_invalid_goal_is_rejected_before_command) (position=nan, speed=50.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 154, in test_invalid_goal_is_rejected_before_command
+    self.assertFalse(self.send('position', position, speed).accepted)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_goal_is_rejected_before_command (__main__.GripperFeedbackTest.test_invalid_goal_is_rejected_before_command) (position=50.0, speed=inf)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 154, in test_invalid_goal_is_rejected_before_command
+    self.assertFalse(self.send('position', position, speed).accepted)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_goal_is_rejected_before_command (__main__.GripperFeedbackTest.test_invalid_goal_is_rejected_before_command) (position=-1.0, speed=50.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 154, in test_invalid_goal_is_rejected_before_command
+    self.assertFalse(self.send('position', position, speed).accepted)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_goal_is_rejected_before_command (__main__.GripperFeedbackTest.test_invalid_goal_is_rejected_before_command) (position=101.0, speed=50.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 154, in test_invalid_goal_is_rejected_before_command
+    self.assertFalse(self.send('position', position, speed).accepted)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_goal_is_rejected_before_command (__main__.GripperFeedbackTest.test_invalid_goal_is_rejected_before_command) (position=50.0, speed=-1.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 154, in test_invalid_goal_is_rejected_before_command
+    self.assertFalse(self.send('position', position, speed).accepted)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_goal_is_rejected_before_command (__main__.GripperFeedbackTest.test_invalid_goal_is_rejected_before_command) (position=50.0, speed=101.0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 154, in test_invalid_goal_is_rejected_before_command
+    self.assertFalse(self.send('position', position, speed).accepted)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_goal_is_rejected_before_command (__main__.GripperFeedbackTest.test_invalid_goal_is_rejected_before_command)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 155, in test_invalid_goal_is_rejected_before_command
+    self.assertEqual(self.commands, [])
+AssertionError: Lists differ: [[0.0], [0.39], [0.78], [0.0], [0.39], [0.39]] != []
+
+First list contains 6 additional elements.
+First extra element 0:
+[0.0]
+
+- [[0.0], [0.39], [0.78], [0.0], [0.39], [0.39]]
++ []
+
+======================================================================
+FAIL: test_mutual_exclusion_and_cancel_remain_responsive (__main__.GripperFeedbackTest.test_mutual_exclusion_and_cancel_remain_responsive)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 140, in test_mutual_exclusion_and_cancel_remain_responsive
+    self.assertFalse(other.accepted)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_no_feedback_aborts_without_sending_motion (__main__.GripperFeedbackTest.test_no_feedback_aborts_without_sending_motion)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 109, in test_no_feedback_aborts_without_sending_motion
+    self.assertFalse(result.result.success, 'Missing joint feedback must not become REACHED')
+AssertionError: True is not false : Missing joint feedback must not become REACHED
+
+======================================================================
+FAIL: test_pause_cannot_report_arrival_from_wall_sleep (__main__.GripperFeedbackTest.test_pause_cannot_report_arrival_from_wall_sleep)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 161, in test_pause_cannot_report_arrival_from_wall_sleep
+    self.assertEqual(result.status, 6)
+AssertionError: 4 != 6
+
+======================================================================
+FAIL: test_stalled_joint_is_not_a_successful_close (__main__.GripperFeedbackTest.test_stalled_joint_is_not_a_successful_close)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 118, in test_stalled_joint_is_not_a_successful_close
+    self.assertFalse(result.result.success, 'Elapsed sleep cannot establish gripping')
+AssertionError: True is not false : Elapsed sleep cannot establish gripping
+
+======================================================================
+FAIL: test_success_and_feedback_use_measured_position (__main__.GripperFeedbackTest.test_success_and_feedback_use_measured_position)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/grasp_control/test/test_gripper_feedback.py", line 132, in test_success_and_feedback_use_measured_position
+    self.assertLess(self.feedback[0].current_position, 2., 'Initial feedback must be measured')
+AssertionError: 50.0 not less than 2.0 : Initial feedback must be measured
+
+----------------------------------------------------------------------
+Ran 7 tests in 20.957s
+
+FAILED (failures=13)

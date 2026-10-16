@@ -1,0 +1,395 @@
+{
+  "status": "failed",
+  "scope": "physical course grasp module; real vision target, real MoveIt, real finger contact, no physical attachment",
+  "execute": true,
+  "detection_source": "reports/course-demo-detect-layout.json",
+  "plans": [
+    {
+      "stage": "pregrasp",
+      "plan_only": true,
+      "finger_xyz": [
+        -0.4488053305307881,
+        -0.02016443488326903,
+        0.37194920944948867
+      ],
+      "status": 4,
+      "success": true,
+      "message": "Planned (plan_only)",
+      "hand_messages": 0
+    },
+    {
+      "stage": "grasp",
+      "plan_only": true,
+      "finger_xyz": [
+        -0.4735685703164832,
+        -0.023596920180566895,
+        0.32864793926026675
+      ],
+      "status": 4,
+      "success": true,
+      "message": "Planned (plan_only)",
+      "hand_messages": 0
+    },
+    {
+      "stage": "lift",
+      "plan_only": true,
+      "finger_xyz": [
+        -0.4735685703164832,
+        -0.023596920180566895,
+        0.4286479392602668
+      ],
+      "status": 4,
+      "success": true,
+      "message": "Planned (plan_only)",
+      "hand_messages": 0
+    }
+  ],
+  "actions": [
+    {
+      "stage": "pregrasp",
+      "plan_only": false,
+      "finger_xyz": [
+        -0.4488053305307881,
+        -0.02016443488326903,
+        0.37194920944948867
+      ],
+      "status": 4,
+      "success": true,
+      "message": "Succeeded",
+      "hand_messages": 71
+    },
+    {
+      "stage": "gripper_position",
+      "status": 4,
+      "success": true,
+      "message": "Fresh joint feedback confirms target position; object holding requires separate evidence",
+      "measured_percent": 70.8974380493164,
+      "wait_for_completion": true
+    },
+    {
+      "stage": "grasp",
+      "plan_only": false,
+      "finger_xyz": [
+        -0.4735685703164832,
+        -0.023596920180566895,
+        0.32864793926026675
+      ],
+      "status": 4,
+      "success": true,
+      "message": "Succeeded",
+      "hand_messages": 22
+    },
+    {
+      "stage": "gripper_close",
+      "status": 4,
+      "success": true,
+      "message": "Command sent without waiting; final_position is measured, arrival unverified",
+      "measured_percent": 70.0,
+      "wait_for_completion": false
+    },
+    {
+      "stage": "lift",
+      "plan_only": false,
+      "finger_xyz": [
+        -0.4735685703164832,
+        -0.023596920180566895,
+        0.4286479392602668
+      ],
+      "status": 4,
+      "success": true,
+      "message": "Succeeded",
+      "hand_messages": 44
+    }
+  ],
+  "object_history": [
+    {
+      "stage": "baseline",
+      "receipt_sim_seconds": 3902.8833333330003,
+      "object_xyz": [
+        1.6500144004821777,
+        0.5999213457107544,
+        0.609194815158844
+      ],
+      "wrist_xyz": [
+        1.8756608963012695,
+        0.5640018582344055,
+        0.8239482641220093
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "before_close",
+      "receipt_sim_seconds": 3913.6000000000004,
+      "object_xyz": [
+        1.650004267692566,
+        0.5999216437339783,
+        0.60919588804245
+      ],
+      "wrist_xyz": [
+        1.75141179561615,
+        0.6122816801071167,
+        0.786850094795227
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "before_lift",
+      "receipt_sim_seconds": 3914.5666666660004,
+      "object_xyz": [
+        1.64949631690979,
+        0.5999867916107178,
+        0.6076775789260864
+      ],
+      "wrist_xyz": [
+        1.7518341541290283,
+        0.6122755408287048,
+        0.7870081067085266
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "held_after_lift",
+      "receipt_sim_seconds": 3919.05,
+      "object_xyz": [
+        1.4847224950790405,
+        0.5701977014541626,
+        0.6090267300605774
+      ],
+      "wrist_xyz": [
+        1.7513506412506104,
+        0.6123385429382324,
+        0.8868026733398438
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "held_after_lift",
+      "receipt_sim_seconds": 3919.216666666,
+      "object_xyz": [
+        1.4847224950790405,
+        0.5701977014541626,
+        0.6090267300605774
+      ],
+      "wrist_xyz": [
+        1.7513768672943115,
+        0.6123337149620056,
+        0.8868018388748169
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "held_after_lift",
+      "receipt_sim_seconds": 3919.366666666,
+      "object_xyz": [
+        1.4847224950790405,
+        0.5701977014541626,
+        0.6090267300605774
+      ],
+      "wrist_xyz": [
+        1.751348853111267,
+        0.6123502254486084,
+        0.8868012428283691
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "held_after_lift",
+      "receipt_sim_seconds": 3919.5333333330004,
+      "object_xyz": [
+        1.4847224950790405,
+        0.5701977014541626,
+        0.6090267300605774
+      ],
+      "wrist_xyz": [
+        1.7513689994812012,
+        0.6123310923576355,
+        0.8868008255958557
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "held_after_lift",
+      "receipt_sim_seconds": 3919.7000000000003,
+      "object_xyz": [
+        1.4847224950790405,
+        0.5701977014541626,
+        0.6090267300605774
+      ],
+      "wrist_xyz": [
+        1.7513519525527954,
+        0.6122947931289673,
+        0.8867998719215393
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "held_after_lift",
+      "receipt_sim_seconds": 3919.866666666,
+      "object_xyz": [
+        1.4847224950790405,
+        0.5701977014541626,
+        0.6090267300605774
+      ],
+      "wrist_xyz": [
+        1.751368522644043,
+        0.6123060584068298,
+        0.8868018388748169
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "held_after_lift",
+      "receipt_sim_seconds": 3920.016666666,
+      "object_xyz": [
+        1.4847224950790405,
+        0.5701977014541626,
+        0.6090267300605774
+      ],
+      "wrist_xyz": [
+        1.7513638734817505,
+        0.612260639667511,
+        0.886803388595581
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "held_after_lift",
+      "receipt_sim_seconds": 3920.1666666660003,
+      "object_xyz": [
+        1.4847224950790405,
+        0.5701977014541626,
+        0.6090267300605774
+      ],
+      "wrist_xyz": [
+        1.7513595819473267,
+        0.6123038530349731,
+        0.8868006467819214
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "held_after_lift",
+      "receipt_sim_seconds": 3920.333333333,
+      "object_xyz": [
+        1.4847224950790405,
+        0.5701977014541626,
+        0.6090267300605774
+      ],
+      "wrist_xyz": [
+        1.7513729333877563,
+        0.6122977137565613,
+        0.8868014812469482
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "held_after_lift",
+      "receipt_sim_seconds": 3920.5000000000005,
+      "object_xyz": [
+        1.4847224950790405,
+        0.5701977014541626,
+        0.6090267300605774
+      ],
+      "wrist_xyz": [
+        1.751354694366455,
+        0.6123497486114502,
+        0.8868001699447632
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "held_after_lift",
+      "receipt_sim_seconds": 3920.6666666660003,
+      "object_xyz": [
+        1.4847224950790405,
+        0.5701977014541626,
+        0.6090267300605774
+      ],
+      "wrist_xyz": [
+        1.7513657808303833,
+        0.6123524308204651,
+        0.8868004083633423
+      ],
+      "object_source_stamp": 0.0
+    },
+    {
+      "stage": "held_after_lift",
+      "receipt_sim_seconds": 3920.833333333,
+      "object_xyz": [
+        1.4847224950790405,
+        0.5701977014541626,
+        0.6090267300605774
+      ],
+      "wrist_xyz": [
+        1.751346468925476,
+        0.6123039126396179,
+        0.886800229549408
+      ],
+      "object_source_stamp": 0.0
+    }
+  ],
+  "errors": [
+    "RuntimeError('Physical object did not leave the table and remain lifted')"
+  ],
+  "arm_base_world_matrix": [
+    [
+      0.9986749580954164,
+      0.05146176429105606,
+      0.00012202118700646704,
+      2.142897605895996
+    ],
+    [
+      -0.05146175959430378,
+      0.9986749649368661,
+      -4.1325626117110756e-05,
+      0.6043453812599182
+    ],
+    [
+      -0.0001239861942856573,
+      3.4991442939634045e-05,
+      0.9999999917015113,
+      0.31446146965026855
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "detected_xyz": [
+    -0.4884265141879003,
+    -0.025656411358945613,
+    0.3026671771467336
+  ],
+  "normal": [
+    -0.49526479571390253,
+    -0.06864970594595732,
+    -0.8660254037844387
+  ],
+  "long_axis": [
+    0.13729941189191464,
+    -0.9905295914278051,
+    0.0
+  ],
+  "requested_lift_m": 0.1,
+  "baseline": {
+    "stage": "baseline",
+    "receipt_sim_seconds": 3902.8833333330003,
+    "object_xyz": [
+      1.6500144004821777,
+      0.5999213457107544,
+      0.609194815158844
+    ],
+    "wrist_xyz": [
+      1.8756608963012695,
+      0.5640018582344055,
+      0.8239482641220093
+    ],
+    "object_source_stamp": 0.0
+  },
+  "observed_minimum_lift_m": -0.00016808509826660156,
+  "object_wrist_relative_change_m": 0.1938299110159645,
+  "final_gripper_angle_rad": 0.0001,
+  "hand_message_count": 363
+}

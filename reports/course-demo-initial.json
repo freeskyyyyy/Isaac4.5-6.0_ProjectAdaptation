@@ -1,0 +1,34 @@
+{
+  "initial_true_xy_yaw": [
+    2.8374783992767334,
+    0.9749873876571655,
+    -2.3907582868655872
+  ],
+  "goal_xy_yaw": [
+    2.15,
+    0.6,
+    3.141592653589793
+  ],
+  "arm_position": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "source_stamp": [
+    0,
+    0
+  ],
+  "initialization": "one-time true initial pose, subsequent AMCL localization; no continuously published truth localization",
+  "scene_sha256": "8cae3c282e9446309b18d864fd6b9f6bf1d9efa3d3e82813ad287eed31847003",
+  "source_params_sha256": "f1e05120af3de75bf329be28278cce704792d28d962f1eaa2641f88ec09e34ea",
+  "runtime_params_sha256": "69b1c42385c7aba497531e992152bfa102b4d2ca65ca2ff4106c7cce05707a28",
+  "previous_staging_goal_xy_yaw": [
+    2.35,
+    0.6,
+    3.141592653589793
+  ],
+  "scope": "functional course demo; original geometry retained, measured precision is diagnostic per latest user instruction"
+}

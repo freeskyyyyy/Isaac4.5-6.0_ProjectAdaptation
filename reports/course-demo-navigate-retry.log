@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "scope": "real near-desk navigation for first functional course demo; no grasp claim",
+  "goal_xy_yaw": [
+    2.15,
+    0.6,
+    3.141592653589793
+  ],
+  "errors": [],
+  "precision_policy": "record precision after latest user instruction; no 30mm localization/50mm tracking/0.55m conservative circle gate; retain Nav2 real-map footprint collision and bounded commands",
+  "initial": {
+    "wall_seconds": 1.0663504850090249,
+    "receipt_sim_seconds": 3203.833333333,
+    "world_xy": [
+      2.188570976257324,
+      0.6046539545059204
+    ],
+    "world_yaw": 1.8546089204538374,
+    "v": [
+      -0.0004537571803666651,
+      -0.001577853923663497,
+      -0.008967714384198189
+    ]
+  },
+  "action_status": 4,
+  "action_error_code": 0,
+  "action_error_message": "",
+  "final_position_error_m": 0.03755774696920242,
+  "final_yaw_error_rad": 0.005069663210104824
+}

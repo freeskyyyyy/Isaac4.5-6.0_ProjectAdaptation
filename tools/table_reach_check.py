@@ -57,6 +57,10 @@ def main():
               'candidates': [], 'errors': [], 'collision_model': 'all six table USD collision mesh world AABBs'}
     report['finger_x_override_m'] = a.finger_x
     report['finger_z_override_m'] = a.finger_z
+    report['requested_grasp_z_m'] = a.grasp_z
+    report['requested_lift_z_m'] = a.lift_z
+    report['requested_lift_distance_m'] = (a.lift_z-a.grasp_z
+        if a.lift_z is not None and a.grasp_z is not None else None)
     object_ids = []
 
     def wait(future, timeout=15):
@@ -234,7 +238,7 @@ def main():
                     start_state.joint_state.name = list(trajectory.joint_names)
                     start_state.joint_state.position = list(trajectory.points[-1].positions)
                 else:
-                    record['result'] = 'approach_and_10cm_lift_planned_only'
+                    record['result'] = 'approach_and_lift_planned_only'
         report['command_messages'] = len(commands)
         if commands:
             raise RuntimeError('Unexpected /hand_command traffic during plan-only evaluation')

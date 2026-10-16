@@ -1,0 +1,15 @@
+Waiting for an action server to become available...
+Sending goal:
+     command: position
+position: 50.0
+speed: 50.0
+wait_for_completion: true
+
+Goal accepted with ID: 1c99562ac0994e0285e26e9d1498953b
+
+Result:
+    success: true
+message: Fresh joint feedback confirms target position; object holding requires separate evidence
+final_position: 50.910255432128906
+
+Goal finished with status: SUCCEEDED

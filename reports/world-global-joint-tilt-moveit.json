@@ -1,0 +1,115 @@
+{
+  "status": "evaluated",
+  "scope": "hypothetical stationary arm planning with real MoveIt/table collisions; no motion",
+  "candidates": [
+    {
+      "name": "supported165_staging_tilt30",
+      "station_xy_yaw": [
+        2.35,
+        0.6,
+        3.141592653589793
+      ],
+      "collision_objects_confirmed": [
+        "course_reach_table_0",
+        "course_reach_table_1",
+        "course_reach_table_2",
+        "course_reach_table_3",
+        "course_reach_table_4",
+        "course_reach_table_5"
+      ],
+      "ik_attempts": [
+        {
+          "error_code": 1
+        }
+      ],
+      "requested_wrist_position_arm_base_m": [
+        -0.5169999540511478,
+        1.8492292105625704e-05,
+        0.4878092132906994
+      ],
+      "offline_seed_real_fk_position_error_m": 1.849229371509555e-05,
+      "offline_seed_collision_valid": true,
+      "offline_seed_contacts": [],
+      "ik_fk_position_error_m": 6.310919494056776e-09,
+      "ik_fk_orientation_error_rad": 1.490116119384766e-07,
+      "plan_error_code": 1,
+      "trajectory_points": 179,
+      "result": "approach_and_lift_planned_only",
+      "vertical_cycle": [
+        {
+          "phase": "approach",
+          "finger_world_z_m": 0.63919645,
+          "fraction": 1.0,
+          "error_code": 1,
+          "trajectory_points": 9
+        },
+        {
+          "phase": "lift",
+          "finger_world_z_m": 0.68919645,
+          "fraction": 1.0,
+          "error_code": 1,
+          "trajectory_points": 14
+        }
+      ]
+    },
+    {
+      "name": "supported165_staging_tilt60",
+      "station_xy_yaw": [
+        2.35,
+        0.6,
+        3.141592653589793
+      ],
+      "collision_objects_confirmed": [
+        "course_reach_table_0",
+        "course_reach_table_1",
+        "course_reach_table_2",
+        "course_reach_table_3",
+        "course_reach_table_4",
+        "course_reach_table_5"
+      ],
+      "ik_attempts": [
+        {
+          "error_code": 1
+        }
+      ],
+      "requested_wrist_position_arm_base_m": [
+        -0.45623973706181853,
+        1.631844224188031e-05,
+        0.4270489962624826
+      ],
+      "offline_seed_real_fk_position_error_m": 1.6320582982449377e-05,
+      "offline_seed_collision_valid": true,
+      "offline_seed_contacts": [],
+      "ik_fk_position_error_m": 1.0530712408034334e-09,
+      "ik_fk_orientation_error_rad": 0.0,
+      "plan_error_code": 1,
+      "trajectory_points": 187,
+      "result": "approach_and_lift_planned_only",
+      "vertical_cycle": [
+        {
+          "phase": "approach",
+          "finger_world_z_m": 0.63919645,
+          "fraction": 1.0,
+          "error_code": 1,
+          "trajectory_points": 7
+        },
+        {
+          "phase": "lift",
+          "finger_world_z_m": 0.68919645,
+          "fraction": 1.0,
+          "error_code": 1,
+          "trajectory_points": 11
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "collision_model": "all six table USD collision mesh world AABBs",
+  "finger_x_override_m": null,
+  "finger_z_override_m": null,
+  "requested_grasp_z_m": 0.63919645,
+  "requested_lift_z_m": 0.68919645,
+  "requested_lift_distance_m": 0.04999999999999993,
+  "command_messages": 0,
+  "temporary_objects_removed": true
+}

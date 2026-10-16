@@ -1,0 +1,8 @@
+{
+  "gripper_l_joint1": 0.3896,
+  "gripper_r_joint1": 0.3897,
+  "gripper_l_link_finger2link1": -0.3774,
+  "gripper_r_link_finger2link1": -0.384,
+  "gripper_l_joint_finger": -0.3791,
+  "gripper_r_joint_finger": -0.3856
+}

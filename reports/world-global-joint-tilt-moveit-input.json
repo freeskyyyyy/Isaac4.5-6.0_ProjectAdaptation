@@ -1,0 +1,113 @@
+{
+  "scope": "hypothetical support-valid object location and tilted grasp; no object relocation",
+  "candidates": [
+    {
+      "name": "supported165_staging_tilt30",
+      "map_pose_xy_yaw": [
+        2.35,
+        0.6,
+        3.141592653589793
+      ],
+      "navigation_candidate": true,
+      "grasp_execution_accepted": false,
+      "quaternion_xyzw": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "arm_mount_world_m": [
+        2.249999954381868,
+        0.6000000046839645,
+        0.3151474537375176
+      ],
+      "finger_target_world_m": [
+        1.65,
+        0.6,
+        0.65919645
+      ],
+      "finger_horizontal_reach_m": 0.8499999543818682,
+      "table_edge_clearance_with_candidate_footprint_m": 0.3899999999999999,
+      "wrist_target_in_arm_base_m": [
+        -0.5169999540511478,
+        1.8492292105625704e-05,
+        0.4878092132906994
+      ],
+      "offline_ik": {
+        "phase": "pre",
+        "finger_z": 0.65919645,
+        "joints_rad": [
+          -0.12368258436399544,
+          -0.26945626611004725,
+          -0.9220824095961906,
+          0.14102697140673512,
+          1.6325178938387257,
+          -1.6780461419186763
+        ],
+        "position_error_m": 2.5665808016821242e-11,
+        "orientation_error_rad": 1.3511930614459239e-12,
+        "kinematic_solution_found": true
+      },
+      "wrist_orientation_in_arm_base_xyzw": [
+        1.727921515839462e-05,
+        0.9659258261345164,
+        4.629951747535451e-06,
+        -0.2588190450611087
+      ]
+    },
+    {
+      "name": "supported165_staging_tilt60",
+      "map_pose_xy_yaw": [
+        2.35,
+        0.6,
+        3.141592653589793
+      ],
+      "navigation_candidate": true,
+      "grasp_execution_accepted": false,
+      "quaternion_xyzw": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "arm_mount_world_m": [
+        2.249999954381868,
+        0.6000000046839645,
+        0.3151474537375176
+      ],
+      "finger_target_world_m": [
+        1.65,
+        0.6,
+        0.65919645
+      ],
+      "finger_horizontal_reach_m": 0.8499999543818682,
+      "table_edge_clearance_with_candidate_footprint_m": 0.3899999999999999,
+      "wrist_target_in_arm_base_m": [
+        -0.45623973706181853,
+        1.631844224188031e-05,
+        0.4270489962624826
+      ],
+      "offline_ik": {
+        "phase": "pre",
+        "finger_z": 0.65919645,
+        "joints_rad": [
+          -0.15257684268590813,
+          -0.02616156386088978,
+          -1.757041471618339,
+          1.2545295094074296,
+          1.702804034975425,
+          -1.6475322114121649
+        ],
+        "position_error_m": 1.684386299598039e-08,
+        "orientation_error_rad": 5.759145812659488e-10,
+        "kinematic_solution_found": true
+      },
+      "wrist_orientation_in_arm_base_xyzw": [
+        1.5492120489331044e-05,
+        0.8660254036458712,
+        8.944379934833394e-06,
+        -0.499999999919998
+      ]
+    }
+  ]
+}

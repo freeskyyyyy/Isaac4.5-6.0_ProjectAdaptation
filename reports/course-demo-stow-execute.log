@@ -1,0 +1,44 @@
+{
+  "status": "failed",
+  "scope": "original observation joints via MoveIt with six table collision boxes",
+  "execute": true,
+  "errors": [
+    "RuntimeError('Observation MoveIt: NO_IK')"
+  ],
+  "observation_joints_rad": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "table_collision_ids": [
+    "course_demo_table_0",
+    "course_demo_table_1",
+    "course_demo_table_2",
+    "course_demo_table_3",
+    "course_demo_table_4",
+    "course_demo_table_5"
+  ],
+  "base_world_xyz": [
+    2.2427542209625244,
+    0.5992094874382019,
+    0.02046109549701214
+  ],
+  "requested_finger_arm_xyz": [
+    -0.08599891044459923,
+    0.1866222406516473,
+    0.7724996065214121
+  ],
+  "actions": [
+    {
+      "plan_only": true,
+      "status": 6,
+      "success": false,
+      "code": 2,
+      "message": "NO_IK",
+      "commands": 0
+    }
+  ]
+}

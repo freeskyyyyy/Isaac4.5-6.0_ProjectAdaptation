@@ -1,0 +1,154 @@
+{
+  "scope": "offline feedback diagnosis only; no navigation or physical acceleration acceptance",
+  "motion_status": "failed",
+  "cutoff_before_predictive_stop_sim_s": 262.45,
+  "start_connector_length_m": 0.0593315669177799,
+  "first_raw_path_points_xy": [
+    [
+      7.950000133365393,
+      1.0500001721084118
+    ],
+    [
+      7.900000132620335,
+      1.1000001728534698
+    ],
+    [
+      7.850000131875277,
+      1.150000173598528
+    ]
+  ],
+  "odom_native_source_sim_time": {
+    "all": {
+      "samples": 708,
+      "nonpositive_intervals": 0,
+      "maximum_absolute_xy_wz": [
+        0.017182829872429986,
+        0.061011404530076065,
+        0.16003505885601044
+      ],
+      "maximum_absolute_sample_derivative_xy_wz": [
+        1.170450140144091,
+        2.6199549893398606,
+        7.900301879572576
+      ],
+      "median_sim_dt_s": 0.016666666999981317,
+      "median_wall_dt_s": 0.026507802998821717
+    },
+    "ordinary": {
+      "samples": 397,
+      "nonpositive_intervals": 0,
+      "maximum_absolute_xy_wz": [
+        0.008843729794618487,
+        0.046288632387896905,
+        0.1347699910402298
+      ],
+      "maximum_absolute_sample_derivative_xy_wz": [
+        0.2071500295316593,
+        0.33806061768215634,
+        1.2337943473753596
+      ],
+      "median_sim_dt_s": 0.016666666999981317,
+      "median_wall_dt_s": 0.026511467000091216
+    }
+  },
+  "twist_sim_receipt_time": {
+    "/cmd_vel_nav": {
+      "all": {
+        "samples": 52,
+        "nonpositive_intervals": 0,
+        "maximum_absolute_xy_wz": [
+          0.014382067136466503,
+          0.04964788258075714,
+          0.13188140094280243
+        ],
+        "maximum_absolute_sample_derivative_xy_wz": [
+          0.8629240109275342,
+          2.97887289526115,
+          7.912883898292351
+        ],
+        "median_sim_dt_s": 0.03333333300003005,
+        "median_wall_dt_s": 0.05013470099947881
+      },
+      "ordinary": {
+        "samples": 48,
+        "nonpositive_intervals": 0,
+        "maximum_absolute_xy_wz": [
+          0.009678162634372711,
+          0.04252729192376137,
+          0.11765425652265549
+        ],
+        "maximum_absolute_sample_derivative_xy_wz": [
+          0.0754534203938573,
+          0.15687168271995094,
+          0.2877400012884074
+        ],
+        "median_sim_dt_s": 0.03333333300003005,
+        "median_wall_dt_s": 0.05013470099947881
+      }
+    },
+    "/cmd_vel": {
+      "all": {
+        "samples": 226,
+        "nonpositive_intervals": 18,
+        "maximum_absolute_xy_wz": [
+          0.014382067136466503,
+          0.04964788258075714,
+          0.13394251312528338
+        ],
+        "maximum_absolute_sample_derivative_xy_wz": [
+          0.653035198209836,
+          2.7845214453615843,
+          7.791359049086928
+        ],
+        "median_sim_dt_s": 0.03333333300003005,
+        "median_wall_dt_s": 0.05212839800515212
+      },
+      "ordinary": {
+        "samples": 48,
+        "nonpositive_intervals": 0,
+        "maximum_absolute_xy_wz": [
+          0.009678162634372711,
+          0.04252729192376137,
+          0.11765425652265549
+        ],
+        "maximum_absolute_sample_derivative_xy_wz": [
+          0.08240257719457782,
+          0.0998109186596209,
+          0.37371505235785635
+        ],
+        "median_sim_dt_s": 0.03333333300003005,
+        "median_wall_dt_s": 0.04996654300339287
+      }
+    }
+  },
+  "latest_native_odom_before_trigger": {
+    "sim_seconds": 262.45,
+    "receipt_sim_seconds": 262.433333333,
+    "wall_seconds": 10.587562353997782,
+    "xy_wz": [
+      -0.010613208601572511,
+      0.05009059733930372,
+      0.14023829996585846
+    ]
+  },
+  "native_odom_window_means_before_trigger": {
+    "0.05": [
+      -0.009076402530708015,
+      0.045677839458127006,
+      0.13596440851688385
+    ],
+    "0.1": [
+      -0.00694526392678875,
+      0.04351593069317292,
+      0.12828442135027476
+    ]
+  },
+  "limitations": [
+    "Ordinary excludes all samples at/after the predictive stop trigger, conservatively separating emergency override.",
+    "Twist receipt stamps cannot establish exact publisher timing or command/physics latency.",
+    "Raw native derivatives include measurement/contact noise; no certified acceleration or braking floor.",
+    "GT source stamp is zero; request/receipt simulation interval remains required.",
+    "Wall/simulation period mismatch is measured, not repaired by use_sim_time or nominal model_dt."
+  ],
+  "motion_sha256": "086d0e2f8a6496441ae43c8aaba4216e056263fc155b54ccbb7de2aec9b290cf"
+}

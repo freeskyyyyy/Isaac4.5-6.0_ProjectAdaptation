@@ -1,0 +1,80 @@
+{
+  "status": "passed",
+  "scope": "course camera look-at observation via MoveIt; known target used only for camera aim, grasp detection remains YOLOE",
+  "execute": true,
+  "errors": [],
+  "observation_joints_rad": [
+    0.0,
+    0.58,
+    -1.67,
+    -0.5,
+    1.51,
+    0.0
+  ],
+  "table_collision_ids": [
+    "course_demo_table_0",
+    "course_demo_table_1",
+    "course_demo_table_2",
+    "course_demo_table_3",
+    "course_demo_table_4",
+    "course_demo_table_5"
+  ],
+  "base_world_xyz": [
+    2.188504695892334,
+    0.6011365652084351,
+    0.020461509004235268
+  ],
+  "requested_finger_arm_xyz": [
+    -0.4057671946184799,
+    -0.05043310351457714,
+    0.32200462479549813
+  ],
+  "requested_ee_rotation": [
+    [
+      0.02635907443159257,
+      0.5270316667675711,
+      -0.8494367671694616
+    ],
+    [
+      0.999651845726173,
+      -0.014897802206877574,
+      0.021777117019024003
+    ],
+    [
+      -0.0011775106646114957,
+      -0.8497150567770357,
+      -0.5272408707175821
+    ]
+  ],
+  "predicted_camera_arm_xyz": [
+    -0.31395127612524815,
+    -0.05389504806433507,
+    0.5261650777687064
+  ],
+  "actions": [
+    {
+      "plan_only": true,
+      "status": 4,
+      "success": true,
+      "code": 0,
+      "message": "Planned (plan_only)",
+      "commands": 0
+    },
+    {
+      "plan_only": false,
+      "status": 4,
+      "success": true,
+      "code": 0,
+      "message": "Succeeded",
+      "commands": 83
+    }
+  ],
+  "final_joints_rad": [
+    -0.0157,
+    0.8038,
+    -2.3118,
+    0.9523,
+    1.5624,
+    0.0066
+  ]
+}

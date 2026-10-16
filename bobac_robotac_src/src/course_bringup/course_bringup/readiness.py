@@ -1,6 +1,7 @@
 """Wait for real simulator output before starting the ROS course stack."""
 import argparse
 import json
+import math
 from pathlib import Path
 import time
 
@@ -67,6 +68,9 @@ class Readiness(Node):
             missing = set(f'joint_{i}' for i in range(1, 7)) - set(joints.name)
             if missing or len(joints.position) != len(joints.name):
                 errors.append(f'Invalid arm JointState; missing joints: {sorted(missing)}')
+            for field in ('position', 'velocity', 'effort'):
+                if any(not math.isfinite(value) for value in getattr(joints, field)):
+                    errors.append(f'Invalid arm JointState: non-finite {field}; check PhysX state before starting control')
         scan = self.messages.get('/laser_scan_fuse')
         if scan is not None and (not scan.ranges or scan.angle_increment <= 0):
             errors.append('Invalid or empty LaserScan')

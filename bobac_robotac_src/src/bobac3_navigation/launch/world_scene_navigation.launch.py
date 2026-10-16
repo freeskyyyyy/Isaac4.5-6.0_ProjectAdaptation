@@ -63,6 +63,7 @@ def generate_launch_description():
             share, 'launch', 'bobac3_navigation.launch.py')),
             launch_arguments={'map': LaunchConfiguration('localization_map'),
                               'params_file': LaunchConfiguration('params_file'),
-                              'check_readiness': 'false', 'use_scan_relay': 'false'}.items()),
+                              'check_readiness': 'false', 'use_scan_relay': 'false',
+                              'use_sim_time_smoother': 'true'}.items()),
         readiness,
     ])

@@ -1,0 +1,51 @@
+Internal ctest changing into directory: /workspace/bobac_ws/build/bobac3_navigation
+Test project /workspace/bobac_ws/build/bobac3_navigation
+    Start 1: test_navigation_config
+1/8 Test #1: test_navigation_config ...........   Passed    1.03 sec
+    Start 2: test_path_clearance
+2/8 Test #2: test_path_clearance ..............   Passed    0.18 sec
+    Start 3: test_world_scene_map
+3/8 Test #3: test_world_scene_map .............***Failed    0.35 sec
+test_explicit_world_profile_uses_distinct_localization_and_planning_maps (__main__.WorldSceneMapTest.test_explicit_world_profile_uses_distinct_localization_and_planning_maps) ... ok
+test_generator_is_reproducible (__main__.WorldSceneMapTest.test_generator_is_reproducible) ... ok
+test_geometry_evidence_matches_current_scene_and_asset_files (__main__.WorldSceneMapTest.test_geometry_evidence_matches_current_scene_and_asset_files) ... FAIL
+test_north_detour_has_transit_clearance (__main__.WorldSceneMapTest.test_north_detour_has_transit_clearance) ... ok
+test_offline_arm_model_matches_recorded_zero_joint_fk (__main__.WorldSceneMapTest.test_offline_arm_model_matches_recorded_zero_joint_fk) ... ok
+test_old_maps_preserved (__main__.WorldSceneMapTest.test_old_maps_preserved) ... ok
+test_world_coordinates_and_scan_height_projection (__main__.WorldSceneMapTest.test_world_coordinates_and_scan_height_projection) ... ok
+test_world_launch_wires_two_maps_and_checks_tenth_lifecycle_node (__main__.WorldSceneMapTest.test_world_launch_wires_two_maps_and_checks_tenth_lifecycle_node) ... ok
+
+======================================================================
+FAIL: test_geometry_evidence_matches_current_scene_and_asset_files (__main__.WorldSceneMapTest.test_geometry_evidence_matches_current_scene_and_asset_files)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/bobac_ws/src/bobac3_navigation/tests/test_world_scene_map.py", line 88, in test_geometry_evidence_matches_current_scene_and_asset_files
+    self.assertEqual(hashlib.sha256(source.read_bytes()).hexdigest(), evidence[key],
+AssertionError: '43ae57fc3405a83769731fa8d4ce4eb01aede5524b76099b2f148a09a0cde88a' != '9383aec555c3111e13a12e7811f46bae9566ee94a18a3dd4d793022b31c86237'
+- 43ae57fc3405a83769731fa8d4ce4eb01aede5524b76099b2f148a09a0cde88a
++ 9383aec555c3111e13a12e7811f46bae9566ee94a18a3dd4d793022b31c86237
+ : Source changed: regenerate/verify map evidence before accepting alignment
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.203s
+
+FAILED (failures=1)
+
+    Start 4: test_world_transport_control
+4/8 Test #4: test_world_transport_control .....   Passed    0.14 sec
+    Start 5: test_control_feedback
+5/8 Test #5: test_control_feedback ............   Passed    0.09 sec
+    Start 6: feedback_step_check
+6/8 Test #6: feedback_step_check ..............   Passed    0.00 sec
+    Start 7: connected_path_check
+7/8 Test #7: connected_path_check .............   Passed    0.00 sec
+    Start 8: planner_plugin_load_check
+8/8 Test #8: planner_plugin_load_check ........   Passed    0.02 sec
+
+88% tests passed, 1 tests failed out of 8
+
+Total Test time (real) =   1.80 sec
+
+The following tests FAILED:
+	  3 - test_world_scene_map (Failed)
+Errors while running CTest

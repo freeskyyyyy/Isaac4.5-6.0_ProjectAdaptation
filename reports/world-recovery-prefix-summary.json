@@ -1,0 +1,17 @@
+{
+  "status": "failed",
+  "errors": [
+    "NavigateToPose did not succeed"
+  ],
+  "action_status": 5,
+  "reason": "A canceled low-progress diagnostic; source prefix fix passed regression but did not establish long-route success",
+  "wall_duration": 155.9248446720012,
+  "sim_duration": 98.1000000009999,
+  "displacement_m": 0.3699837622623703,
+  "max_tracking_error_m": 0.011469873239841735,
+  "max_localization_error_m": 0.009782210307007865,
+  "trajectory_clearance_lower_bound_m": 1.4783506698324356,
+  "replans": 134,
+  "all_replans_accepted": true,
+  "live_rotation_fraction": 0.7916666666666666
+}

@@ -1,0 +1,535 @@
+{
+  "scope": "static authored collision vertices, not effective rolling-radius calibration",
+  "scene": "scenes/test_scene_bobac_6.0.recovery.usda",
+  "scene_sha256": "9383aec555c3111e13a12e7811f46bae9566ee94a18a3dd4d793022b31c86237",
+  "wheels": [
+    {
+      "name": "left",
+      "metadata_radius_m": 0.035,
+      "collision_shapes": [
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_0/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -2.4175839802298427e-09,
+            -0.010999987329941341,
+            4.336572970942143e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239252,
+            0.032999999262392506
+          ],
+          "radial_outer_upper_bound_m": 0.04399998659233413
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_1/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -0.006465664694437934,
+            -0.008899182148561557,
+            3.544730195592649e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239251,
+            0.03299999926239251
+          ],
+          "radial_outer_upper_bound_m": 0.04400001121030321
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_2/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -0.010461622629788225,
+            -0.003399179923801121,
+            1.4043179392686511e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239252,
+            0.03299999926239251,
+            0.03299999926239251
+          ],
+          "radial_outer_upper_bound_m": 0.04399999799886834
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_3/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -0.010461636505559938,
+            0.003399192832311826,
+            -1.2909823650097962e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239252,
+            0.03299999926239252
+          ],
+          "radial_outer_upper_bound_m": 0.04400001518445848
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_4/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -0.006465623985321911,
+            0.008899203729687777,
+            -3.4722581880863856e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.032999999262392526,
+            0.03299999926239252
+          ],
+          "radial_outer_upper_bound_m": 0.04400000474157566
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_5/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -1.2935303314587365e-09,
+            0.011000021583669195,
+            -4.351221055909349e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239253,
+            0.03299999926239253,
+            0.032999999262392526
+          ],
+          "radial_outer_upper_bound_m": 0.044000020846061805
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_6/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            0.006465653529432527,
+            0.008899209951690246,
+            -3.5631000550040426e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239251,
+            0.03299999926239251
+          ],
+          "radial_outer_upper_bound_m": 0.04400002714085383
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_7/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            0.010461615187951877,
+            0.0033992002802119003,
+            -1.4097801743773175e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239252,
+            0.03299999926239251
+          ],
+          "radial_outer_upper_bound_m": 0.043999997211745884
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_8/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            0.01046162905922178,
+            -0.003399177938871567,
+            1.265167116404342e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239254,
+            0.03299999926239252,
+            0.03299999926239251
+          ],
+          "radial_outer_upper_bound_m": 0.04400000350024921
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_01/OW1_wheel_passive_9/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            0.006465620268775472,
+            -0.008899183374976971,
+            3.4667955848277643e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239251,
+            0.03299999926239251
+          ],
+          "radial_outer_upper_bound_m": 0.04399998608972404
+        }
+      ]
+    },
+    {
+      "name": "right",
+      "metadata_radius_m": 0.035,
+      "collision_shapes": [
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_0/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -7.797274631515805e-09,
+            -0.011000009590925508,
+            -4.3616279654656864e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239253,
+            0.032999999262392526,
+            0.03299999926239252
+          ],
+          "radial_outer_upper_bound_m": 0.0440000088533208
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_1/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -0.006465651492455336,
+            -0.00889919352211166,
+            -3.4612365089614627e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.032999999262392526,
+            0.03299999926239252
+          ],
+          "radial_outer_upper_bound_m": 0.04400001265174274
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_2/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -0.010461634726529542,
+            -0.0033991900380181406,
+            -1.2905322410716735e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239253,
+            0.032999999262392526,
+            0.03299999926239252
+          ],
+          "radial_outer_upper_bound_m": 0.0440000126290158
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_3/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -0.010461632091965739,
+            0.003399185948279815,
+            1.4148724840623572e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.032999999262392526,
+            0.032999999262392526
+          ],
+          "radial_outer_upper_bound_m": 0.044000008859598816
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_4/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -0.00646564478313353,
+            0.008899182622916335,
+            3.5596280056893193e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239252,
+            0.03299999926239252
+          ],
+          "radial_outer_upper_bound_m": 0.04399999989046878
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_5/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -1.082622849701842e-08,
+            0.011000001143687044,
+            4.332090811409728e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239252,
+            0.03299999926239252
+          ],
+          "radial_outer_upper_bound_m": 0.0440000004060849
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_6/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            0.006465627277898366,
+            0.008899192518094345,
+            3.4446070342752932e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239253,
+            0.032999999262392526,
+            0.032999999262392526
+          ],
+          "radial_outer_upper_bound_m": 0.043999997606520125
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_7/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            0.010461610511799654,
+            0.0033991880417838516,
+            1.2572723342429981e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239254,
+            0.032999999262392526,
+            0.032999999262392526
+          ],
+          "radial_outer_upper_bound_m": 0.04399998898256971
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_8/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            0.010461615327815546,
+            -0.003399187940881454,
+            -1.4481326848780895e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239254,
+            0.032999999262392526,
+            0.03299999926239252
+          ],
+          "radial_outer_upper_bound_m": 0.043999993531691914
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW_02/OW2_wheel_passive_9/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            0.0064656261563384165,
+            -0.008899184616427469,
+            -3.5928881327862427e-06
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239253,
+            0.032999999262392526,
+            0.032999999262392526
+          ],
+          "radial_outer_upper_bound_m": 0.04399999055469758
+        }
+      ]
+    },
+    {
+      "name": "front",
+      "metadata_radius_m": 0.035,
+      "collision_shapes": [
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_0/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -7.250698756677831e-09,
+            -0.011000000428686096,
+            -8.743691992663116e-09
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239252,
+            0.03299999926239251
+          ],
+          "radial_outer_upper_bound_m": 0.04399999969108101
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_1/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -0.00646564991096598,
+            -0.008899191534291306,
+            3.643732782165898e-08
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239251,
+            0.03299999926239251
+          ],
+          "radial_outer_upper_bound_m": 0.044000010113986104
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_2/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -0.010461640424806823,
+            -0.003399185314130637,
+            6.181168643593082e-08
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239252,
+            0.03299999926239251
+          ],
+          "radial_outer_upper_bound_m": 0.04400001658864041
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_3/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -0.010461635251742797,
+            0.00339919242007114,
+            5.6979667206746853e-08
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239253,
+            0.03299999926239252,
+            0.03299999926239251
+          ],
+          "radial_outer_upper_bound_m": 0.044000013864618145
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_4/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -0.006465644937497454,
+            0.008899195001659699,
+            4.034781042605573e-08
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239252,
+            0.03299999926239252
+          ],
+          "radial_outer_upper_bound_m": 0.044000009995812356
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_5/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            -1.9813108098620802e-10,
+            0.010999999478894962,
+            -6.15832718153797e-09
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239254,
+            0.032999999262392526,
+            0.03299999926239252
+          ],
+          "radial_outer_upper_bound_m": 0.0439999987412875
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_6/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            0.00646562942371573,
+            0.008899193378913317,
+            -5.134100611314807e-08
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239254,
+            0.03299999926239254,
+            0.032999999262392526
+          ],
+          "radial_outer_upper_bound_m": 0.043999999564215866
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_7/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            0.010461614348076832,
+            0.003399194144396489,
+            -6.181512191005822e-08
+          ],
+          "transformed_sphere_radii_m": [
+            0.03299999926239252,
+            0.03299999926239252,
+            0.03299999926239252
+          ],
+          "radial_outer_upper_bound_m": 0.04399999451689997
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_8/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            0.010461611039329646,
+            -0.003399186850031377,
+            -7.188392459056558e-08
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239252,
+            0.03299999926239251
+          ],
+          "radial_outer_upper_bound_m": 0.04399998911600831
+        },
+        {
+          "path": "/World/bobac/bobac3_serverbot/bobac3_serverbot/base_footprint/Angellun_OW/OW0_wheel_passive_9/collisions/mesh_0/sphere",
+          "type": "Sphere",
+          "approximation": null,
+          "collision_enabled": true,
+          "center_in_axle_frame_m": [
+            0.006465631900986958,
+            -0.008899188500679278,
+            -5.525076396395434e-08
+          ],
+          "transformed_sphere_radii_m": [
+            0.032999999262392526,
+            0.03299999926239251,
+            0.03299999926239251
+          ],
+          "radial_outer_upper_bound_m": 0.04399999707374151
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+[INFO] [1792151372.767599908] [velocity_smoother]: 
+	velocity_smoother lifecycle node launched. 
+	Waiting on external lifecycle transitions to activate
+	See https://design.ros2.org/articles/node_lifecycle.html for more information.
+[INFO] [1792151614.782807324] [velocity_smoother]: Configuring velocity smoother
+[INFO] [1792151616.288249556] [velocity_smoother]: Activating
+[INFO] [1792151616.288327188] [velocity_smoother]: Creating bond (velocity_smoother) to lifecycle manager.
+[INFO] [1792151616.289240526] [velocity_smoother]: Simulation-clock CLOSED_LOOP smoother; dt cap 0.050s, odom age limit 0.150s

@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "scope": "real MoveIt joint-goal home with timed hand commands",
+  "errors": [],
+  "planning_code": 1,
+  "duration_sim_seconds": 7.086504156,
+  "points": 72,
+  "measured_final_rad": [
+    -0.0086,
+    0.0007,
+    0.0068,
+    -0.0082,
+    0.003,
+    0.0053
+  ]
+}
